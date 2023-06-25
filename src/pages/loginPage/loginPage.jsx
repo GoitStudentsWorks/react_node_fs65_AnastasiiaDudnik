@@ -1,9 +1,12 @@
+
 import LogInForm from "components/loginForm/loginForm"
 
-
-const LoginPage = ()=>{
+const LoginPage = () => {
     return (
-        <LogInForm/>
+      
+            <LogInForm />
+
+        
     )
 }
 export default LoginPage

@@ -11,7 +11,7 @@ const lightTheme = {
     },
   },
   typography: {
-    fontFamily: ['Coolvetica', 'Inter', 'Poppins', 'sans-serif'].join(', '),
+  fontFamily: [ 'Inter', 'Poppins', 'sans-serif','Coolvetica',].join(', '),
   },
 };
 
