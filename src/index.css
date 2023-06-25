@@ -1,4 +1,4 @@
-@import-normalize; /* bring in normalize.css styles */
+/* @import-normalize; bring in normalize.css styles */
 
 body {
   margin: 0;
@@ -63,24 +63,6 @@ code {
   font-style: normal;
   font-weight: 700;
   src: url('fonts/Inter-Bold.ttf') format('ttf');
-}
-
-/* Poppins-regular */
-@font-face {
-  font-display: swap;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/Poppins-Regular.ttf') format('ttf');
-}
-
-/* Poppins-medium */
-@font-face {
-  font-display: swap;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  src: url('fonts/Poppins-Medium.ttf') format('ttf');
 }
 
 /* --------- Fonts ------------------------------------- */
