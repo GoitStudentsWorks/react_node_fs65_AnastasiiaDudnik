@@ -1,21 +1,46 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://goose-calendar.onrender.com';
+const { REACT_APP_API_URL } = process.env;
+
+const instance = axios.create({
+  baseURL: REACT_APP_API_URL,
+});
 
 const setAuthHeader = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  return (instance.defaults.headers.common.Authorization = `Bearer ${token}`);
 };
 
 const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
+  instance.defaults.headers.common.Authorization = '';
 };
+
+instance.interceptors.response.use(
+  response => response,
+  async error => {
+    if (error.response.status === 401) {
+      const refreshToken = localStorage.getItem('refreshToken');
+      try {
+        const { data } = await instance.post('/users/refresh', {
+          refreshToken,
+        });
+        setAuthHeader(data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+
+        return instance(error.config);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const register = createAsyncThunk(
   'auth/register',
   async (user, thunkAPI) => {
     try {
-      const response = await axios.post('/users/register', user);
+      const response = await instance.post('/users/register', user);
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
@@ -26,7 +51,7 @@ export const register = createAsyncThunk(
 
 export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
-    const response = await axios.post('/users/login', user);
+    const response = await instance.post('/users/login', user);
     setAuthHeader(response.data.token);
     return response.data;
   } catch (error) {
@@ -36,7 +61,7 @@ export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await axios.post('users/logout');
+    await instance.post('users/logout');
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -55,7 +80,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       setAuthHeader(persistedToken);
-      const response = await axios.get('/users/current');
+      const response = await instance.get('/users/current');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -75,7 +100,7 @@ export const updateUser = createAsyncThunk(
       formData.append('skype', skype || '');
       formData.append('birthday', birthday || '');
 
-      const response = await axios.patch('users/update', formData, {
+      const response = await instance.patch('users/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
