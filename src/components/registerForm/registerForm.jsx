@@ -3,6 +3,7 @@ import { Box, Button, Container, OutlinedInput, Typography } from "@mui/material
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import goose from "./sign up 1.png"
 
 const ValidationSchema = Yup.object().shape({
   name: Yup.string().min(4, "Name must be 4 characters long").required("Required"),
@@ -30,7 +31,7 @@ const RegisterForm = () => {
         isSubmitting,
       }) => (
         <Box sx={{ backgroundColor: "#DCEBF7", height: "100%", width: "100%", display: "flex", alignItems: "center", position: "fixed", flexDirection: "column", justifyContent: "center" }}>
-          <Container sx={{ width: 335, borderRadius: 2, backgroundColor: "#fff", pr: 3, pl: 3, pt: 5, pb: 5 }}>
+          <Container sx={{ position: "relative", width: { xs: "335px", md: "480px" }, borderRadius: 2, backgroundColor: "#fff", pr: { xs: 3, md: 5 }, pl: { xs: 3, md: 5 }, pt: 5, pb: 5 }}>
             <Form>
               <Typography variant="h2" sx={{ fontSize: 18, color: "#3E85F3", mb: 4, fontWeight: 600, }}>Sign Up</Typography>
               <label>
@@ -76,7 +77,8 @@ const RegisterForm = () => {
                 <ErrorMessage name="password" component="div" style={{ fontSize: 12, color: "#DA1414", marginTop: 8 }} />
               </label>
               <Button
-                sx={{ textTransform: "none", backgroundColor: "#2B78EF", marginTop: 4, width: 287, padding: 2, borderRadius: 4, fontSize: 14, fontWeight: 600 }}
+                sx={{ textTransform: "none", backgroundColor: "#2B78EF", marginTop: 4, width: "100%", padding: 2, borderRadius: 4, fontSize: 14, fontWeight: 600, fontFamily: "Inter, sans-serif", }}
+
                 variant="contained"
                 type="submit"
               >
@@ -87,6 +89,7 @@ const RegisterForm = () => {
           <Link to={"/login"}>
             <Typography variant="h2" sx={{ fontSize: 12, color: "#3E85F3", mt: 2.25, fontWeight: 600, textDecoration: "underline" }}>Log In</Typography>
           </Link>
+          {window.innerWidth > 1440 ? <img style={{ display: { xs: "none" }, position: "absolute", left: "200px", bottom: "300px" }} src={goose} alt="goose-racket" /> : <></>}
         </Box>
       )}
     </Formik>

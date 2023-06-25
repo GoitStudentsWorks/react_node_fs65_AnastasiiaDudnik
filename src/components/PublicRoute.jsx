@@ -1,10 +1,10 @@
 const { Outlet } = require("react-router-dom")
 
-const PrivateRoute = ()=>{
+const PublicRoute = ()=>{
     return (
         <div>
             <Outlet/>
         </div>
     )
 }
-export default PrivateRoute
+export default PublicRoute

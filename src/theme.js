@@ -10,6 +10,9 @@ const lightTheme = {
       xl: 1536,
     },
   },
+  typography: {
+  fontFamily: [ 'Inter', 'Poppins', 'sans-serif','Coolvetica',].join(', '),
+  },
 };
 
 export const theme = createTheme(lightTheme);
