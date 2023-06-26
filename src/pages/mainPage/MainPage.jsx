@@ -1,14 +1,13 @@
-import AuthSection from "components/authSection/authSection"
-import Description from "components/description/description"
-import React from "react"
-
+import AuthSection from 'components/authSection/authSection';
+import Description from 'components/description/description';
+import React from 'react';
 
 const MainPage = () => {
+  return (
     <>
-    
-    <p>asd</p>
-        {/* <AuthSection />
-        <Description /> */}
+      <AuthSection />
+      <Description />
     </>
-}
-export default MainPage
+  );
+};
+export default MainPage;

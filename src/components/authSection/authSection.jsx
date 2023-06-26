@@ -1,4 +1,4 @@
-import { Typography, Container, Box, Image } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import goose from './GOOSE.png';
 import { Link } from 'react-router-dom';
 
