@@ -146,7 +146,7 @@ const RegisterForm = () => {
                       <Typography
                         sx={{ color: '#3CBC81', fontSize: 12, mt: '8px' }}
                       >
-                        This is a CORRECT email
+                        This is a CORRECT name
                       </Typography>
                     </>
                   )}
@@ -305,7 +305,7 @@ const RegisterForm = () => {
                         <Typography
                           sx={{ color: '#3CBC81', fontSize: 12, mt: '8px' }}
                         >
-                          This is a CORRECT email
+                          This is a CORRECT password
                         </Typography>
                       </>
                     )}
