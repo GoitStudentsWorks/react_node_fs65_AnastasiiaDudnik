@@ -15,7 +15,7 @@ import Sprite from 'icons/sprite.svg';
 
 const ValidationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(4, 'Name must be 4 characters long')
+    .min(2, 'Name must be 2 characters long')
     .required('Required'),
   email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string()
