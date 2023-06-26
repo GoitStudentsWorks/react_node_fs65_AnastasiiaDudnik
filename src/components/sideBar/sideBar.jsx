@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Drawer } from '@mui/material';
+import { Logo } from '../logo/logo';
 // import { UserNav } from 'atoms/UserNav';
-// import { Logo } from 'atoms/Logo';
 
 export const SideBar = props => {
   const { window } = props;
@@ -18,9 +18,8 @@ export const SideBar = props => {
 
   const drawer = (
     <>
-      <Box>SideBar</Box>
-      {/* <Logo handleDrawerToggle={handleDrawerToggle} />
-      <UserNav handleDrawerToggle={handleDrawerToggle} /> */}
+      <Logo handleDrawerToggle={handleDrawerToggle} />
+      {/* <UserNav handleDrawerToggle={handleDrawerToggle} /> */}
     </>
   );
 
