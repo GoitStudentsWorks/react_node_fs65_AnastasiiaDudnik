@@ -27,8 +27,6 @@ const borderColor = {
 };
 
 const LogInForm = () => {
-  const handleSubmit = (value, actions) => {};
-
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
