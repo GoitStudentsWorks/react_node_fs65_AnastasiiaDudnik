@@ -16,7 +16,7 @@ export const App = () => {
     <Suspense fallback={null}>
       {/* Заміть null має бути лоадер */}
       <Routes>
-        <Route path="/" element={<div>Layout</div>}/>
+        <Route path="/" element={<PublicRoute/>}/>
             <Route index element={<MainPage/>} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<LoginPage />} />
