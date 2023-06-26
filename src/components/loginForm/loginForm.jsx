@@ -33,6 +33,8 @@ const LogInForm = () => {
       initialValues={{ email: '', password: '' }}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
+
         setSubmitting(false);
       }}
     >
