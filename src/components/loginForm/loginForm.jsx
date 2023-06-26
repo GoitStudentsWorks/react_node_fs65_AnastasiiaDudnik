@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom/dist';
 import goose from './elements.png';
 import Sprite from 'icons/sprite.svg';
 
+
 const ValidationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string()
