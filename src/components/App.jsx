@@ -2,13 +2,10 @@ import { Suspense, lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import PublicRoute from './PublicRoute';
-import MainPage from 'pages/mainPage/MainPage';
-// import Description from "./description/description";
-// import AuthSection from './authSection/authSection';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
-// const MainPage = lazy(() => import('pages/mainPage/mainPage'));
+const MainPage = lazy(() => import('pages/mainPage/MainPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
