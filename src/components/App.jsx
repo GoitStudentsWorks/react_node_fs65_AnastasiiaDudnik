@@ -3,7 +3,6 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import PublicRoute from './PublicRoute';
-import { MainTemplate } from 'template/MainTemplate';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
