@@ -1,20 +1,30 @@
-import React from "react";
-import { Box, Button, Container, OutlinedInput, Typography } from "@mui/material";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import goose from "./sign up 1.png"
+import React from 'react';
+import {
+  Box,
+  Button,
+  Container,
+  OutlinedInput,
+  Typography,
+} from '@mui/material';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+import goose from './sign up 1.png';
 
 const ValidationSchema = Yup.object().shape({
-  name: Yup.string().min(4, "Name must be 4 characters long").required("Required"),
-  email: Yup.string().email("Invalid email address").required("Required"),
-  password: Yup.string().min(6, 'Password must be 6 characters long').required("Required")
+  name: Yup.string()
+    .min(4, 'Name must be 4 characters long')
+    .required('Required'),
+  email: Yup.string().email('Invalid email address').required('Required'),
+  password: Yup.string()
+    .min(6, 'Password must be 6 characters long')
+    .required('Required'),
 });
 
 const RegisterForm = () => {
   return (
     <Formik
-      initialValues={{ name: "", email: '', password: '' }}
+      initialValues={{ name: '', email: '', password: '' }}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
@@ -30,12 +40,41 @@ const RegisterForm = () => {
         handleSubmit,
         isSubmitting,
       }) => (
-        <Box sx={{ backgroundColor: "#DCEBF7", height: "100%", width: "100%", display: "flex", alignItems: "center", position: "fixed", flexDirection: "column", justifyContent: "center" }}>
-          <Container sx={{ position: "relative", width: { xs: "335px", md: "480px" }, borderRadius: 2, backgroundColor: "#fff", pr: { xs: 3, md: 5 }, pl: { xs: 3, md: 5 }, pt: 5, pb: 5 }}>
+        <Box
+          sx={{
+            backgroundColor: '#DCEBF7',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            position: 'fixed',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <Container
+            sx={{
+              position: 'relative',
+              width: { xs: '335px', md: '480px' },
+              borderRadius: 2,
+              backgroundColor: '#fff',
+              pr: { xs: 3, md: 5 },
+              pl: { xs: 3, md: 5 },
+              pt: 5,
+              pb: 5,
+            }}
+          >
             <Form>
-              <Typography variant="h2" sx={{ fontSize: 18, color: "#3E85F3", mb: 4, fontWeight: 600, }}>Sign Up</Typography>
+              <Typography
+                variant="h2"
+                sx={{ fontSize: 18, color: '#3E85F3', mb: 4, fontWeight: 600 }}
+              >
+                Sign Up
+              </Typography>
               <label>
-                <Typography sx={{ fontSize: 14, fontWeight: 600, mb: 1 }}>Name</Typography>
+                <Typography sx={{ fontSize: 14, fontWeight: 600, mb: 1 }}>
+                  Name
+                </Typography>
                 <Field
                   as={OutlinedInput}
                   type="text"
@@ -44,12 +83,25 @@ const RegisterForm = () => {
                   onBlur={handleBlur}
                   value={values.name}
                   placeholder="Enter your name"
-                  sx={{ border: "rgba(220, 227, 229, 0.60);", width: "100%", height: 54, borderRadius: 2, }}
+                  sx={{
+                    border: 'rgba(220, 227, 229, 0.60);',
+                    width: '100%',
+                    height: 54,
+                    borderRadius: 2,
+                  }}
                 />
-                <ErrorMessage name="name" component="div" style={{ fontSize: 12, color: "#DA1414", marginTop: 8 }} />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  style={{ fontSize: 12, color: '#DA1414', marginTop: 8 }}
+                />
               </label>
               <label>
-                <Typography sx={{ fontSize: 14, fontWeight: 600, mb: 1, mt: 3 }}>Email</Typography>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, mb: 1, mt: 3 }}
+                >
+                  Email
+                </Typography>
                 <Field
                   as={OutlinedInput}
                   type="email"
@@ -58,12 +110,25 @@ const RegisterForm = () => {
                   onBlur={handleBlur}
                   value={values.email}
                   placeholder="Enter email"
-                  sx={{ border: "rgba(220, 227, 229, 0.60);", width: "100%", height: 54, borderRadius: 2, }}
+                  sx={{
+                    border: 'rgba(220, 227, 229, 0.60);',
+                    width: '100%',
+                    height: 54,
+                    borderRadius: 2,
+                  }}
                 />
-                <ErrorMessage name="email" component="div" style={{ fontSize: 12, color: "#DA1414", marginTop: 8 }} />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  style={{ fontSize: 12, color: '#DA1414', marginTop: 8 }}
+                />
               </label>
               <label>
-                <Typography sx={{ fontSize: 14, fontWeight: 600, mb: 1, mt: 3 }}>Password</Typography>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, mb: 1, mt: 3 }}
+                >
+                  Password
+                </Typography>
                 <Field
                   as={OutlinedInput}
                   type="password"
@@ -72,13 +137,31 @@ const RegisterForm = () => {
                   onBlur={handleBlur}
                   value={values.password}
                   placeholder="Enter password"
-                  sx={{ border: "rgba(220, 227, 229, 0.60);", width: "100%", height: 54, borderRadius: 2, }}
+                  sx={{
+                    border: 'rgba(220, 227, 229, 0.60);',
+                    width: '100%',
+                    height: 54,
+                    borderRadius: 2,
+                  }}
                 />
-                <ErrorMessage name="password" component="div" style={{ fontSize: 12, color: "#DA1414", marginTop: 8 }} />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  style={{ fontSize: 12, color: '#DA1414', marginTop: 8 }}
+                />
               </label>
               <Button
-                sx={{ textTransform: "none", backgroundColor: "#2B78EF", marginTop: 4, width: "100%", padding: 2, borderRadius: 4, fontSize: 14, fontWeight: 600, fontFamily: "Inter, sans-serif", }}
-
+                sx={{
+                  textTransform: 'none',
+                  backgroundColor: '#2B78EF',
+                  marginTop: 4,
+                  width: '100%',
+                  padding: 2,
+                  borderRadius: 4,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: 'Inter, sans-serif',
+                }}
                 variant="contained"
                 type="submit"
               >
@@ -86,10 +169,34 @@ const RegisterForm = () => {
               </Button>
             </Form>
           </Container>
-          <Link to={"/login"}>
-            <Typography variant="h2" sx={{ fontSize: 12, color: "#3E85F3", mt: 2.25, fontWeight: 600, textDecoration: "underline" }}>Log In</Typography>
+          <Link to={'/login'}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: 12,
+                color: '#3E85F3',
+                mt: 2.25,
+                fontWeight: 600,
+                textDecoration: 'underline',
+              }}
+            >
+              Log In
+            </Typography>
           </Link>
-          {window.innerWidth > 1440 ? <img style={{ display: { xs: "none" }, position: "absolute", left: "200px", bottom: "300px" }} src={goose} alt="goose-racket" /> : <></>}
+          {window.innerWidth > 1440 ? (
+            <img
+              style={{
+                display: { xs: 'none' },
+                position: 'absolute',
+                left: '49px',
+                bottom: '0px',
+              }}
+              src={goose}
+              alt="goose-racket"
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       )}
     </Formik>
