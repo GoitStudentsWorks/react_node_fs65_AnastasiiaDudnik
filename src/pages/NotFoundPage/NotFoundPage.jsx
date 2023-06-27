@@ -1,4 +1,4 @@
-import { UseSelector } from "react-redux";
+// import { UseSelector } from "react-redux";
 import error from './img/error.webp'
 import error2x from './img/error@2x.webp'
 import error3x from './img/error@3x.webp'
