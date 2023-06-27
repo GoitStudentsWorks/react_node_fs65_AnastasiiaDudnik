@@ -3,18 +3,13 @@ import { Box, Drawer } from '@mui/material';
 import { Logo } from '../logo/logo';
 import { UserNav } from '../userNav/userNav';
 
-export const SideBar = props => {
-  const { window } = props;
-
+export const SideBar = () => {
   const drawerWidth = { mobile: 225, desktop: 289 };
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   const drawer = (
     <>
@@ -40,7 +35,6 @@ export const SideBar = props => {
       }}
     >
       <Drawer
-        container={container}
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
