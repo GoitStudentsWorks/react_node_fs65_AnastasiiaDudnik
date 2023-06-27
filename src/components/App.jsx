@@ -7,6 +7,8 @@ import PublicRoute from './PublicRoute';
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
+const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'))
+
 
 export const App = () => {
   // const dispatch = useDispatch();
@@ -19,6 +21,7 @@ export const App = () => {
             <Route index element={<MainPage/>} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>
