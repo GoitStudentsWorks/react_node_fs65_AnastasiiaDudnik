@@ -7,14 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from 'redux/auth/operations';
 import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
-import MainLayout from 'pages/MainLayout/mainLayout';
+import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
-const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'))
+const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 
+const Account = lazy(() => import('../pages/accountPage/accountPage'));
+const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
+const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -50,9 +53,14 @@ export const App = () => {
           <Route
             path="/main"
             element={
-              <PrivateRoute redirectTo="/login" component={<MainLayout />} />
+              <PrivateRoute redirectTo="/login" component={MainLayout} />
             }
-          />
+          >
+            <Route index element={<Calendar />} />
+            <Route path="account" element={<Account />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="statistics" element={<Statistics />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

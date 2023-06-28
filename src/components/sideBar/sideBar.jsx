@@ -1,17 +1,9 @@
-import { useState } from 'react';
 import { Box, Drawer } from '@mui/material';
 import { Logo } from '../logo/logo';
 import { UserNav } from '../userNav/userNav';
 import { LogoutBtn } from 'components/logoutBtn/logoutBtn';
 
-export const SideBar = () => {
-  const drawerWidth = { mobile: 225, desktop: 289 };
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
+export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <>
       <Box>
