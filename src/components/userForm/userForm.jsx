@@ -8,8 +8,11 @@ import {
   InputBase,
 } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
+import { useState } from 'react';
 
 const UserForm = () => {
+  const [selectAvatar, setSelectAvatar] = useState('');
+  console.log(selectAvatar);
   return (
     <Formik>
       <Form>
@@ -58,16 +61,21 @@ const UserForm = () => {
                 position: 'absolute',
                 top: { xs: '4%', md: '18%', lg: '22%' },
                 right: { xs: '40%', md: '44%', lg: '46%' },
+                cursor: 'pointer',
               }}
             >
               <Field
+                id="addAvatars"
                 type="file"
+                name="addAvatars"
+                onChange={e => setSelectAvatar(e.target.files[0])}
                 style={{ display: 'none' }}
-                onChange={() => console.log('tuk')}
               />
-              <SvgIcon stroke="currentColor">
-                <use href={`${Sprite}#addAvatar`}></use>
-              </SvgIcon>
+              <label htmlFor="addAvatars">
+                <SvgIcon stroke="currentColor">
+                  <use href={`${Sprite}#addAvatar`}></use>
+                </SvgIcon>
+              </label>
             </Box>
           </Box>
           <Typography
