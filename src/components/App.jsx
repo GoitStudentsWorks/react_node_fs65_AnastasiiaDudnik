@@ -13,6 +13,8 @@ import { PrivateRoute } from 'redux/privareRoute';
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
+const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'))
+
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -51,7 +53,7 @@ export const App = () => {
               <PrivateRoute redirectTo="/login" component={<MainLayout />} />
             }
           />
-          <Route path="*" element={<p>NotFound 404</p>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>
