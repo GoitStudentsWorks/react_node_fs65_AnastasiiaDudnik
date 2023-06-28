@@ -1,6 +1,7 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, SvgIcon } from '@mui/material';
 import goose from './GOOSE.png';
 import { Link } from 'react-router-dom';
+import Sprite from 'icons/sprite.svg';
 
 const AuthSection = () => {
   return (
@@ -100,9 +101,22 @@ const AuthSection = () => {
               color: '#3E85F3',
               textDecoration: 'none',
               fontSize: 14,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
             }}
           >
             Log in
+            <SvgIcon
+              stroke="currentColor"
+              sx={{
+                width: { xs: '20px', md: '24px' },
+                height: { xs: '20px', md: '24px' },
+              }}
+            >
+              <use href={`${Sprite}#log-in`}></use>
+            </SvgIcon>
           </Typography>
         </Link>
       </Box>

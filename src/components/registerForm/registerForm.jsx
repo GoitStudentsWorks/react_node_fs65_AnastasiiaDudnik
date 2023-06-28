@@ -12,6 +12,9 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import goose from './sign up 1.png';
 import Sprite from 'icons/sprite.svg';
+import { useResponse } from 'hooks/useResponse';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/operations';
 
 const ValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,24 +32,19 @@ const borderColor = {
 };
 
 const RegisterForm = () => {
+  const { isDesktop } = useResponse();
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={{ name: '', email: '', password: '' }}
       validationSchema={ValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+      onSubmit={({ name, email, password }, { setSubmitting }) => {
+        dispatch(register({ name, email, password }));
         setSubmitting(false);
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => {
+      {({ values, errors, touched, handleChange, handleBlur }) => {
         const isValid = field =>
           touched[field] && errors[field]
             ? 'is-invalid'
@@ -282,7 +280,12 @@ const RegisterForm = () => {
                       value={values.password}
                       placeholder="Enter password"
                       sx={{
-                        border: 'rgba(220, 227, 229, 0.60);',
+                        border: `${
+                          (isValid('email') === 'is-invalid' &&
+                            borderColor.invalidColor) ||
+                          (isValid('email') === 'is-valid' &&
+                            borderColor.validColor)
+                        } solid 1px`,
                         width: '100%',
                         height: 54,
                         borderRadius: 2,
@@ -376,7 +379,7 @@ const RegisterForm = () => {
                 Log In
               </Typography>
             </Link>
-            {window.innerWidth > 1440 ? (
+            {isDesktop && (
               <img
                 style={{
                   display: { xs: 'none' },
@@ -387,8 +390,6 @@ const RegisterForm = () => {
                 src={goose}
                 alt="goose-racket"
               />
-            ) : (
-              <></>
             )}
           </Box>
         );

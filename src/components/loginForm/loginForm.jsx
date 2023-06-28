@@ -12,7 +12,9 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom/dist';
 import goose from './elements.png';
 import Sprite from 'icons/sprite.svg';
-
+import { useResponse } from 'hooks/useResponse';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/operations';
 
 const ValidationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Required'),
@@ -27,25 +29,19 @@ const borderColor = {
 };
 
 const LogInForm = () => {
+  const { isDesktop } = useResponse();
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-
+        dispatch(logIn(values));
         setSubmitting(false);
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => {
+      {({ values, errors, touched, handleChange, handleBlur }) => {
         const isValid = field =>
           touched[field] && errors[field]
             ? 'is-invalid'
@@ -307,14 +303,12 @@ const LogInForm = () => {
                 Sign up
               </Typography>
             </Link>
-            {window.innerWidth > 1440 ? (
+            {isDesktop && (
               <img
                 style={{ position: 'absolute', right: '60px', bottom: '19px' }}
                 src={goose}
                 alt="goose-racket"
               />
-            ) : (
-              <></>
             )}
           </Box>
         );
