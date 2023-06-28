@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const Calendar = () => {
+const Statistics = () => {
   return (
     <Box>
-      <Typography paragraph>Calendar</Typography>
+      <Typography paragraph>Statistics</Typography>
     </Box>
   );
 };
 
-export default Calendar;
+export default Statistics;
