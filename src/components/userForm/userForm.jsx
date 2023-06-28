@@ -9,12 +9,23 @@ import {
 } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'redux/auth/selectors';
 
 const UserForm = () => {
   const [selectAvatar, setSelectAvatar] = useState('');
-  console.log(selectAvatar);
+  const userState = useSelector(selectUser);
+  const initialValues = {
+    name: userState.name,
+    avatar: userState.avatarURL || '',
+    email: userState.email,
+    birthday: userState.birthday || '',
+    phone: userState.phone || '',
+    skype: userState.skype || '',
+  };
+
   return (
-    <Formik>
+    <Formik initialValues={initialValues}>
       <Form>
         <Box
           sx={{
@@ -23,7 +34,6 @@ const UserForm = () => {
             padding: { xs: '59px 0px 40px 0px', md: '40px 0px 40px 0px' },
             marginLeft: 'auto',
             marginRight: 'auto',
-            // backgroundColor: '#3EE',
             position: 'relative',
             marginTop: '95px',
             display: 'flex',
@@ -35,7 +45,7 @@ const UserForm = () => {
           <Box>
             <Avatar
               alt="avatar"
-              src=""
+              src={`https://2.gravatar.com/avatar/}`}
               sx={{
                 width: { xs: '72px', md: '124px' },
                 height: { xs: '72px', md: '124px' },
@@ -98,7 +108,6 @@ const UserForm = () => {
               textAlign: 'center',
             }}
           >
-            {' '}
             User
           </Typography>
           <Box
@@ -131,6 +140,8 @@ const UserForm = () => {
                 </Typography>
                 <Field
                   placeholder="User Name"
+                  name="name"
+                  type="text"
                   as={InputBase}
                   sx={{
                     width: '100%',
@@ -155,6 +166,8 @@ const UserForm = () => {
                   Birthday
                 </Typography>
                 <Field
+                  name="birthday"
+                  type="text"
                   placeholder="Birthday"
                   as={InputBase}
                   sx={{
@@ -180,6 +193,8 @@ const UserForm = () => {
                   Email
                 </Typography>
                 <Field
+                  type="email"
+                  name="email"
                   placeholder="Email"
                   as={InputBase}
                   sx={{
@@ -213,6 +228,8 @@ const UserForm = () => {
                   Phone
                 </Typography>
                 <Field
+                  type="phone"
+                  name="phone"
                   placeholder="Phone"
                   as={InputBase}
                   sx={{
@@ -238,6 +255,8 @@ const UserForm = () => {
                   Skype
                 </Typography>
                 <Field
+                  type="text"
+                  name="skype"
                   as={InputBase}
                   placeholder="Skype"
                   sx={{

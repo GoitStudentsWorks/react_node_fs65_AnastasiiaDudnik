@@ -9,17 +9,16 @@ import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
 import MainLayout from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
+import UserForm from './userForm/userForm';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
-const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'))
-
+const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
   const isFatching = useSelector(selectIsRefreshing);
-  console.log(isFatching);
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
@@ -30,27 +29,33 @@ export const App = () => {
     <Suspense fallback={<p>Loading</p>}>
       {/* Заміть null має бути лоадер */}
       <Routes>
+        <Route index element={<MainPage />} />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute
+              redirectTo="/account"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute redirectTo="/account" component={<LoginPage />} />
+          }
+        />
         <Route path="/" element={<PublicRoute />}>
-          <Route index element={<MainPage />} />
           <Route
-            path="/register"
-            element={
-              <RestrictedRoute
-                redirectTo="/main"
-                component={<RegisterPage />}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RestrictedRoute redirectTo="/main" component={<LoginPage />} />
-            }
-          />
-          <Route
-            path="/main"
+            path="main"
             element={
               <PrivateRoute redirectTo="/login" component={<MainLayout />} />
+            }
+          />
+          <Route
+            path="account"
+            element={
+              <PrivateRoute redirectTo="/login" component={<UserForm />} />
             }
           />
           <Route path="*" element={<NotFoundPage />} />

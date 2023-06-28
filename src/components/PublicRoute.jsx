@@ -1,10 +1,13 @@
-const { Outlet } = require("react-router-dom")
+import { SideBar } from './sideBar/sideBar';
 
-const PublicRoute = ()=>{
-    return (
-        <div>
-            <Outlet/>
-        </div>
-    )
-}
-export default PublicRoute
+const { Outlet } = require('react-router-dom');
+
+const PublicRoute = () => {
+  return (
+    <div>
+      <SideBar />
+      <Outlet />
+    </div>
+  );
+};
+export default PublicRoute;
