@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
+const { REACT_APP_API_URL } = process.env;
 const instance = axios.create({
-  baseURL: 'https://goose-calendar.onrender.com',
+  baseURL: REACT_APP_API_URL,
 });
 
 const setAuthHeader = token => {
