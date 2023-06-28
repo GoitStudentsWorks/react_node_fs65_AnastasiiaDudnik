@@ -43,7 +43,7 @@ export const UserNav = ({ handleDrawerToggle }) => {
         <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
-            to="/account"
+            to="/main/account"
             sx={{
               backgroundColor: 'background.paper',
               color: 'text.disabled',
@@ -85,7 +85,7 @@ export const UserNav = ({ handleDrawerToggle }) => {
         <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
-            to="/calendar"
+            to="/main/calendar"
             sx={{
               backgroundColor: 'background.paper',
               color: 'text.disabled',
@@ -127,7 +127,7 @@ export const UserNav = ({ handleDrawerToggle }) => {
         <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
-            to="/statistics"
+            to="/main/statistics"
             sx={{
               backgroundColor: 'background.paper',
               color: 'text.disabled',

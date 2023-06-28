@@ -24,7 +24,7 @@ export const Logo = ({ handleDrawerToggle }) => {
     >
       <Button
         component={NavLink}
-        to="/calendar"
+        to="/main/calendar"
         onClick={handleDrawerToggle}
         sx={{
           p: 0,
