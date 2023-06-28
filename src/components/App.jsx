@@ -9,20 +9,22 @@ import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
 import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
+import UserForm from './userForm/userForm';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 
+
 const Account = lazy(() => import('../pages/accountPage/accountPage'));
 const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
 const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
 
+
 export const App = () => {
   const dispatch = useDispatch();
   const isFatching = useSelector(selectIsRefreshing);
-  console.log(isFatching);
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
@@ -33,27 +35,35 @@ export const App = () => {
     <Suspense fallback={<p>Loading</p>}>
       {/* Заміть null має бути лоадер */}
       <Routes>
+        <Route index element={<MainPage />} />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute
+              redirectTo="/account"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute redirectTo="/account" component={<LoginPage />} />
+          }
+        />
         <Route path="/" element={<PublicRoute />}>
-          <Route index element={<MainPage />} />
           <Route
-            path="/register"
+            path="main"
             element={
-              <RestrictedRoute
-                redirectTo="/main"
-                component={<RegisterPage />}
-              />
+              <PrivateRoute redirectTo="/login" component={<MainLayout />} />
             }
           />
           <Route
-            path="/login"
+            path="account"
             element={
-              <RestrictedRoute redirectTo="/main" component={<LoginPage />} />
-            }
-          />
-          <Route
-            path="/main"
-            element={
-              <PrivateRoute redirectTo="/login" component={MainLayout} />
+
+              <PrivateRoute redirectTo="/login" component={<UserForm />} />
+
             }
           >
             <Route index element={<Calendar />} />

@@ -32,7 +32,7 @@ const Description = () => {
       <Container
         sx={{
           display: { xs: 'block', md: 'block', lg: 'flex' },
-          gap: '228px',
+          gap: '224px',
           justifyContent: 'center',
           alignItems: 'center',
         }}
