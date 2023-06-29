@@ -1,5 +1,8 @@
 import { Box, Container, Typography } from '@mui/material';
 import { useResponse } from 'hooks/useResponse';
+import { useDispatch } from 'react-redux';
+import { getReviews } from '../../redux/reviews/operations';
+import { useEffect } from 'react';
 
 //desktop_images
 import d_calendar from './lg/calendar1x.png';
@@ -27,6 +30,12 @@ import m_all2 from './sm/one2.png';
 
 const Description = () => {
   const { isDesktop, isTablet, isMobile } = useResponse();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getReviews());
+  }, [dispatch]);
+
   return (
     <Box sx={{ mt: '64px' }}>
       <Container
