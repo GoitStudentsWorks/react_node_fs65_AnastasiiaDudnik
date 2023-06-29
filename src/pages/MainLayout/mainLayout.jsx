@@ -1,10 +1,9 @@
-
 import { Outlet } from 'react-router-dom';
 import { useRef, useState, useLayoutEffect, Suspense } from 'react';
 import { Box } from '@mui/material';
 import { Header } from '../../components/header/header';
-import { SideBar } from '../../components/sideBar/sideBar';
 import { useViewportHeight } from '../../hooks/useViewportHeight';
+import SideBar from 'components/sideBar/sideBar';
 
 export const MainLayout = () => {
   const drawerWidth = { mobile: 225, desktop: 289 };
@@ -60,6 +59,5 @@ export const MainLayout = () => {
         </Suspense>
       </Box>
     </Box>
-
   );
 };

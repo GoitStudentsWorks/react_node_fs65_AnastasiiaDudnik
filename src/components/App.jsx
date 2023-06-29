@@ -1,26 +1,19 @@
 import { Suspense, lazy, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-
-import PublicRoute from './PublicRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from 'redux/auth/operations';
 import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
 import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
-import UserForm from './userForm/userForm';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
-
-
 const Account = lazy(() => import('../pages/accountPage/accountPage'));
 const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
 const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
-
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -35,12 +28,12 @@ export const App = () => {
     <Suspense fallback={<p>Loading</p>}>
       {/* Заміть null має бути лоадер */}
       <Routes>
-        <Route index element={<MainPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route
           path="register"
           element={
             <RestrictedRoute
-              redirectTo="/account"
+              redirectTo="/main/account"
               component={<RegisterPage />}
             />
           }
@@ -48,29 +41,31 @@ export const App = () => {
         <Route
           path="login"
           element={
-            <RestrictedRoute redirectTo="/account" component={<LoginPage />} />
+            <RestrictedRoute
+              redirectTo="/main/account"
+              component={<LoginPage />}
+            />
           }
         />
-        <Route path="/" element={<PublicRoute />}>
+        <Route path="/" element={<MainLayout />}>
           <Route
-            path="main"
+            path="main/account"
             element={
-              <PrivateRoute redirectTo="/login" component={<MainLayout />} />
+              <PrivateRoute redirectTo="/login" component={<Account />} />
             }
           />
           <Route
-            path="account"
+            path="main/calendar"
             element={
-
-              <PrivateRoute redirectTo="/login" component={<UserForm />} />
-
+              <PrivateRoute redirectTo="/login" component={<Calendar />} />
             }
-          >
-            <Route index element={<Calendar />} />
-            <Route path="account" element={<Account />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="statistics" element={<Statistics />} />
-          </Route>
+          />
+          <Route
+            path="main/statistics"
+            element={
+              <PrivateRoute redirectTo="/login" component={<Statistics />} />
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

@@ -1,12 +1,7 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import UserForm from 'components/userForm/userForm';
 
 const Account = () => {
-  return (
-    <Box>
-      <Typography paragraph>Account</Typography>
-    </Box>
-  );
+  return <UserForm />;
 };
 
 export default Account;
