@@ -23,7 +23,6 @@ const UserForm = () => {
     phone: userState.phone || '',
     skype: userState.skype || '',
   };
-
   return (
     <Formik initialValues={initialValues}>
       <Form>
@@ -45,7 +44,7 @@ const UserForm = () => {
           <Box>
             <Avatar
               alt="avatar"
-              src={`https://2.gravatar.com/avatar/}`}
+              src={selectAvatar || `https://2.gravatar.com/avatar/}`}
               sx={{
                 width: { xs: '72px', md: '124px' },
                 height: { xs: '72px', md: '124px' },
