@@ -89,15 +89,16 @@ export const refreshUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   'auth/update',
   async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
+    console.log(avatarURL);
     try {
       const formData = new FormData();
       formData.append('avatar', avatarURL);
       formData.append('name', username);
       formData.append('email', email);
-      formData.append('phone', phone || null);
-      formData.append('skype', skype || null);
-      formData.append('birthday', birthday || null);
-
+      formData.append('phone', phone || '');
+      formData.append('skype', skype || '');
+      formData.append('birthday', birthday || '');
+      console.log(formData.getAll('avatar'));
       const response = await instance.patch('users/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
