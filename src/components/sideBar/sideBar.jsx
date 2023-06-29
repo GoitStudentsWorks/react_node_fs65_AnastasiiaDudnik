@@ -3,7 +3,7 @@ import { Logo } from '../logo/logo';
 import { UserNav } from '../userNav/userNav';
 import { LogoutBtn } from 'components/logoutBtn/logoutBtn';
 
-export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
+const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <>
       <Box>
@@ -56,3 +56,4 @@ export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
     </Box>
   );
 };
+export default SideBar;

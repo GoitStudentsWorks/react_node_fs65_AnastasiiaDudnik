@@ -35,10 +35,10 @@ const UserForm = () => {
             marginLeft: 'auto',
             marginRight: 'auto',
             position: 'relative',
-            marginTop: '95px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            backgroundColor: '#fff',
           }}
         >
           {/* <img src="" alt="" /> */}
