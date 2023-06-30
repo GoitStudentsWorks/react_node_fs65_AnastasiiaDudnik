@@ -1,31 +1,23 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Form,
-  InputContaiter,
-  InputTimeContaiter,
-  Label,
-  Input,
-  RadioButtonsContainer,
-  RadioButtonContainer,
-  RadioInput,
-  RadioLabel,
-  ButtonContainer,
-  AddButton,
-  AddIcon,
-  CancelButton,
-  EditButton,
-  EditIcon,
-} from './TaskForm.styled';
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Button,
+} from '@mui/material';
 import { format } from 'date-fns';
 import { Notify } from 'notiflix';
 import { useTranslation } from 'react-i18next';
 
-import Icons from 'icons/sprite.svg';
-
 import { useDateValidation } from 'helpers/useDateValidation';
 import { addTask, patchTask } from 'redux/tasks/operations';
 import { selectTasks } from 'redux/tasks/selectors';
+
+import Icons from 'icons/sprite.svg';
 
 const TaskForm = ({
   onCloseModal,
@@ -38,7 +30,6 @@ const TaskForm = ({
   const [title, setTitle] = useState(editTask?.title || '');
   const [start, setStart] = useState(editTask?.start || '09:00');
   const [end, setEnd] = useState(editTask?.end || '09:30');
-  const [selectedOption, setSelectedOption] = useState(editTask?.priority);
   const [priority, setPriority] = useState(editTask?.priority || 'low');
   const category = editTask?.category || 'to-do';
   const dispatch = useDispatch();
@@ -50,7 +41,6 @@ const TaskForm = ({
   const currentDay = format(validDate, 'yyyy-MM-dd');
 
   const handleOptionChange = event => {
-    setSelectedOption(event.target.value);
     setPriority(event.target.value);
   };
 
@@ -98,150 +88,141 @@ const TaskForm = ({
       return;
     }
 
-    if (tasks.find(task => task._id === id)) {
+        if (tasks.find(task => task._id === id)) {
       dispatch(patchTask({ id, task: edit }));
-      Notify.success('Successfully! The task has been changed.');
-    } else {
-      dispatch(
-        addTask({
-          title,
-          start,
-          end,
-          priority,
-          date: currentDay,
-          category: addCategory,
-        })
-      );
-      Notify.success('Successfully! Task added.');
+      Notify.success('Successfully! The task has been changed');
+      onCloseModal();
+      return;
     }
 
-    closeModal();
+    dispatch(addTask(edit));
+    Notify.success('Successfully! The task has been added');
+    onCloseModal();
   };
 
-  const closeModal = () => {
-    setAnimationModal(false);
-
-    setTimeout(() => {
-      onCloseModal();
-    }, 300);
-  };
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case 'title':
-        return setTitle(value);
-      case 'start':
-        return setStart(value);
-      case 'end':
-        return setEnd(value);
-
-      default:
-        return value;
+  const handleCategoryChange = event => {
+    const value = event.target.value;
+    if (value === 'newCategory') {
+      const newCategory = prompt('Enter a new category:');
+      if (newCategory) {
+        addCategory(newCategory);
+      }
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputContaiter>
-        <Label>{i18n.language === 'en' ? 'Title' : 'Заголовок'}</Label>
-        <Input
-          maxLength={250}
-          type="text"
-          placeholder={i18n.language === 'en' ? 'Enter text' : 'Введіть текст'}
-          name="title"
-          onChange={handleChange}
-          value={title}
+    <form className="task-form" onSubmit={handleSubmit}>
+      <TextField
+        label="Title"
+        variant="outlined"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        fullWidth
+        required
+      />
+
+      <div className="task-form__time">
+        <TextField
+          label="Start"
+          type="time"
+          variant="outlined"
+          value={start}
+          onChange={e => setStart(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            step: 300, // 5 min
+          }}
+          required
         />
-      </InputContaiter>
 
-      <InputTimeContaiter>
-        <InputContaiter>
-          <Label>{i18n.language === 'en' ? 'Start' : 'Початок'}</Label>
-          <Input
-            type="time"
-            name="start"
-            onChange={handleChange}
-            value={start}
-            id="timeInput"
+        <TextField
+          label="End"
+          type="time"
+          variant="outlined"
+          value={end}
+          onChange={e => setEnd(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            step: 300, // 5 min
+          }}
+          required
+        />
+      </div>
+
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Priority</FormLabel>
+        <RadioGroup
+          aria-label="priority"
+          name="priority"
+          value={priority}
+          onChange={handleOptionChange}
+          row
+        >
+          <FormControlLabel
+            value="low"
+            control={<Radio color="primary" />}
+            label="Low"
           />
-        </InputContaiter>
-
-        <InputContaiter>
-          <Label>{i18n.language === 'en' ? 'End' : 'Кінець'}</Label>
-          <Input
-            type="time"
-            name="end"
-            onChange={handleChange}
-            value={end}
-            id="timeInput"
+          <FormControlLabel
+            value="medium"
+            control={<Radio color="primary" />}
+            label="Medium"
           />
-        </InputContaiter>
-      </InputTimeContaiter>
+          <FormControlLabel
+            value="high"
+            control={<Radio color="primary" />}
+            label="High"
+          />
+        </RadioGroup>
+      </FormControl>
 
-      <RadioButtonsContainer>
-        <RadioButtonContainer>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="option"
-              value="low"
-              checked={selectedOption === 'low'}
-              onChange={handleOptionChange}
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Category</FormLabel>
+        <RadioGroup
+          aria-label="category"
+          name="category"
+          value={category}
+          onChange={handleCategoryChange}
+          row
+        >
+          {categories.map(cat => (
+            <FormControlLabel
+              key={cat}
+              value={cat}
+              control={<Radio color="primary" />}
+              label={cat}
             />
-            {i18n.language === 'en' ? 'Low' : 'Легка'}
-          </RadioLabel>
-        </RadioButtonContainer>
-        <RadioButtonContainer>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="option"
-              value="medium"
-              checked={selectedOption === 'medium'}
-              onChange={handleOptionChange}
-            />
-            {i18n.language === 'en' ? 'Medium' : 'Середня'}
-          </RadioLabel>
-        </RadioButtonContainer>
-        <RadioButtonContainer>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="option"
-              value="high"
-              checked={selectedOption === 'high'}
-              onChange={handleOptionChange}
-            />
-            {i18n.language === 'en' ? 'High' : 'Складна'}
-          </RadioLabel>
-        </RadioButtonContainer>
-      </RadioButtonsContainer>
+          ))}
+          <FormControlLabel
+            value="newCategory"
+            control={<Radio color="primary" />}
+            label="Add New"
+          />
+        </RadioGroup>
+      </FormControl>
 
-      <ButtonContainer>
-        {showEditBtn ? (
-          <EditButton type="submit">
-            <EditIcon>
-              <use href={`${Icons}#edit-btn-s`}></use>
-            </EditIcon>
-            {i18n.language === 'en' ? 'Edit' : 'Редагувати'}
-          </EditButton>
-        ) : (
-          <>
-            <AddButton type="submit">
-              <AddIcon>
-                <use href={`${Icons}#add-btn-s`}></use>
-              </AddIcon>
-              {i18n.language === 'en' ? 'Add' : 'Додати'}
-            </AddButton>
-            <CancelButton type="button" onClick={closeModal}>
-              {i18n.language === 'en' ? 'Cancel' : 'Відміна'}
-            </CancelButton>
-          </>
-        )}
-      </ButtonContainer>
-    </Form>
+      <div className="task-form__buttons">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          className="task-form__button"
+        >
+          {showEditBtn ? 'Edit Task' : 'Add Task'}
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => onCloseModal()}
+          className="task-form__button"
+        >
+          Cancel
+        </Button>
+      </div>
+    </form>
   );
 };
 

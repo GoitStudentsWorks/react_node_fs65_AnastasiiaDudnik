@@ -1,7 +1,7 @@
 import React from 'react';
 import { addMonths, subMonths, addDays, subDays } from 'date-fns';
 import PeriodPaginator from 'components/calendarToolbar/PeriodPaginator/PeriodPaginator';
-import { PeriodContainer } from 'components/calendarToolbar/PeriodPaginator/PeriodPaginator.styled';
+import { Box } from '@mui/material'; // Import Box component from MUI
 import PeriodTypeSelect from 'components/calendarToolbar/PeriodTypeSelect/PeriodTypeSelect';
 
 const CalendarToolbar = ({
@@ -24,7 +24,7 @@ const CalendarToolbar = ({
   };
   return (
     <>
-      <PeriodContainer>
+      <Box> {/* Replace PeriodContainer with Box */}
         <PeriodPaginator
           nextMonth={nextMonth}
           prevMonth={prevMonth}
@@ -39,8 +39,9 @@ const CalendarToolbar = ({
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
         />
-      </PeriodContainer>
+      </Box>
     </>
   );
 };
+
 export default CalendarToolbar;

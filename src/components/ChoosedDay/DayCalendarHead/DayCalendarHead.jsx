@@ -1,9 +1,9 @@
-import { Day, DayList } from './DayCalendarHead.Styled';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { DayWrap } from './DayCalendarHead.Styled';
+import { DayList, DayWrap, Day } from './DayCalendarHead.styled';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 
@@ -33,7 +33,7 @@ const DayCalendarHead = ({ selectedDay, setSelectedDay }) => {
   // we find the day of the week by number
   const currentDayOfWeek = selectedDay.getDay();
 
-  const onPickOftheDay = currentDay => {
+  const onPickOftheDay = (currentDay) => {
     setSelectedDay(currentDay);
     const choosenDay = format(currentDay, 'yyyy-MM-dd');
     navigate(`/calendar/day/${choosenDay}`);
@@ -67,11 +67,30 @@ const DayCalendarHead = ({ selectedDay, setSelectedDay }) => {
   }, [dispatch]);
 
   return (
-    <DayList>
-      {week.map(items => (
+    <Box
+      component="ul"
+      sx={{
+        display: 'flex',
+        fontSize: 16,
+        maxWidth: '100%',
+        height: 74,
+        backgroundColor: 'var(--primary-background-color)',
+        borderRadius: 8,
+        padding: '14px 18px',
+        justifyContent: 'space-between',
+        marginBottom: 15,
+        '@media screen and (min-width: 768px)': {
+          height: 68,
+          fontSize: 14,
+        },
+        cursor: 'pointer',
+      }}
+    >
+      {week.map((items) => (
         <li key={Math.random()}>{items}</li>
       ))}
-    </DayList>
+    </Box>
   );
 };
-export default DayCalendarHead;
+
+export default Day

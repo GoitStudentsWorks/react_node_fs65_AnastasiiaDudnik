@@ -1,13 +1,5 @@
-import { useState } from 'react';
-import {
-  Avatar,
-  CardWraper,
-  NoAvatar,
-  PriorityWraper,
-  TaskText,
-  ToolsWraper,
-  Wraper,
-} from './TaskColumnCard.Styled';
+import React, { useState } from 'react';
+import { Card, Typography, Avatar } from '@mui/material';
 import TaskToolBar from './TaskToolbar/TaskToolbar';
 import { selectUser } from 'redux/auth/selectors';
 import { useSelector } from 'react-redux';
@@ -20,40 +12,49 @@ const TaskColumnCard = ({ taskText, priority, id, addCategory }) => {
   const toggleCut = () => {
     setIsCut(!isCut);
   };
+
   const currentLanguageCode = Cookies.get('i18next');
+
   let styleObj = isCut
     ? { textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }
     : { textOverflow: 'clip', whiteSpace: 'normal', overflow: 'visible' };
+
   return (
-    <CardWraper>
-      <TaskText
+    <Card sx={{ padding: '15px', backgroundColor: 'var(--secondary-background-color)', borderRadius: '8px' }}>
+      <Typography
         onMouseEnter={toggleCut}
         onMouseLeave={toggleCut}
-        style={styleObj}
+        variant="body2"
+        sx={{ color: 'var(--primary-text-color)', fontFamily: 'Inter', fontStyle: 'medium', fontSize: '14px', maxWidth: '272px', margin: '0 0 28px 0', ...styleObj }}
       >
         {taskText}
-      </TaskText>
-      <Wraper>
-        <ToolsWraper>
+      </Typography>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           {user.avatarURL ? (
-            <Avatar src={user.avatarURL} alt="user avatar" />
+            <Avatar src={user.avatarURL} alt="user avatar" sx={{ width: '32px', height: '32px', borderRadius: '50%' }} />
           ) : (
-            <NoAvatar>{user.name?.charAt(0).toUpperCase()}</NoAvatar>
+            <Avatar sx={{ width: '32px', height: '32px', borderRadius: '50%', color: 'var(--secondary-text-color)', backgroundColor: 'var(--avatar-background-color)', fontSize: '25px', outline: '2px solid var(--accent-background-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', lineHeight: 0 }}>
+              {user.name?.charAt(0).toUpperCase()}
+            </Avatar>
           )}
           {currentLanguageCode === 'ua' && (
-            <PriorityWraper text={priority}>
+            <Typography variant="body2" sx={{ padding: '4px 12px', borderRadius: '4px', backgroundColor: priority.includes('low') ? 'var(--task-priority-low-color)' : priority.includes('medium') ? 'var(--task-priority-medium-color)' : 'var(--task-priority-high-color)', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {priority === 'low' && 'Низька'}
               {priority === 'medium' && 'Середня'}
               {priority === 'high' && 'Висока'}
-            </PriorityWraper>
+            </Typography>
           )}
           {currentLanguageCode === 'en' && (
-            <PriorityWraper text={priority}>{priority}</PriorityWraper>
+            <Typography variant="body2" sx={{ padding: '4px 12px', borderRadius: '4px', backgroundColor: priority.includes('low') ? 'var(--task-priority-low-color)' : priority.includes('medium') ? 'var(--task-priority-medium-color)' : 'var(--task-priority-high-color)', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {priority}
+            </Typography>
           )}
-        </ToolsWraper>
+        </div>
         <TaskToolBar id={id} addCategory={addCategory} />
-      </Wraper>
-    </CardWraper>
+      </div>
+    </Card>
   );
 };
+
 export default TaskColumnCard;

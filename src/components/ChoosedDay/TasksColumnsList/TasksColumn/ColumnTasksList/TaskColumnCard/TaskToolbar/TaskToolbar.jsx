@@ -1,26 +1,18 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, SvgIcon, MenuItem, Select } from '@mui/material';
 import Icons from 'images/sprite.svg';
-import {
-  BtnArrow,
-  BtnStyled,
-  ChouseCat,
-  InputStyled,
-  LabelStyled,
-  ToolBarItem,
-  Wraper,
-} from './TaskToolbar.Styled';
 import TaskModal from '../../../TaskModal/TaskModal';
 
 import { deleteTask, fetchDayTasks, patchTask } from 'redux/tasks/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTasks } from 'redux/tasks/selectors';
-import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const TaskToolBar = ({ id, addCategory }) => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
-  let editTask = tasks.find(task => task._id === id);
+  let editTask = tasks.find((task) => task._id === id);
 
   const currentLanguageCode = Cookies.get('i18next');
 
@@ -34,8 +26,9 @@ const TaskToolBar = ({ id, addCategory }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
+
   const handleClick = () => {
-    setIsClicked(prevState => !prevState);
+    setIsClicked((prevState) => !prevState);
   };
 
   const handleToggleModal = () => {
@@ -48,7 +41,9 @@ const TaskToolBar = ({ id, addCategory }) => {
 
     dispatch(patchTask({ id: id, task: { category: editTask.category } }));
   }
+
   let { currentDay } = useParams();
+
   const onDeleteHendler = async () => {
     await dispatch(deleteTask(id));
 
@@ -68,7 +63,7 @@ const TaskToolBar = ({ id, addCategory }) => {
 
   const chouseCatRef = useRef(null);
   useEffect(() => {
-    const handleChouseCatClickOutside = e => {
+    const handleChouseCatClickOutside = (e) => {
       if (chouseCatRef.current && !chouseCatRef.current.contains(e.target)) {
         setIsClicked(false);
       }
@@ -82,63 +77,131 @@ const TaskToolBar = ({ id, addCategory }) => {
   }, []);
 
   return (
-    <Wraper>
-      <BtnArrow>
-        <BtnStyled
-          type="button"
-          onClick={() => {
-            handleClick();
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ position: 'relative' }}>
+        <Button
+          onClick={handleClick}
+          sx={{
+            backgroundColor: 'transparent',
+            p: 0,
+            '&:hover': {
+              stroke: 'var(--color-button-period-type)',
+            },
           }}
         >
-          <ToolBarItem>
-            <use href={`${Icons}#task-move-sf`}></use>
-          </ToolBarItem>
-        </BtnStyled>
+          <SvgIcon
+            component={Icons}
+            viewBox="0 0 16 16"
+            sx={{
+              stroke: 'var(--close-btn-color)',
+              fill: 'transparent',
+              width: '16px',
+              height: '16px',
+            }}
+          >
+            <use href="#task-move-sf" />
+          </SvgIcon>
+        </Button>
 
-        <ChouseCat
+        <div
           ref={chouseCatRef}
           style={isClicked ? { display: 'flex' } : { display: 'none' }}
         >
-          {category.map(item => {
+          {category.map((item) => {
             return (
               item.name !== editTask.category && (
                 <div key={Math.random()}>
-                  <LabelStyled>
+                  <label
+                    style={{
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
                     {currentLanguageCode === 'en' ? item.en : item.ua}
-                    <ToolBarItem>
-                      <use href={`${Icons}#task-move-sf`}></use>
-                    </ToolBarItem>
-                    <InputStyled
+                    <SvgIcon
+                      component={Icons}
+                      viewBox="0 0 16 16"
+                      sx={{
+                        stroke: 'var(--close-btn-color)',
+                        fill: 'transparent',
+                        width: '16px',
+                        height: '16px',
+                      }}
+                    >
+                      <use href="#task-move-sf" />
+                    </SvgIcon>
+                    <input
                       type="radio"
                       value={item.name}
                       checked={selectedOption === item.name}
                       onChange={handleOptionChange}
+                      style={{
+                        position: 'absolute',
+                        opacity: 0,
+                        width: 0,
+                        height: 0,
+                      }}
                     />
-                  </LabelStyled>
+                  </label>
                 </div>
               )
             );
           })}
-        </ChouseCat>
-      </BtnArrow>
+        </div>
+      </div>
 
-      <BtnStyled
-        type="button"
+      <Button
         onClick={() => {
           handleToggleModal();
           setShowEditBtn(true);
         }}
+        sx={{
+          backgroundColor: 'transparent',
+          p: 0,
+          '&:hover': {
+            stroke: 'var(--color-button-period-type)',
+          },
+        }}
       >
-        <ToolBarItem>
-          <use href={`${Icons}#task-edit-sf`}></use>
-        </ToolBarItem>
-      </BtnStyled>
+        <SvgIcon
+          component={Icons}
+          viewBox="0 0 16 16"
+          sx={{
+            stroke: 'var(--close-btn-color)',
+            fill: 'transparent',
+            width: '16px',
+            height: '16px',
+          }}
+        >
+          <use href="#task-edit-sf" />
+        </SvgIcon>
+      </Button>
 
-      <BtnStyled type="button" onClick={onDeleteHendler}>
-        <ToolBarItem>
-          <use href={`${Icons}#task-trash-sf`}></use>
-        </ToolBarItem>
-      </BtnStyled>
+      <Button
+        onClick={onDeleteHendler}
+        sx={{
+          backgroundColor: 'transparent',
+          p: 0,
+          '&:hover': {
+            stroke: 'var(--color-button-period-type)',
+          },
+        }}
+      >
+        <SvgIcon
+          component={Icons}
+          viewBox="0 0 16 16"
+          sx={{
+            stroke: 'var(--close-btn-color)',
+            fill: 'transparent',
+            width: '16px',
+            height: '16px',
+          }}
+        >
+          <use href="#task-trash-sf" />
+        </SvgIcon>
+      </Button>
 
       {isOpened && (
         <TaskModal
@@ -150,7 +213,8 @@ const TaskToolBar = ({ id, addCategory }) => {
           isOpened={isOpened}
         />
       )}
-    </Wraper>
+    </div>
   );
 };
+
 export default TaskToolBar;
