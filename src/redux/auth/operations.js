@@ -88,11 +88,11 @@ export const refreshUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'auth/update',
-  async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
+  async ({ avatarURL, name, birthday, phone, skype, email }, thunkAPI) => {
     try {
       const formData = new FormData();
-      formData.append('avatar', avatarURL);
-      formData.append('name', username);
+      formData.append('avatarURL', avatarURL);
+      formData.append('name', name);
       formData.append('email', email);
       formData.append('phone', phone || null);
       formData.append('skype', skype || null);
@@ -103,8 +103,6 @@ export const updateUser = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log(response.data);
 
       return response.data;
     } catch (error) {
