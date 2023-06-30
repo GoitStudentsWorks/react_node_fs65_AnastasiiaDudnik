@@ -89,7 +89,6 @@ export const refreshUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   'auth/update',
   async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
-    console.log(avatarURL);
     try {
       const formData = new FormData();
       formData.append('avatar', avatarURL);
