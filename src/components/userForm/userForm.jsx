@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from 'redux/auth/selectors';
 import { updateUser } from 'redux/auth/operations';
-import { ErrorMessage, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import {
   Typography,
   SvgIcon,
@@ -13,13 +13,28 @@ import {
 } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
 import * as Yup from 'yup';
+import { DatePicker } from '@mui/x-date-pickers';
 
 const borderColor = {
   validColor: '1px solid rgba(17, 17, 17, 0.15)',
   invalidColor: '#E74A3B',
 };
 
-const phoneRegexp = /^(\d{2})\s\((\d{3})\)\s(\d{3})\s(\d{2})\s(\d{2})$/;
+const errorMesage = errorName => {
+  return (
+    <Typography
+      sx={{
+        fontSize: 12,
+        lineHeight: '14px',
+        color: '#DA1414',
+        marginTop: '8px',
+      }}
+    >
+      {errorName}
+    </Typography>
+  );
+};
+
 const skypeNumberRegexp = /^\+[1-9]\d{0,2}[.-]?\d{1,14}$/;
 const birthdayRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
 
@@ -36,9 +51,8 @@ const validationSchema = Yup.object().shape({
     .notRequired(),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string()
-    .matches(phoneRegexp, {
-      message: 'Invalid phone number',
-    })
+    .min(14, 'Too Short name!')
+    .max(14, 'Too Long name!')
     .notRequired(),
   skype: Yup.string()
     .max(16, 'Too Long name skype!')
@@ -54,9 +68,9 @@ const UserForm = () => {
   const dispatch = useDispatch();
 
   const initialValues = {
-    username: userState.name,
-    avatarURL: userState.avatarURL,
-    email: userState.email,
+    username: userState.name || '',
+    avatarURL: userState.avatarURL || '',
+    email: userState.email || '',
     birthday: userState.birthday || '',
     phone: userState.phone || '',
     skype: userState.skype || '',
@@ -70,6 +84,13 @@ const UserForm = () => {
       dispatch(updateUser(values));
     },
   });
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    formik.setFieldValue(name, value);
+    setIsFormChanged(true);
+  };
+
   const handleAvatarUpload = event => {
     const file = event.currentTarget.files[0];
     const avatarURL = URL.createObjectURL(file);
@@ -81,6 +102,33 @@ const UserForm = () => {
 
     formik.setFieldValue('avatarURL', avatarURL);
     setIsFormChanged(true);
+  };
+
+  const handleBirthdayChange = (e, setFieldValue) => {
+    let value = e.target.value;
+    value = value.replace(/\//g, '');
+    if (value.length > 2) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    if (value.length > 5) {
+      value = value.slice(0, 5) + '/' + value.slice(5);
+    }
+    setFieldValue('birthday', value);
+  };
+
+  const handlePhoneNumberChange = (e, setFieldValue) => {
+    let value = e.target.value;
+    value = value.replace(/\D/g, '');
+
+    if (value.length > 3 && value.length <= 6) {
+      value = value.slice(0, 3) + ' ' + value.slice(3);
+    } else if (value.length > 6) {
+      value =
+        value.slice(0, 3) + '(' + value.slice(3, 6) + ')' + value.slice(6);
+    }
+    setIsFormChanged(true);
+
+    setFieldValue('phone', value);
   };
 
   const isValid = field =>
@@ -118,7 +166,7 @@ const UserForm = () => {
               mr: 'auto',
               ml: 'auto',
               mb: '18px',
-              position: { xs: 'absolute', md: 'inherit' },
+              position: { xs: 'absolute', md: 'relative' },
               top: { xs: '-36px', md: 0 },
               left: { xs: '132px', md: 0 },
             }}
@@ -133,7 +181,7 @@ const UserForm = () => {
           <Box
             sx={{
               position: 'absolute',
-              top: { xs: '4%', md: '18%', lg: '22%' },
+              top: { xs: '4%', md: '150px', lg: '150px' },
               right: { xs: '40%', md: '44%', lg: '46%' },
               cursor: 'pointer',
             }}
@@ -204,7 +252,7 @@ const UserForm = () => {
                 User Name
               </Typography>
               <InputBase
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
                 placeholder="User Name"
@@ -225,6 +273,9 @@ const UserForm = () => {
                   } solid 1px`,
                 }}
               />
+              {formik.errors.username &&
+                formik.touched.username &&
+                errorMesage(formik.errors.username)}
             </label>
             <label>
               <Typography
@@ -238,12 +289,12 @@ const UserForm = () => {
                 Birthday
               </Typography>
               <InputBase
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.birthday}
                 name="birthday"
                 type="text"
-                placeholder="Birthday"
+                placeholder="DD/MM/YYYY"
                 sx={{
                   width: '100%',
                   fontSize: '14px',
@@ -259,6 +310,9 @@ const UserForm = () => {
                   padding: '8px 18px',
                 }}
               />
+              {formik.errors.birthday &&
+                formik.touched.birthday &&
+                errorMesage(formik.errors.birthday)}
             </label>
             <label>
               <Typography
@@ -272,7 +326,7 @@ const UserForm = () => {
                 Email
               </Typography>
               <InputBase
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
                 type="email"
@@ -292,6 +346,9 @@ const UserForm = () => {
                   padding: '8px 18px',
                 }}
               />
+              {formik.errors.email &&
+                formik.touched.email &&
+                errorMesage(formik.errors.email)}
             </label>
           </Box>
           <Box
@@ -314,7 +371,7 @@ const UserForm = () => {
                 Phone
               </Typography>
               <InputBase
-                onChange={formik.handleChange}
+                onChange={e => handlePhoneNumberChange(e, formik.setFieldValue)}
                 onBlur={formik.handleBlur}
                 value={formik.values.phone}
                 type="phone"
@@ -334,6 +391,9 @@ const UserForm = () => {
                   padding: '8px 18px',
                 }}
               />
+              {formik.errors.phone &&
+                formik.touched.phone &&
+                errorMesage(formik.errors.phone)}
             </label>
             <label>
               <Typography
@@ -347,7 +407,7 @@ const UserForm = () => {
                 Skype
               </Typography>
               <InputBase
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.skype}
                 type="text"
@@ -367,6 +427,9 @@ const UserForm = () => {
                   padding: '8px 18px',
                 }}
               />
+              {formik.errors.skype &&
+                formik.touched.skype &&
+                errorMesage(formik.errors.skype)}
             </label>
           </Box>
         </Box>
@@ -385,6 +448,7 @@ const UserForm = () => {
             }}
             variant="contained"
             type="submit"
+            disabled={!isFormChanged}
           >
             Save changes
           </Button>
