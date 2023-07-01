@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import Notiflix from 'notiflix';
 const { REACT_APP_API_URL } = process.env;
 const instance = axios.create({
   baseURL: REACT_APP_API_URL,
@@ -40,6 +41,9 @@ export const register = createAsyncThunk(
     try {
       const response = await instance.post('/users/register', user);
       setAuthHeader(response.data.token);
+      if (response) {
+        Notiflix.Notify.success('Register success');
+      }
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -51,8 +55,14 @@ export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     const response = await instance.post('/users/login', user);
     setAuthHeader(response.data.token);
+    if (response) {
+      Notiflix.Notify.success('LogIn success');
+    }
     return response.data;
   } catch (error) {
+    if (error) {
+      Notiflix.Notify.failure('Invalid email or password');
+    }
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -89,24 +99,25 @@ export const refreshUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   'auth/update',
   async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
+    console.log(birthday);
     try {
       const formData = new FormData();
-      formData.append('avatar', avatarURL);
+      formData.append('avatarURL', avatarURL);
       formData.append('name', username);
       formData.append('email', email);
       formData.append('phone', phone || '');
       formData.append('skype', skype || '');
       formData.append('birthday', birthday || '');
-      console.log(formData.getAll('name'));
       const response = await instance.patch('users/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log(response);
-
-      return response.data;
+      if (response.status===200) {
+        Notiflix.Notify.success('Update succes');
+     
+      }
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

@@ -13,7 +13,9 @@ import {
 } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
 import * as Yup from 'yup';
-
+import { DatePicker } from '@mui/x-date-pickers';
+import moment from 'moment/moment';
+import dayjs from 'dayjs';
 
 const borderColor = {
   validColor: '1px solid rgba(17, 17, 17, 0.15)',
@@ -36,19 +38,19 @@ const errorMesage = errorName => {
 };
 
 const skypeNumberRegexp = /^\+[1-9]\d{0,2}[.-]?\d{1,14}$/;
-const birthdayRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
+// const birthdayRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, 'Too Short name!')
     .max(35, 'Too Long name!')
     .required('Name is required'),
-  birthday: Yup.string()
-    .notRequired()
-    .matches(birthdayRegexp, {
-      message: 'Invalid birthday',
-    })
-    .notRequired(),
+  // birthday: Yup.string()
+  //   .notRequired()
+  //   .matches(birthdayRegexp, {
+  //     message: 'Invalid birthday',
+  //   })
+  //   .notRequired(),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string()
     .min(14, 'Too Short name!')
@@ -66,21 +68,18 @@ const UserForm = () => {
   const [selectAvatar, setSelectAvatar] = useState({});
   const [isFormChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
-
   const initialValues = {
-    username: userState.name || '',
-    avatarURL: userState.avatarURL || '',
+    username: userState.name,
+    avatarURL: userState.avatarURL,
     email: userState.email || '',
-    birthday: userState.birthday || '',
+    birthday: userState.birthday,
     phone: userState.phone || '',
     skype: userState.skype || '',
   };
-
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log(values);
       dispatch(updateUser(values));
     },
   });
@@ -91,30 +90,24 @@ const UserForm = () => {
     setIsFormChanged(true);
   };
 
+  const handleDatePicker = date => {
+    if (!date) formik.setFieldValue('birthday', '');
+    const formattedDate = moment(date.$d).format('DD/MM/YYYY');
+    formik.setFieldValue('birthday', formattedDate);
+    setIsFormChanged(true);
+  };
+
+
   const handleAvatarUpload = event => {
     const file = event.currentTarget.files[0];
     const avatarURL = URL.createObjectURL(file);
-
     setSelectAvatar({
       path: avatarURL,
       file: file,
     });
-
     formik.setFieldValue('avatarURL', file);
     setIsFormChanged(true);
   };
-
-  // const handleBirthdayChange = (e, setFieldValue) => {
-  //   let value = e.target.value;
-  //   value = value.replace(/\//g, '');
-  //   if (value.length > 2) {
-  //     value = value.slice(0, 2) + '/' + value.slice(2);
-  //   }
-  //   if (value.length > 5) {
-  //     value = value.slice(0, 5) + '/' + value.slice(5);
-  //   }
-  //   setFieldValue('birthday', value);
-  // };
 
   const handlePhoneNumberChange = (e, setFieldValue) => {
     let value = e.target.value;
@@ -157,7 +150,7 @@ const UserForm = () => {
         <Box>
           <Avatar
             alt="avatar"
-            src={selectAvatar.path ? selectAvatar.path : ''}
+            src={selectAvatar.path ? selectAvatar.path : userState.avatarURL}
             sx={{
               width: { xs: '72px', md: '124px' },
               height: { xs: '72px', md: '124px' },
@@ -212,17 +205,6 @@ const UserForm = () => {
         >
           {userState.name}
         </Typography>
-        {/* <Typography
-          sx={{
-            color: '#343434',
-            fontSize: '12px',
-            fontWeight: 600,
-            lineHeight: '14px',
-            textAlign: 'center',
-          }}
-        >
-          User
-        </Typography> */}
         <Box
           sx={{
             display: 'flex',
@@ -288,10 +270,9 @@ const UserForm = () => {
               >
                 Birthday
               </Typography>
-              <InputBase
-                onChange={handleInputChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.birthday}
+              <DatePicker
+                onChange={handleDatePicker}
+                defaultValue={dayjs(userState.birthday.slice(0, 10))} 
                 name="birthday"
                 type="text"
                 placeholder="DD/MM/YYYY"
@@ -307,7 +288,6 @@ const UserForm = () => {
                       borderColor.validColor)
                   } solid 1px`,
                   borderRadius: '8px',
-                  padding: '8px 18px',
                 }}
               />
               {formik.errors.birthday &&
@@ -376,7 +356,7 @@ const UserForm = () => {
                 value={formik.values.phone}
                 type="phone"
                 name="phone"
-                placeholder="Phone"
+                placeholder="ex. 01 (234) 567 89 01"
                 sx={{
                   width: '100%',
                   fontSize: '14px',
@@ -412,7 +392,7 @@ const UserForm = () => {
                 value={formik.values.skype}
                 type="text"
                 name="skype"
-                placeholder="Skype"
+                placeholder="ex. +1234567890"
                 sx={{
                   width: '100%',
                   fontSize: '14px',

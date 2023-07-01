@@ -109,7 +109,7 @@ const LogInForm = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
-                    placeholder="nadiia@gmail.com"
+                    placeholder="Enter email"
                     sx={{
                       border: `${
                         (isValid('email') === 'is-invalid' &&
@@ -194,7 +194,7 @@ const LogInForm = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.password}
-                      placeholder="•••••••"
+                      placeholder="Enter password"
                       sx={{
                         border: `${
                           (isValid('password') === 'is-invalid' &&

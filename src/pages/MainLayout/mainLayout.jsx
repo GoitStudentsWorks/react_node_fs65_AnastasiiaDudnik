@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import { useRef, useState, useLayoutEffect, Suspense } from 'react';
 import { Box } from '@mui/material';
 import { Header } from '../../components/header/header';
-import { useViewportHeight } from '../../hooks/useViewportHeight';
 import SideBar from 'components/sideBar/sideBar';
 
 export const MainLayout = () => {
@@ -10,7 +9,6 @@ export const MainLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [height, setHeight] = useState(0);
   const elRef = useRef();
-  const viewHeight = useViewportHeight();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
