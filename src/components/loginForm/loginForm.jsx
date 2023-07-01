@@ -109,7 +109,7 @@ const LogInForm = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
-                    placeholder="nadiia@gmail.com"
+                    placeholder="Enter email"
                     sx={{
                       border: `${
                         (isValid('email') === 'is-invalid' &&
@@ -145,20 +145,18 @@ const LogInForm = () => {
                     </>
                   )}
                   {isValid('email') === 'is-invalid' && (
-                    <>
-                      <SvgIcon
-                        stroke="currentColor"
-                        sx={{
-                          width: { xs: '20px', md: '24px' },
-                          height: { xs: '20px', md: '24px' },
-                          position: 'absolute',
-                          top: '48px',
-                          right: '10px',
-                        }}
-                      >
-                        <use href={`${Sprite}#error-input`}></use>
-                      </SvgIcon>
-                    </>
+                    <SvgIcon
+                      stroke="currentColor"
+                      sx={{
+                        width: { xs: '20px', md: '24px' },
+                        height: { xs: '20px', md: '24px' },
+                        position: 'absolute',
+                        top: '48px',
+                        right: '10px',
+                      }}
+                    >
+                      <use href={`${Sprite}#error-input`}></use>
+                    </SvgIcon>
                   )}
                   <ErrorMessage
                     name="email"
@@ -196,7 +194,7 @@ const LogInForm = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.password}
-                      placeholder="•••••••"
+                      placeholder="Enter password"
                       sx={{
                         border: `${
                           (isValid('password') === 'is-invalid' &&
