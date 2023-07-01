@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
 import * as Yup from 'yup';
-import { DatePicker } from '@mui/x-date-pickers';
+
 
 const borderColor = {
   validColor: '1px solid rgba(17, 17, 17, 0.15)',
@@ -100,21 +100,21 @@ const UserForm = () => {
       file: file,
     });
 
-    formik.setFieldValue('avatarURL', avatarURL);
+    formik.setFieldValue('avatarURL', file);
     setIsFormChanged(true);
   };
 
-  const handleBirthdayChange = (e, setFieldValue) => {
-    let value = e.target.value;
-    value = value.replace(/\//g, '');
-    if (value.length > 2) {
-      value = value.slice(0, 2) + '/' + value.slice(2);
-    }
-    if (value.length > 5) {
-      value = value.slice(0, 5) + '/' + value.slice(5);
-    }
-    setFieldValue('birthday', value);
-  };
+  // const handleBirthdayChange = (e, setFieldValue) => {
+  //   let value = e.target.value;
+  //   value = value.replace(/\//g, '');
+  //   if (value.length > 2) {
+  //     value = value.slice(0, 2) + '/' + value.slice(2);
+  //   }
+  //   if (value.length > 5) {
+  //     value = value.slice(0, 5) + '/' + value.slice(5);
+  //   }
+  //   setFieldValue('birthday', value);
+  // };
 
   const handlePhoneNumberChange = (e, setFieldValue) => {
     let value = e.target.value;

@@ -97,14 +97,14 @@ export const updateUser = createAsyncThunk(
       formData.append('phone', phone || '');
       formData.append('skype', skype || '');
       formData.append('birthday', birthday || '');
-      console.log(formData.getAll('avatar'));
+      console.log(formData.getAll('name'));
       const response = await instance.patch('users/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(response.data);
+      console.log(response);
 
       return response.data;
     } catch (error) {
