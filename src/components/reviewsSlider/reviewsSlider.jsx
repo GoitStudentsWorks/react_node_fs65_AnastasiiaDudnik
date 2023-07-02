@@ -12,13 +12,10 @@ import {
 } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
+import SwipeableViews from 'react-swipeable-views-react-18-fix';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getReviews } from '../../redux/reviews/operations';
-
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const ReviewSlider = () => {
   const theme = useTheme();
@@ -39,6 +36,13 @@ const ReviewSlider = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep(prevActiveStep => (prevActiveStep + 1) % maxSteps);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [maxSteps]);
 
   const handleStepChange = step => {
     setActiveStep(step);
@@ -83,8 +87,7 @@ const ReviewSlider = () => {
             border: '1px solid rgba(17, 17, 17, 0.10)',
           }}
         >
-          <AutoPlaySwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          <SwipeableViews
             index={activeStep}
             onChangeIndex={handleStepChange}
             enableMouseEvents
@@ -146,7 +149,7 @@ const ReviewSlider = () => {
                 </div>
               )
             )}
-          </AutoPlaySwipeableViews>
+          </SwipeableViews>
         </Container>
         <Box
           sx={{
