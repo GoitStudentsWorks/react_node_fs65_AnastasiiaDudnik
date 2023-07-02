@@ -1,27 +1,36 @@
-import { useState } from 'react';
+import { selectReviews } from '../../redux/reviews/selectors';
 
-import { Box, Typography, Button, useTheme } from '@mui/material';
+import { useState, useEffect } from 'react';
+
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  useTheme,
+  Avatar,
+} from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
-// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getReviews } from '../../redux/reviews/operations';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const ReviewSlider = () => {
   const theme = useTheme();
-  // const dispatch = useDispatch();
+  const reviews = useSelector(selectReviews);
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
-  // const maxSteps = reviews.length;
 
-  const rewiews = getReviews();
+  const maxSteps = reviews.length;
 
-  //   useEffect(() => {
-  //     dispatch(rewiews);
-  //   }, [dispatch, rewiews]);
+  useEffect(() => {
+    dispatch(getReviews());
+  }, [dispatch]);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -38,76 +47,134 @@ const ReviewSlider = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
         mt: '64px',
+        mb: { xs: '64px', md: '100px', lg: '118px' },
       }}
     >
-      <Typography
+      <Container
         sx={{
-          color: '#3E85F3',
-          fontSize: '28px',
-          fontFamily: 'Inter',
-          fontWeight: '700',
-          lineHeight: '32px',
-          textTransform: 'uppercase',
-          mb: '40px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        Reviews
-        {/* {images[activeStep].label} */}
-      </Typography>
-      <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-        <AutoPlaySwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
+        <Typography
+          sx={{
+            color: '#3E85F3',
+            fontSize: { xs: '28px', md: '40px', lg: '40px' },
+            fontFamily: 'Inter',
+            fontWeight: '700',
+            lineHeight: { xs: '32px', md: '44px', lg: '44px' },
+            textTransform: 'uppercase',
+            mb: { xs: '40px', md: '50px', lg: '50px' },
+          }}
         >
-          {rewiews.map((step, index) => (
-            <div key={step._id}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    height: 255,
-                    display: 'block',
-                    maxWidth: 400,
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-        <Button
-          size="small"
-          onClick={handleNext}
-          // disabled={activeStep === maxSteps - 1}
+          Reviews
+        </Typography>
+
+        <Container
+          sx={{
+            // width: '275px',
+            padding: { xs: '24px', md: '32px', lg: '32px' },
+            paddingLeft: { xs: '20px' },
+            paddingBottom: { md: '50px', lg: '50px' },
+            mb: { xs: '8px', md: '18px', lg: '32px' },
+            borderRadius: '8px',
+            border: '1px solid rgba(17, 17, 17, 0.10)',
+          }}
         >
-          Next
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </Button>
-        backButton=
-        {
+          <AutoPlaySwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
+            {reviews.map(
+              ({ comment, _id, rating, owner: { avatarURL, name } }, index) => (
+                <div key={_id}>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <Box
+                      sx={{
+                        // height: 255,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                        // maxWidth: 400,
+                        overflow: 'hidden',
+                        width: '100%',
+                      }}
+                    >
+                      <Container
+                        sx={{
+                          display: 'flex',
+                          gap: '18px',
+                        }}
+                      >
+                        <Avatar
+                          alt="avatar"
+                          src={avatarURL}
+                          sx={{ width: 50, height: 50 }}
+                        ></Avatar>
+                        <Container
+                          sx={{ display: 'flex', flexDirection: 'column' }}
+                        >
+                          <Typography
+                            sx={{
+                              color: '#343434',
+                              fontSize: '18px',
+                              fontWeight: { xs: '700', md: '500', lg: '500' },
+                              lineHeight: '18px',
+                            }}
+                          >
+                            {name}
+                          </Typography>
+                          <Typography>{rating}</Typography>
+                        </Container>
+                      </Container>
+                      <Typography
+                        sx={{
+                          color: 'rgba(17, 17, 17, 0.70)',
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          lineHeight: '18px',
+                        }}
+                      >
+                        {comment}
+                      </Typography>
+                    </Box>
+                  ) : null}
+                </div>
+              )
+            )}
+          </AutoPlaySwipeableViews>
+        </Container>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '25px',
+            justifyContent: 'center',
+          }}
+        >
           <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
             {theme.direction === 'rtl' ? (
               <KeyboardArrowRight />
             ) : (
               <KeyboardArrowLeft />
             )}
-            Back
           </Button>
-        }
-      </Box>
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+          >
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
+          </Button>
+        </Box>
+      </Container>
     </Box>
   );
 };
