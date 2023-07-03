@@ -14,6 +14,7 @@ const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 const Account = lazy(() => import('../pages/accountPage/accountPage'));
 const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
 const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
+const ChoosedDay = lazy(() => import('./choosedDay/choosedDay'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,14 @@ export const App = () => {
             element={
               <PrivateRoute redirectTo="/login" component={<Calendar />} />
             }
-          />
+          >
+            <Route
+              index
+              element={
+                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
+              }
+            />
+          </Route>
           <Route
             path="main/statistics"
             element={
