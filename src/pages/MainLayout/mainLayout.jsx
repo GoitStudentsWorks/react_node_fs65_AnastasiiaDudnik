@@ -8,10 +8,15 @@ export const MainLayout = () => {
   const drawerWidth = { mobile: 225, desktop: 289 };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [height, setHeight] = useState(0);
+  const [mode, setMode] = useState('light');
   const elRef = useRef();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleModeChange = newMode => {
+    setMode(newMode);
   };
 
   useLayoutEffect(() => {
@@ -23,6 +28,7 @@ export const MainLayout = () => {
       <Header
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={drawerWidth}
+        handleModeChange={handleModeChange}
       />
       <SideBar
         drawerWidth={drawerWidth}
