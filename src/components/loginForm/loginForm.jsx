@@ -203,10 +203,10 @@ const LogInForm = () => {
                             borderColor.validColor)
                         } solid 1px`,
                         width: '100%',
-                        fontFamily: 'Inter',
                         borderRadius: 2,
                         fontSize: 16,
                         lineHeight: '18px',
+                        fontWeight: 600,
                       }}
                     />
                     {isValid('password') === 'is-valid' && (
