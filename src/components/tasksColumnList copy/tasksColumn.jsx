@@ -49,9 +49,14 @@ const style = {
   listTodos: {
     boxSizing: 'border-box',
     mt: '15px',
-    width: {
-      xs: 'calc(100vw - 40px)',
-      md: 'calc((100vw - 32px - 32px - 16px) / 2  )',
+    maxWidth: {
+      xs: 'calc(100%)',
+      md: 'calc((100% - 16px) / 2)',
+      lg: 'calc((100% - 54px) / 3)',
+    },
+    minWidth: {
+      xs: 'calc(100%)',
+      md: 'calc((100% - 16px) / 2)',
       lg: 'calc((100% - 54px) / 3)',
     },
     display: 'flex',
