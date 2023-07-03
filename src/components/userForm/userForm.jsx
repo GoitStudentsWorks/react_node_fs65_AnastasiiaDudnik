@@ -67,8 +67,9 @@ const validationSchema = Yup.object().shape({
 const UserForm = () => {
   const userState = useSelector(selectUser);
   const [selectAvatar, setSelectAvatar] = useState({});
-  const [isFormChanged, setIsFormChanged] = useState(false);
+  const [isFormChanged, setIsFormChanged] = useState(true);
   const dispatch = useDispatch();
+  const [team, setTeam] = useState(true); // Темна тема
 
   const initialValues = {
     username: userState.name,
@@ -145,7 +146,7 @@ const UserForm = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: '#fff',
+          backgroundColor: team ? '#21222C' : '#fff',
         }}
       >
         <Box>
@@ -197,7 +198,7 @@ const UserForm = () => {
         </Box>
         <Typography
           sx={{
-            color: '#343434',
+            color: team ? '#fff' : '#111',
             fontSize: '14px',
             fontWeight: 700,
             lineHeight: '18px',
@@ -226,7 +227,7 @@ const UserForm = () => {
             <label>
               <Typography
                 sx={{
-                  color: '#111',
+                  color: team ? '#FAFAFA4D' : '#111',
                   fontSize: '12px',
                   lineHeight: '14px',
                   mb: '8px',
@@ -245,17 +246,20 @@ const UserForm = () => {
                   width: { xs: '100%', lg: '354px' },
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#111',
+                  color: team ? '#fff' : '#111',
                   borderRadius: '8px',
                   padding: '8px 18px',
-                  border: `${
-                    (isValid('username') === 'is-invalid' &&
-                      borderColor.invalidColor) ||
-                    borderColor.validColor
-                  } solid 1px`,
-                  '&:hover': {
-                    border: '1px solid #000 ',
-                  },
+                  border: team
+                    ? `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        '#FFFFFF26'
+                      } solid 1px`
+                    : `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        borderColor.validColor
+                      } solid 1px`,
                 }}
               />
               {formik.errors.username &&
@@ -265,7 +269,7 @@ const UserForm = () => {
             <label>
               <Typography
                 sx={{
-                  color: '#111',
+                  color: team ? '#FAFAFA4D' : '#111',
                   fontSize: '12px',
                   lineHeight: '14px',
                   mb: '8px',
@@ -282,15 +286,23 @@ const UserForm = () => {
                 sx={{
                   width: '100%',
                   fontSize: '14px',
-                  color: '#111',
-                  border: `${
-                    isValid('birthday') === 'is-invalid' &&
-                    borderColor.invalidColor
-                  } solid 1px`,
+                  border: team
+                    ? `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        '#FFFFFF26'
+                      } solid 1px`
+                    : `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        borderColor.validColor
+                      } solid 1px`,
                   borderRadius: '8px',
+
                   '&>div>input': {
                     padding: '13px 14px',
                     fontWeight: 600,
+                    color: team ? '#fff' : '#111',
                   },
                   '&>div': {
                     borderRadius: '8px',
@@ -304,7 +316,7 @@ const UserForm = () => {
             <label>
               <Typography
                 sx={{
-                  color: '#111',
+                  color: team ? '#FAFAFA4D' : '#111',
                   fontSize: '12px',
                   lineHeight: '14px',
                   mb: '8px',
@@ -324,12 +336,18 @@ const UserForm = () => {
                     width: '100%',
                     fontSize: '14px',
                     fontWeight: 600,
-                    color: '#111',
-                    border: `${
-                      (isValid('email') === 'is-invalid' &&
-                        borderColor.invalidColor) ||
-                      borderColor.validColor
-                    } solid 1px`,
+                    color: team ? '#fff' : '#111',
+                    border: team
+                      ? `${
+                          (isValid('username') === 'is-invalid' &&
+                            borderColor.invalidColor) ||
+                          '#FFFFFF26'
+                        } solid 1px`
+                      : `${
+                          (isValid('username') === 'is-invalid' &&
+                            borderColor.invalidColor) ||
+                          borderColor.validColor
+                        } solid 1px`,
                     borderRadius: '8px',
                     padding: '8px 18px',
                     '&:hover': {
@@ -357,7 +375,7 @@ const UserForm = () => {
             <label>
               <Typography
                 sx={{
-                  color: '#111',
+                  color: team ? '#FAFAFA4D' : '#111',
                   fontSize: '12px',
                   lineHeight: '14px',
                   mb: '8px',
@@ -376,12 +394,18 @@ const UserForm = () => {
                   width: '100%',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#111',
-                  border: `${
-                    (isValid('phone') === 'is-invalid' &&
-                      borderColor.invalidColor) ||
-                    borderColor.validColor
-                  } solid 1px`,
+                  color: team ? '#fff' : '#111',
+                  border: team
+                    ? `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        '#FFFFFF26'
+                      } solid 1px`
+                    : `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        borderColor.validColor
+                      } solid 1px`,
                   borderRadius: '8px',
                   padding: '8px 18px',
                   '&:hover': {
@@ -396,7 +420,7 @@ const UserForm = () => {
             <label>
               <Typography
                 sx={{
-                  color: '#111',
+                  color: team ? '#FAFAFA4D' : '#111',
                   fontSize: '12px',
                   lineHeight: '14px',
                   mb: '8px',
@@ -415,12 +439,18 @@ const UserForm = () => {
                   width: '100%',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#111',
-                  border: `${
-                    (isValid('skype') === 'is-invalid' &&
-                      borderColor.invalidColor) ||
-                    borderColor.validColor
-                  } solid 1px`,
+                  color: team ? '#fff' : '#111',
+                  border: team
+                    ? `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        '#FFFFFF26'
+                      } solid 1px`
+                    : `${
+                        (isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor) ||
+                        borderColor.validColor
+                      } solid 1px`,
                   borderRadius: '8px',
                   padding: '8px 18px',
                   '&:hover': {

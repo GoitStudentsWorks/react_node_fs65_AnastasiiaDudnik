@@ -13,8 +13,15 @@ import {
 } from '@mui/material';
 // import Icons from 'icons/Icons';
 import Sprite from '../../icons/sprite.svg';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'redux/auth/selectors';
 
-export const Header = ({ handleDrawerToggle, drawerWidth }) => {
+export const Header = ({
+  handleDrawerToggle,
+  drawerWidth,
+  handleModeChange,
+}) => {
+  const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   // console.log(matchesDesktop);
@@ -22,7 +29,9 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
   const [mode, setMode] = useState('light');
 
   const toggleColorMode = () => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    handleModeChange(newMode);
   };
 
   return (
@@ -144,7 +153,6 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
                 </SvgIcon>
               )}
             </IconButton>
-
             <Typography
               fontSize={{ xs: '14px', md: '18px' }}
               fontWeight={700}
@@ -152,9 +160,10 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
               color="text.secondary"
               lineHeight={{ xs: 1.286, md: 1 }}
             >
-              Nadiia
+              {userState.name}
             </Typography>
             <Avatar
+              src={userState.avatarURL || ''}
               sx={{
                 border: '1.8px solid #3E85F3',
                 width: { xs: '32px', md: '44px' },
