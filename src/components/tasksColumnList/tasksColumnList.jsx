@@ -23,6 +23,8 @@ export default function TasksColumnList() {
 
 const style = {
     list: {
+        boxSizing: 'border-box',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
