@@ -18,7 +18,7 @@ import moment from 'moment/moment';
 import dayjs from 'dayjs';
 
 const borderColor = {
-  validColor: '1px solid rgba(17, 17, 17, 0.15)',
+  validColor: ' rgba(17, 17, 17, 0.15)',
   invalidColor: '#E74A3B',
 };
 
@@ -36,27 +36,28 @@ const errorMesage = errorName => {
     </Typography>
   );
 };
+const dayNow = userState => {
+  if (userState) {
+    return userState;
+  }
+  var day = new Date();
+  return moment(day).format('DD/MM/YYYY');
+};
 
 const skypeNumberRegexp = /^\+[1-9]\d{0,2}[.-]?\d{1,14}$/;
-// const birthdayRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
-
 const validationSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, 'Too Short name!')
     .max(35, 'Too Long name!')
     .required('Name is required'),
-  // birthday: Yup.string()
-  //   .notRequired()
-  //   .matches(birthdayRegexp, {
-  //     message: 'Invalid birthday',
-  //   })
-  //   .notRequired(),
+  birthday: Yup.string().notRequired(),
   email: Yup.string().email('Invalid email').required('Email is required'),
   phone: Yup.string()
     .min(14, 'Too Short name!')
     .max(14, 'Too Long name!')
     .notRequired(),
   skype: Yup.string()
+    .min(11, 'Too Short name!')
     .max(16, 'Too Long name skype!')
     .matches(skypeNumberRegexp, {
       message: 'Invalid skype name',
@@ -68,11 +69,12 @@ const UserForm = () => {
   const [selectAvatar, setSelectAvatar] = useState({});
   const [isFormChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
+
   const initialValues = {
     username: userState.name,
-    avatarURL: userState.avatarURL,
-    email: userState.email || '',
-    birthday: userState.birthday,
+    avatarURL: userState.avatarURL || '',
+    email: userState.email,
+    birthday: dayNow(userState.birthday),
     phone: userState.phone || '',
     skype: userState.skype || '',
   };
@@ -92,11 +94,10 @@ const UserForm = () => {
 
   const handleDatePicker = date => {
     if (!date) formik.setFieldValue('birthday', '');
-    const formattedDate = moment(date.$d).format('DD/MM/YYYY');
+    const formattedDate = moment(date.$d).format('YYYY/MM/DD');
     formik.setFieldValue('birthday', formattedDate);
     setIsFormChanged(true);
   };
-
 
   const handleAvatarUpload = event => {
     const file = event.currentTarget.files[0];
@@ -117,7 +118,7 @@ const UserForm = () => {
       value = value.slice(0, 3) + ' ' + value.slice(3);
     } else if (value.length > 6) {
       value =
-        value.slice(0, 3) + '(' + value.slice(3, 6) + ')' + value.slice(6);
+        value.slice(0, 2) + '(' + value.slice(2, 5) + ')' + value.slice(5);
     }
     setIsFormChanged(true);
 
@@ -250,9 +251,11 @@ const UserForm = () => {
                   border: `${
                     (isValid('username') === 'is-invalid' &&
                       borderColor.invalidColor) ||
-                    (isValid('username') === 'is-valid' &&
-                      borderColor.validColor)
+                    borderColor.validColor
                   } solid 1px`,
+                  '&:hover': {
+                    border: '1px solid #000 ',
+                  },
                 }}
               />
               {formik.errors.username &&
@@ -272,22 +275,26 @@ const UserForm = () => {
               </Typography>
               <DatePicker
                 onChange={handleDatePicker}
-                defaultValue={dayjs(userState.birthday.slice(0, 10))} 
+                defaultValue={dayjs(formik.values.birthday)}
                 name="birthday"
-                type="text"
-                placeholder="DD/MM/YYYY"
+                format="YYYY/MM/DD"
+                placeholder="YYYY-MM-DD"
                 sx={{
                   width: '100%',
                   fontSize: '14px',
                   fontWeight: 600,
                   color: '#111',
                   border: `${
-                    (isValid('birthday') === 'is-invalid' &&
-                      borderColor.invalidColor) ||
-                    (isValid('birthday') === 'is-valid' &&
-                      borderColor.validColor)
+                    isValid('birthday') === 'is-invalid' &&
+                    borderColor.invalidColor
                   } solid 1px`,
                   borderRadius: '8px',
+                  '&>div>input': {
+                    padding: '13px 14px',
+                  },
+                  '&>div': {
+                    borderRadius: '8px',
+                  },
                 }}
               />
               {formik.errors.birthday &&
@@ -312,19 +319,24 @@ const UserForm = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                sx={{
-                  width: '100%',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#111',
-                  border: `${
-                    (isValid('email') === 'is-invalid' &&
-                      borderColor.invalidColor) ||
-                    (isValid('email') === 'is-valid' && borderColor.validColor)
-                  } solid 1px`,
-                  borderRadius: '8px',
-                  padding: '8px 18px',
-                }}
+                sx={[
+                  {
+                    width: '100%',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#111',
+                    border: `${
+                      (isValid('email') === 'is-invalid' &&
+                        borderColor.invalidColor) ||
+                      borderColor.validColor
+                    } solid 1px`,
+                    borderRadius: '8px',
+                    padding: '8px 18px',
+                    '&:hover': {
+                      border: '1px solid #000 ',
+                    },
+                  },
+                ]}
               />
               {formik.errors.email &&
                 formik.touched.email &&
@@ -365,10 +377,13 @@ const UserForm = () => {
                   border: `${
                     (isValid('phone') === 'is-invalid' &&
                       borderColor.invalidColor) ||
-                    (isValid('phone') === 'is-valid' && borderColor.validColor)
+                    borderColor.validColor
                   } solid 1px`,
                   borderRadius: '8px',
                   padding: '8px 18px',
+                  '&:hover': {
+                    border: '1px solid #000 ',
+                  },
                 }}
               />
               {formik.errors.phone &&
@@ -401,10 +416,13 @@ const UserForm = () => {
                   border: `${
                     (isValid('skype') === 'is-invalid' &&
                       borderColor.invalidColor) ||
-                    (isValid('skype') === 'is-valid' && borderColor.validColor)
+                    borderColor.validColor
                   } solid 1px`,
                   borderRadius: '8px',
                   padding: '8px 18px',
+                  '&:hover': {
+                    border: '1px solid #000 ',
+                  },
                 }}
               />
               {formik.errors.skype &&

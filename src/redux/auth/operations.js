@@ -98,11 +98,11 @@ export const refreshUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'auth/update',
-  async ({ avatarURL, name, birthday, phone, skype, email }, thunkAPI) => {
+  async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
     try {
       const formData = new FormData();
       formData.append('avatarURL', avatarURL);
-      formData.append('name', name);
+      formData.append('name', username);
       formData.append('email', email);
       formData.append('phone', phone || '');
       formData.append('skype', skype || '');
@@ -113,11 +113,15 @@ export const updateUser = createAsyncThunk(
         },
       });
 
-      if (response.status===200) {
+      const responseData = {
+        status: response.status,
+        data: response.data,
+      };
+
+      if (response.status === 200) {
         Notiflix.Notify.success('Update succes');
-     
       }
-      return response;
+      return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
