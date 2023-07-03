@@ -289,6 +289,7 @@ const RegisterForm = () => {
                         width: '100%',
                         height: 54,
                         borderRadius: 2,
+                        fontWeight: 600,
                       }}
                     />
                     {isValid('password') === 'is-valid' && (

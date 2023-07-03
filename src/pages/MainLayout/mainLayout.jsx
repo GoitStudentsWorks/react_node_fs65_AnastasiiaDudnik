@@ -2,18 +2,21 @@ import { Outlet } from 'react-router-dom';
 import { useRef, useState, useLayoutEffect, Suspense } from 'react';
 import { Box } from '@mui/material';
 import { Header } from '../../components/header/header';
-import { useViewportHeight } from '../../hooks/useViewportHeight';
 import SideBar from 'components/sideBar/sideBar';
 
 export const MainLayout = () => {
   const drawerWidth = { mobile: 225, desktop: 289 };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [height, setHeight] = useState(0);
+  const [mode, setMode] = useState('light');
   const elRef = useRef();
-  const viewHeight = useViewportHeight();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleModeChange = newMode => {
+    setMode(newMode);
   };
 
   useLayoutEffect(() => {
@@ -25,6 +28,7 @@ export const MainLayout = () => {
       <Header
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={drawerWidth}
+        handleModeChange={handleModeChange}
       />
       <SideBar
         drawerWidth={drawerWidth}
@@ -39,11 +43,11 @@ export const MainLayout = () => {
           width: {
             lg: `calc(100% - ${drawerWidth.desktop}px - 64px)`,
           },
-          height: {
-            xs: `calc(${viewHeight}px - ${height}px - 64px - 40px) `,
-            md: `calc(${viewHeight}px - ${height}px - 64px - 38px) `,
-            lg: `calc(${viewHeight}px - ${height}px - 33px - 32px) `,
-          },
+          // height: {
+          //   xs: `calc(${viewHeight}px - ${height}px - 64px - 40px) `,
+          //   md: `calc(${viewHeight}px - ${height}px - 64px - 38px) `,
+          //   lg: `calc(${viewHeight}px - ${height}px - 33px - 32px) `,
+          // },
           bgcolor: 'background.default',
           ml: { lg: `${drawerWidth.desktop}px` },
           px: { xs: '20px', md: '32px' },

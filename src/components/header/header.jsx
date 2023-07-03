@@ -14,15 +14,36 @@ import {
 // import Icons from 'icons/Icons';
 import Sprite from '../../icons/sprite.svg';
 
-export const Header = ({ handleDrawerToggle, drawerWidth }) => {
+import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserReview } from '../../redux/reviews/operations';
+import { selectUser } from '../../redux/auth/selectors';
+
+
+export const Header = ({
+  handleDrawerToggle,
+  drawerWidth,
+  handleModeChange,
+}) => {
+  const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   // console.log(matchesDesktop);
 
+  const dispatch = useDispatch();
+  const { id } = useSelector(selectUser);
+
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [mode, setMode] = useState('light');
 
   const toggleColorMode = () => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    handleModeChange(newMode);
+  };
+
+  const handleModalToggle = () => {
+    setFeedbackModalOpen(!feedbackModalOpen);
   };
 
   return (
@@ -93,6 +114,10 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
         <Box display={'flex'} gap={{ xs: '18px', md: '24px' }}>
           <Button
             variant="contained"
+            onClick={() => {
+              setFeedbackModalOpen(!feedbackModalOpen);
+              dispatch(getUserReview(id));
+            }}
             sx={{
               borderRadius: { xs: '10px', md: '14px' },
               background: '#3E85F3',
@@ -107,6 +132,11 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
           >
             Feedback
           </Button>
+
+          <FeedbackForm
+            feedbackModalOpen={feedbackModalOpen}
+            handleModalToggle={handleModalToggle}
+          />
 
           <Box
             display={'flex'}
@@ -144,7 +174,6 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
                 </SvgIcon>
               )}
             </IconButton>
-
             <Typography
               fontSize={{ xs: '14px', md: '18px' }}
               fontWeight={700}
@@ -152,9 +181,10 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
               color="text.secondary"
               lineHeight={{ xs: 1.286, md: 1 }}
             >
-              Nadiia
+              {userState.name}
             </Typography>
             <Avatar
+              src={userState.avatarURL || ''}
               sx={{
                 border: '1.8px solid #3E85F3',
                 width: { xs: '32px', md: '44px' },
