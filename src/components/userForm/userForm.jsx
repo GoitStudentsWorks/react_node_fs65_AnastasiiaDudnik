@@ -277,8 +277,8 @@ const UserForm = () => {
                 onChange={handleDatePicker}
                 defaultValue={dayjs(formik.values.birthday)}
                 name="birthday"
-                format="YYYY/MM/DD"
-                placeholder="YYYY-MM-DD"
+                format="DD/MM/YYYY"
+                placeholder="DD/MM/YYYY"
                 sx={{
                   width: '100%',
                   fontSize: '14px',
