@@ -189,7 +189,7 @@ const UserForm = () => {
               style={{ display: 'none' }}
             />
             <label htmlFor="avatarURL">
-              <SvgIcon stroke="currentColor">
+              <SvgIcon stroke="currentColor" style={{ cursor: 'pointer' }}>
                 <use href={`${Sprite}#addAvatar`} />
               </SvgIcon>
             </label>
@@ -282,7 +282,6 @@ const UserForm = () => {
                 sx={{
                   width: '100%',
                   fontSize: '14px',
-                  fontWeight: 600,
                   color: '#111',
                   border: `${
                     isValid('birthday') === 'is-invalid' &&
@@ -291,6 +290,7 @@ const UserForm = () => {
                   borderRadius: '8px',
                   '&>div>input': {
                     padding: '13px 14px',
+                    fontWeight: 600,
                   },
                   '&>div': {
                     borderRadius: '8px',
@@ -334,6 +334,9 @@ const UserForm = () => {
                     padding: '8px 18px',
                     '&:hover': {
                       border: '1px solid #000 ',
+                    },
+                    '&:focus ': {
+                      border: '1px solid#000 ',
                     },
                   },
                 ]}
