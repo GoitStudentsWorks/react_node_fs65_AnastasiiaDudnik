@@ -13,8 +13,12 @@ import {
 } from '@mui/material';
 // import Icons from 'icons/Icons';
 import Sprite from '../../icons/sprite.svg';
-import { useSelector } from 'react-redux';
-import { selectUser } from 'redux/auth/selectors';
+
+import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserReview } from '../../redux/reviews/operations';
+import { selectUser } from '../../redux/auth/selectors';
+
 
 export const Header = ({
   handleDrawerToggle,
@@ -26,12 +30,20 @@ export const Header = ({
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   // console.log(matchesDesktop);
 
+  const dispatch = useDispatch();
+  const { id } = useSelector(selectUser);
+
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [mode, setMode] = useState('light');
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
     handleModeChange(newMode);
+  };
+
+  const handleModalToggle = () => {
+    setFeedbackModalOpen(!feedbackModalOpen);
   };
 
   return (
@@ -102,6 +114,10 @@ export const Header = ({
         <Box display={'flex'} gap={{ xs: '18px', md: '24px' }}>
           <Button
             variant="contained"
+            onClick={() => {
+              setFeedbackModalOpen(!feedbackModalOpen);
+              dispatch(getUserReview(id));
+            }}
             sx={{
               borderRadius: { xs: '10px', md: '14px' },
               background: '#3E85F3',
@@ -116,6 +132,11 @@ export const Header = ({
           >
             Feedback
           </Button>
+
+          <FeedbackForm
+            feedbackModalOpen={feedbackModalOpen}
+            handleModalToggle={handleModalToggle}
+          />
 
           <Box
             display={'flex'}
