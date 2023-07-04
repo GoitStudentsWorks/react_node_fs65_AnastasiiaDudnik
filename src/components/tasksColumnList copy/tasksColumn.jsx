@@ -3,15 +3,16 @@ import AddTaskBtn from 'components/addTaskBtn/addTaskBtn'
 import TasksColumnList from 'components/tasksColumnList/tasksColumnList'
 import React from 'react'
 
-export default function TasksColumn() {
+export default function TasksColumn({title, todos}) { 
+
   return (
     <Box sx={style.listTodos}>
       <Box sx={style.addPanel}>
-        <Typography> To do</Typography>
+        <Typography>{title}</Typography>
         <AddTaskBtn />
       </Box>
 
-      <TasksColumnList />
+      <TasksColumnList todos={todos}/>
 
       <Box sx={style.btnAdd}>
         <AddTaskBtn btnList />

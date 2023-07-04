@@ -1,26 +1,11 @@
 import { Box, Tab, Tabs } from '@mui/material'
 import dayjs from 'dayjs'
-import React, { useMemo } from 'react'
+import React from 'react'
 import weekday from 'dayjs/plugin/weekday'
 dayjs.extend(weekday)
 
-export default function DayCalendarHead({ value, handleChange, day }) {
-    const weekend = useMemo(() => {
-        const arr = [];
-        for (let i = 0; i < 7; i++) {
-            const test = dayjs(day).weekday(i + 1);
-            arr[i] = {
-                day: test.$D,
-                weekDay: String(test.$d).slice(0, 3),
-                weekDayMob: String(test.$d).slice(0, 1)
-            }
-        }
-        return arr
-    }, [day])
-
-    if (!weekend) {
-        return
-    }
+export default function DayCalendarHead({ value, handleChange, weekend }) {
+    
     return (
         <>
             <Tabs
@@ -30,7 +15,7 @@ export default function DayCalendarHead({ value, handleChange, day }) {
                 sx={style.weekIconList}>
                 {
                     weekend.map(({ day, weekDay, weekDayMob }) =>
-                        <Tab key={day}
+                        <Tab key={weekDay}
                             sx={style.iconDayTask}
                             icon={
                                 <Box sx={style.dayTitle}>

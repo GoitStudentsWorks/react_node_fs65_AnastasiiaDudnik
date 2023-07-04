@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-const { REACT_APP_API_URL } = process.env;
 const instance = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: 'https://goose-calendar.onrender.com/',
 });
 
 const setAuthHeader = token => {
@@ -21,6 +20,26 @@ export const getTasks = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks`, { date });
+      console.log('allTasks', response.data);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getWeekTasks = createAsyncThunk(
+  'tasks/getWeekTasks',
+  async (props, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      setAuthHeader(persistedToken);
+      const response = await instance.get(`/tasks/week`, { params: props });
       console.log('allTasks', response.data);
       return response.data;
     } catch (e) {
@@ -116,7 +135,7 @@ export const deleteTask = createAsyncThunk(
       setAuthHeader(persistedToken);
       const response = await instance.delete(`/tasks/${id}`);
       console.log('deletedTask', response.data);
-      return response.data;
+      return {...response.data, _id: id};
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
