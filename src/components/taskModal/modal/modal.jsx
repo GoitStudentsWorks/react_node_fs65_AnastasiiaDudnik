@@ -26,7 +26,7 @@ const ModalWrapper = ({ children, closeModal, open }) => {
   };
 
   return createPortal(
-    <Modal open onClose={closeModal} disablePortal>
+    <Modal open={false}onClose={closeModal} disablePortal>
       <Box
         sx={{
           position: 'absolute',
