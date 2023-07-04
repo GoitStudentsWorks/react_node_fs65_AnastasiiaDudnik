@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Notiflix from 'notiflix';
-const { REACT_APP_API_URL } = process.env;
+import config from '../../config';
+// const { REACT_APP_API_URL } = process.env;
+console.log(config);
 const instance = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: config.apiUrl,
 });
 
 const setAuthHeader = token => {
