@@ -14,6 +14,7 @@ const extraActions = [
   getReviews,
   getUserReview,
   updateReview,
+  logout,
 ];
 
 const handlePending = state => {
