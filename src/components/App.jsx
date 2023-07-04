@@ -6,7 +6,10 @@ import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
 import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
-import { ColorRing, MutatingDots } from 'react-loader-spinner';
+import {
+  // ColorRing,
+  MutatingDots,
+} from 'react-loader-spinner';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
@@ -14,7 +17,7 @@ const MainPage = lazy(() => import('pages/mainPage/MainPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 const Account = lazy(() => import('../pages/accountPage/accountPage'));
 const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
-const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
+// const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
 const ChoosedDay = lazy(() => import('./choosedDay/choosedDay'));
 
 export const App = () => {
@@ -94,12 +97,12 @@ export const App = () => {
               }
             />
           </Route>
-          <Route
+          {/* <Route
             path="main/statistics"
             element={
               <PrivateRoute redirectTo="/login" component={<Statistics />} />
             }
-          />
+          /> */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

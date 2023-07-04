@@ -92,9 +92,11 @@ export const Header = ({
               m: 0,
               p: 0,
               display: { lg: 'none' },
+              color: mode !== 'dark' ? '#FFFFFF' : '#343434',
               '&:hover': {
-                backgroundColor: 'background.default',
-                color: 'primary.main',
+                backgroundColor:
+                  mode !== 'dark' ? '#171820' : 'background.default',
+                color: '#3E85F3',
               },
             }}
           >
@@ -148,7 +150,7 @@ export const Header = ({
               onClick={toggleColorMode}
               color="inherit"
             >
-              {mode === 'dark' ? (
+              {mode !== 'dark' ? (
                 <SvgIcon
                   sx={{
                     width: { xs: '24px', md: '32px' },
