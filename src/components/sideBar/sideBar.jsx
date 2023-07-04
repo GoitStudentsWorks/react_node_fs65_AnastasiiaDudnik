@@ -7,7 +7,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle, mode }) => {
   const drawer = (
     <>
       <Box>
-        <Logo handleDrawerToggle={handleDrawerToggle} />
+        <Logo handleDrawerToggle={handleDrawerToggle} mode={mode} />
         <UserNav handleDrawerToggle={handleDrawerToggle} mode={mode} />
       </Box>
       <LogoutBtn />
@@ -31,6 +31,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle, mode }) => {
             width: { xs: drawerWidth.mobile, md: drawerWidth.desktop },
             py: '24px',
             px: { xs: '20px', md: '32px' },
+            bgcolor: mode !== 'dark' ? ' #13151A' : '#F7F6F9',
           },
         }}
       >
@@ -47,7 +48,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle, mode }) => {
             pt: '32px',
             pb: '24px',
             px: '24px',
-            bgcolor: mode !== 'dark' ? ' #171820' : 'background.default',
+            bgcolor: mode !== 'dark' ? ' #13151A' : '#F7F6F9',
           },
         }}
         open

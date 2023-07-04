@@ -46,7 +46,7 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
             to="/main/account"
             sx={{
               backgroundColor:
-                mode !== 'dark' ? '#171820' : 'background.default',
+                mode !== 'dark' ? '#13151A' : 'background.default',
               color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
@@ -89,7 +89,7 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
             to="/main/calendar"
             sx={{
               backgroundColor:
-                mode !== 'dark' ? '#171820' : 'background.default',
+                mode !== 'dark' ? '#13151A' : 'background.default',
               color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
@@ -126,13 +126,14 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem onClick={handleDrawerToggle} disablePadding>
+
+        {/* <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
             to="/main/statistics"
             sx={{
               backgroundColor:
-                mode !== 'dark' ? '#171820' : 'background.default',
+                mode !== 'dark' ? '#13151A' : 'background.default',
               color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
@@ -168,7 +169,8 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
               }
             />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
+
       </List>
     </Box>
   );

@@ -12,7 +12,7 @@ import logoMb from '../../images/GOOSE1.png';
 import logoTb from '../../images/GOOSE2.png';
 import logoDes from '../../images/GOOSE3.png';
 
-export const Logo = ({ handleDrawerToggle }) => {
+export const Logo = ({ handleDrawerToggle, mode }) => {
   return (
     <Toolbar
       sx={{
@@ -27,10 +27,15 @@ export const Logo = ({ handleDrawerToggle }) => {
         to="/main/calendar"
         onClick={handleDrawerToggle}
         sx={{
-          p: 0,
+          py: 0,
+          pl: 0,
+          pr: '12px',
           minWidth: 0,
           minHeight: 35,
           gap: { xs: '6px', lg: '10px' },
+          '&:hover, &:focus': {
+            backgroundColor: mode !== 'dark' ? '#13151A' : '#F7F6F9',
+          },
         }}
       >
         <Box
@@ -71,7 +76,7 @@ export const Logo = ({ handleDrawerToggle }) => {
               fontStyle: 'normal',
               fontSize: { xs: '16px', md: '18px', lg: '24px' },
               lineHeight: { xs: 1.375, md: 1.333, lg: 1 },
-              color: 'primary.main',
+              color: mode !== 'dark' ? '#E3F3FF' : '#3E85F3',
               textTransform: 'none',
               textShadow:
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
@@ -86,7 +91,7 @@ export const Logo = ({ handleDrawerToggle }) => {
               fontStyle: 'italic',
               fontSize: { xs: '16px', md: '18px', lg: '24px' },
               lineHeight: { xs: 1.375, md: 1.333, lg: 1 },
-              color: 'primary.main',
+              color: mode !== 'dark' ? '#E3F3FF' : '#3E85F3',
               textTransform: 'none',
               textShadow:
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
@@ -101,7 +106,7 @@ export const Logo = ({ handleDrawerToggle }) => {
               fontStyle: 'normal',
               fontSize: { xs: '16px', md: '18px', lg: '24px' },
               lineHeight: { xs: 1.375, md: 1.333, lg: 1 },
-              color: 'primary.main',
+              color: mode !== 'dark' ? '#E3F3FF' : '#3E85F3',
               textTransform: 'none',
               textShadow:
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
@@ -120,6 +125,7 @@ export const Logo = ({ handleDrawerToggle }) => {
           display: { lg: 'none' },
           p: 0,
           m: 0,
+          color: mode !== 'dark' ? '#FFFFFF' : '#343434',
         }}
       >
         <SvgIcon
