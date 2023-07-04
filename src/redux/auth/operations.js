@@ -46,6 +46,9 @@ export const register = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
+      if (error.response.status === 409) {
+        Notiflix.Notify.failure('This mail is already in use');
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
