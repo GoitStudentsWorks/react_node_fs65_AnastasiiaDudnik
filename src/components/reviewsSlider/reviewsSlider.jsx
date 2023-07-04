@@ -1,6 +1,6 @@
-import { selectReviews } from '../../redux/reviews/selectors';
-
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Sprite from 'icons/sprite.svg';
 
 import {
   Box,
@@ -9,13 +9,15 @@ import {
   Button,
   useTheme,
   Avatar,
+  SvgIcon,
 } from '@mui/material';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
-import SwipeableViews from 'react-swipeable-views-react-18-fix';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { getReviews } from '../../redux/reviews/operations';
+import { selectReviews } from '../../redux/reviews/selectors';
 
 const ReviewSlider = () => {
   const theme = useTheme();
@@ -24,6 +26,29 @@ const ReviewSlider = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const maxSteps = reviews.length;
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 2000,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          infinite: true,
+          dots: false,
+        },
+      },
+    ],
+  };
 
   useEffect(() => {
     dispatch(getReviews());
@@ -40,13 +65,9 @@ const ReviewSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep(prevActiveStep => (prevActiveStep + 1) % maxSteps);
-    }, 2000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [maxSteps]);
-
-  const handleStepChange = step => {
-    setActiveStep(step);
-  };
 
   return (
     <Box
@@ -78,7 +99,8 @@ const ReviewSlider = () => {
 
         <Container
           sx={{
-            // width: '275px',
+            height: { xs: '194px', md: '187px', lg: '187px' },
+            width: { xs: '335px', md: '580px', lg: '580px' },
             padding: { xs: '24px', md: '32px', lg: '32px' },
             paddingLeft: { xs: '20px' },
             paddingBottom: { md: '50px', lg: '50px' },
@@ -87,69 +109,64 @@ const ReviewSlider = () => {
             border: '1px solid rgba(17, 17, 17, 0.10)',
           }}
         >
-          <SwipeableViews
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-          >
+          <Slider {...settings}>
             {reviews.map(
-              ({ comment, _id, rating, owner: { avatarURL, name } }, index) => (
+              ({ comment, _id, rating, owner: { avatarURL, name } }) => (
                 <div key={_id}>
-                  {Math.abs(activeStep - index) <= 2 ? (
-                    <Box
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '24px',
+                      width: '100%',
+                    }}
+                  >
+                    <Container
                       sx={{
-                        // height: 255,
                         display: 'flex',
-                        flexDirection: 'column',
-                        gap: '24px',
-                        // maxWidth: 400,
-                        overflow: 'hidden',
-                        width: '100%',
+                        gap: '18px',
                       }}
                     >
+                      <Avatar
+                        alt="avatar"
+                        src={avatarURL}
+                        sx={{ width: 50, height: 50 }}
+                      ></Avatar>
                       <Container
                         sx={{
                           display: 'flex',
-                          gap: '18px',
+                          flexDirection: 'column',
+                          gap: '13px',
                         }}
                       >
-                        <Avatar
-                          alt="avatar"
-                          src={avatarURL}
-                          sx={{ width: 50, height: 50 }}
-                        ></Avatar>
-                        <Container
-                          sx={{ display: 'flex', flexDirection: 'column' }}
+                        <Typography
+                          sx={{
+                            color: '#343434',
+                            fontSize: '18px',
+                            fontWeight: { xs: '700', md: '500', lg: '500' },
+                            lineHeight: '18px',
+                          }}
                         >
-                          <Typography
-                            sx={{
-                              color: '#343434',
-                              fontSize: '18px',
-                              fontWeight: { xs: '700', md: '500', lg: '500' },
-                              lineHeight: '18px',
-                            }}
-                          >
-                            {name}
-                          </Typography>
-                          <Typography>{rating}</Typography>
-                        </Container>
+                          {name}
+                        </Typography>
+                        <Typography>{rating}</Typography>
                       </Container>
-                      <Typography
-                        sx={{
-                          color: 'rgba(17, 17, 17, 0.70)',
-                          fontSize: '14px',
-                          fontWeight: '500',
-                          lineHeight: '18px',
-                        }}
-                      >
-                        {comment}
-                      </Typography>
-                    </Box>
-                  ) : null}
+                    </Container>
+                    <Typography
+                      sx={{
+                        color: 'rgba(17, 17, 17, 0.70)',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        lineHeight: '18px',
+                      }}
+                    >
+                      {comment}
+                    </Typography>
+                  </Box>
                 </div>
               )
             )}
-          </SwipeableViews>
+          </Slider>
         </Container>
         <Box
           sx={{
@@ -158,22 +175,34 @@ const ReviewSlider = () => {
             justifyContent: 'center',
           }}
         >
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button onClick={handleBack} disabled={activeStep === 0}>
             {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
+              <SvgIcon
+                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
+              >
+                <use href={`${Sprite}#arrow-right`} />
+              </SvgIcon>
             ) : (
-              <KeyboardArrowLeft />
+              <SvgIcon
+                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
+              >
+                <use href={`${Sprite}#arrow-left`} />
+              </SvgIcon>
             )}
           </Button>
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
+          <Button onClick={handleNext} disabled={activeStep === maxSteps - 1}>
             {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
+              <SvgIcon
+                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
+              >
+                <use href={`${Sprite}#arrow-left`} />
+              </SvgIcon>
             ) : (
-              <KeyboardArrowRight />
+              <SvgIcon
+                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
+              >
+                <use href={`${Sprite}#arrow-right`} />
+              </SvgIcon>
             )}
           </Button>
         </Box>
