@@ -9,11 +9,19 @@ const setAuthHeader = token => {
   return (instance.defaults.headers.common.Authorization = `Bearer ${token}`);
 };
 
-export const getReviews = createAsyncThunk(
-  'reviews/fetchAll',
-  async (_, thunkAPI) => {
+export const getTasks = createAsyncThunk(
+  'tasks/getTasks',
+  async ({ date }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
     try {
-      const response = await instance.get('/reviews');
+      setAuthHeader(persistedToken);
+      const response = await instance.get(`/tasks`, { date });
+      console.log('allTasks', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -21,8 +29,8 @@ export const getReviews = createAsyncThunk(
   }
 );
 
-export const getUserReview = createAsyncThunk(
-  'reviews/getReview',
+export const getTaskById = createAsyncThunk(
+  'tasks/getTaskById',
   async (id, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
@@ -32,7 +40,8 @@ export const getUserReview = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.get(`/reviews/${id}`);
+      const response = await instance.get(`/tasks/${id}`);
+      console.log('oneTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -40,9 +49,9 @@ export const getUserReview = createAsyncThunk(
   }
 );
 
-export const addReview = createAsyncThunk(
-  'reviews/addReview',
-  async ({ rating, comment }, thunkAPI) => {
+export const addTask = createAsyncThunk(
+  'tasks/addTask',
+  async ({ title, start, end, priority, date, category }, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
@@ -51,29 +60,15 @@ export const addReview = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.post('/reviews', { rating, comment });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const updateReview = createAsyncThunk(
-  'reviews/updateReview',
-  async ({ id, rating, comment }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
-    try {
-      setAuthHeader(persistedToken);
-      const response = await instance.patch(`/reviews/${id}`, {
-        rating,
-        comment,
+      const response = await instance.post('/tasks', {
+        title,
+        start,
+        end,
+        priority,
+        date,
+        category,
       });
+      console.log('newTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -81,8 +76,35 @@ export const updateReview = createAsyncThunk(
   }
 );
 
-export const deleteReview = createAsyncThunk(
-  'reviews/deleteReview',
+export const updateTask = createAsyncThunk(
+  'tasks/updateTask',
+  async ({ id, title, start, end, priority, date, category }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      setAuthHeader(persistedToken);
+      const response = await instance.patch(`/tasks/${id}`, {
+        title,
+        start,
+        end,
+        priority,
+        date,
+        category,
+      });
+      console.log('updatedTask', response.data);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
   async (id, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
@@ -92,7 +114,8 @@ export const deleteReview = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.delete(`/reviews/${id}`);
+      const response = await instance.delete(`/tasks/${id}`);
+      console.log('deletedTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
