@@ -14,15 +14,34 @@ import {
 // import Icons from 'icons/Icons';
 import Sprite from '../../icons/sprite.svg';
 
-export const Header = ({ handleDrawerToggle, drawerWidth }) => {
+import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserReview } from '../../redux/reviews/operations';
+import { selectUser } from '../../redux/auth/selectors';
+
+export const Header = ({
+  handleDrawerToggle,
+  drawerWidth,
+  handleModeChange,
+}) => {
+  const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
-  // console.log(matchesDesktop);
 
-  const [mode, setMode] = useState('light');
+  const dispatch = useDispatch();
+  const { id } = useSelector(selectUser);
+
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [mode, setMode] = useState('dark');
 
   const toggleColorMode = () => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    handleModeChange(newMode);
+  };
+
+  const handleModalToggle = () => {
+    setFeedbackModalOpen(!feedbackModalOpen);
   };
 
   return (
@@ -35,7 +54,7 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
         ml: {
           lg: `${drawerWidth.desktop}px`,
         },
-        bgcolor: 'background.default',
+        bgcolor: mode !== 'dark' ? ' #171820' : 'background.default',
         boxShadow: 'none',
       }}
     >
@@ -45,6 +64,7 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
           px: { xs: '20px', md: '32px' },
           minHeight: { xs: '0px' },
           pt: '24px',
+          pb: '24px',
         }}
       >
         {!matchesDesktop ? (
@@ -52,9 +72,10 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
             fontSize={'32px'}
             fontWeight={700}
             fontFamily="Inter, sans-serif"
-            color="text.primary"
             lineHeight={1}
             sx={{
+              color: mode !== 'dark' ? ' #fff' : 'text.primary',
+
               textShadow:
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
             }}
@@ -71,9 +92,11 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
               m: 0,
               p: 0,
               display: { lg: 'none' },
+              color: mode !== 'dark' ? '#FFFFFF' : '#343434',
               '&:hover': {
-                backgroundColor: 'background.default',
-                color: 'primary.main',
+                backgroundColor:
+                  mode !== 'dark' ? '#171820' : 'background.default',
+                color: '#3E85F3',
               },
             }}
           >
@@ -93,6 +116,10 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
         <Box display={'flex'} gap={{ xs: '18px', md: '24px' }}>
           <Button
             variant="contained"
+            onClick={() => {
+              setFeedbackModalOpen(!feedbackModalOpen);
+              dispatch(getUserReview(id));
+            }}
             sx={{
               borderRadius: { xs: '10px', md: '14px' },
               background: '#3E85F3',
@@ -108,21 +135,22 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
             Feedback
           </Button>
 
+          <FeedbackForm
+            feedbackModalOpen={feedbackModalOpen}
+            handleModalToggle={handleModalToggle}
+          />
+
           <Box
             display={'flex'}
             gap={{ xs: '8px', md: '14px' }}
             alignItems={'center'}
           >
-            {/* <IconButton sx={{ padding: 0 }}>
-              <Icons name="moon" size="32px" />
-            </IconButton> */}
-
             <IconButton
               sx={{ padding: 0 }}
               onClick={toggleColorMode}
               color="inherit"
             >
-              {mode === 'dark' ? (
+              {mode !== 'dark' ? (
                 <SvgIcon
                   sx={{
                     width: { xs: '24px', md: '32px' },
@@ -144,17 +172,17 @@ export const Header = ({ handleDrawerToggle, drawerWidth }) => {
                 </SvgIcon>
               )}
             </IconButton>
-
             <Typography
               fontSize={{ xs: '14px', md: '18px' }}
               fontWeight={700}
               fontFamily="Inter, sans-serif"
-              color="text.secondary"
+              color={mode !== 'dark' ? ' #fff' : 'text.secondary'}
               lineHeight={{ xs: 1.286, md: 1 }}
             >
-              Nadiia
+              {userState.name}
             </Typography>
             <Avatar
+              src={userState.avatarURL || ''}
               sx={{
                 border: '1.8px solid #3E85F3',
                 width: { xs: '32px', md: '44px' },

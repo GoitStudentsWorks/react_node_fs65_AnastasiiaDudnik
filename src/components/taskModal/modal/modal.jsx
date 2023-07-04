@@ -10,6 +10,7 @@ const ModalWrapper = ({ children, closeModal, open }) => {
     const handleEscape = e => {
       if (e.code === `Escape`) {
         closeModal();
+
       }
     };
     window.addEventListener('keydown', handleEscape);

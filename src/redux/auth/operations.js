@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-const { REACT_APP_API_URL } = process.env;
+import Notiflix from 'notiflix';
+
 const instance = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: 'https://goose-calendar.onrender.com',
 });
 
 const setAuthHeader = token => {
@@ -40,8 +41,14 @@ export const register = createAsyncThunk(
     try {
       const response = await instance.post('/users/register', user);
       setAuthHeader(response.data.token);
+      if (response) {
+        Notiflix.Notify.success('Register success');
+      }
       return response.data;
     } catch (error) {
+      if (error.response.status === 409) {
+        Notiflix.Notify.failure('This mail is already in use');
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -51,8 +58,14 @@ export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     const response = await instance.post('/users/login', user);
     setAuthHeader(response.data.token);
+    if (response) {
+      Notiflix.Notify.success('LogIn success');
+    }
     return response.data;
   } catch (error) {
+    if (error) {
+      Notiflix.Notify.failure('Invalid email or password');
+    }
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -91,22 +104,27 @@ export const updateUser = createAsyncThunk(
   async ({ avatarURL, username, birthday, phone, skype, email }, thunkAPI) => {
     try {
       const formData = new FormData();
-      formData.append('avatar', avatarURL);
+      formData.append('avatarURL', avatarURL);
       formData.append('name', username);
       formData.append('email', email);
-      formData.append('phone', phone || null);
-      formData.append('skype', skype || null);
-      formData.append('birthday', birthday || null);
-
+      formData.append('phone', phone || '');
+      formData.append('skype', skype || '');
+      formData.append('birthday', birthday || '');
       const response = await instance.patch('users/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(response.data);
+      const responseData = {
+        status: response.status,
+        data: response.data,
+      };
 
-      return response.data;
+      if (response.status === 200) {
+        Notiflix.Notify.success('Update succes');
+      }
+      return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

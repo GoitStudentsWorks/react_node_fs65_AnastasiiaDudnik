@@ -11,7 +11,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import Sprite from '../../icons/sprite.svg';
 
-export const UserNav = ({ handleDrawerToggle }) => {
+export const UserNav = ({ handleDrawerToggle, mode }) => {
   return (
     <Box
       sx={{
@@ -27,7 +27,7 @@ export const UserNav = ({ handleDrawerToggle }) => {
           fontFamily: 'Inter, sans-serif',
           fontWeight: 600,
           fontSize: { xs: '12px', md: '14px' },
-          color: 'text.disabled',
+          color: mode !== 'dark' ? '#FAFAFA4D' : 'text.disabled',
         }}
       >
         User Panel
@@ -45,15 +45,16 @@ export const UserNav = ({ handleDrawerToggle }) => {
             LinkComponent={NavLink}
             to="/main/account"
             sx={{
-              backgroundColor: 'background.paper',
-              color: 'text.disabled',
+              backgroundColor:
+                mode !== 'dark' ? '#13151A' : 'background.default',
+              color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
               pl: { xs: '12px', md: '20px' },
               borderRadius: '8px',
               '&.active, &:hover, &:focus': {
-                backgroundColor: 'secondary.main',
-                color: 'primary.main',
+                backgroundColor: mode !== 'dark' ? '#3E85F3' : 'secondary.main',
+                color: mode !== 'dark' ? '#fff' : 'primary.main',
               },
             }}
           >
@@ -87,15 +88,16 @@ export const UserNav = ({ handleDrawerToggle }) => {
             LinkComponent={NavLink}
             to="/main/calendar"
             sx={{
-              backgroundColor: 'background.paper',
-              color: 'text.disabled',
+              backgroundColor:
+                mode !== 'dark' ? '#13151A' : 'background.default',
+              color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
               pl: { xs: '12px', md: '20px' },
               borderRadius: '8px',
               '&.active, &:hover, &:focus': {
-                backgroundColor: 'secondary.main',
-                color: 'primary.main',
+                backgroundColor: mode !== 'dark' ? '#3E85F3' : 'secondary.main',
+                color: mode !== 'dark' ? '#fff' : 'primary.main',
               },
             }}
           >
@@ -124,20 +126,22 @@ export const UserNav = ({ handleDrawerToggle }) => {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem onClick={handleDrawerToggle} disablePadding>
+
+        {/* <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
             to="/main/statistics"
             sx={{
-              backgroundColor: 'background.paper',
-              color: 'text.disabled',
+              backgroundColor:
+                mode !== 'dark' ? '#13151A' : 'background.default',
+              color: mode !== 'dark' ? '#fff' : 'text.disabled',
               gap: { xs: '8px', md: '10px' },
               py: { xs: '10px', md: '16px' },
               pl: { xs: '12px', md: '20px' },
               borderRadius: '8px',
               '&.active, &:hover, &:focus': {
-                backgroundColor: 'secondary.main',
-                color: 'primary.main',
+                backgroundColor: mode !== 'dark' ? '#3E85F3' : 'secondary.main',
+                color: mode !== 'dark' ? '#fff' : 'primary.main',
               },
             }}
           >
@@ -165,7 +169,8 @@ export const UserNav = ({ handleDrawerToggle }) => {
               }
             />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
+
       </List>
     </Box>
   );
