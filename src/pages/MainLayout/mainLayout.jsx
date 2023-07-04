@@ -39,8 +39,9 @@ export const MainLayout = () => {
         component="main"
         sx={{
           flexGrow: 1,
+          
           width: {
-            lg: `calc(100% - ${drawerWidth.desktop}px)`,
+            lg: `calc(100% - ${drawerWidth.desktop}px - 64px)`,
           },
           // height: {
           //   xs: `calc(${viewHeight}px - ${height}px - 64px - 40px) `,
