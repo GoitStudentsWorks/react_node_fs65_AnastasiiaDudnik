@@ -3,20 +3,17 @@ import { useRef, useState, useLayoutEffect, Suspense } from 'react';
 import { Box } from '@mui/material';
 import { Header } from '../../components/header/header';
 import SideBar from 'components/sideBar/sideBar';
+import { useViewportHeight } from 'hooks/useViewportHeight';
 
-export const MainLayout = () => {
+export const MainLayout = ({ handleModeChange, mode }) => {
   const drawerWidth = { mobile: 225, desktop: 289 };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [height, setHeight] = useState(0);
-  const [mode, setMode] = useState('light');
-  const elRef = useRef();
 
+  const elRef = useRef();
+  const viewHeight = useViewportHeight();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleModeChange = newMode => {
-    setMode(newMode);
   };
 
   useLayoutEffect(() => {
@@ -34,6 +31,7 @@ export const MainLayout = () => {
         drawerWidth={drawerWidth}
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
+        mode={mode}
       />
       <Box
         component="main"
@@ -42,12 +40,10 @@ export const MainLayout = () => {
           width: {
             lg: `calc(100% - ${drawerWidth.desktop}px)`,
           },
-          // height: {
-          //   xs: `calc(${viewHeight}px - ${height}px - 64px - 40px) `,
-          //   md: `calc(${viewHeight}px - ${height}px - 64px - 38px) `,
-          //   lg: `calc(${viewHeight}px - ${height}px - 33px - 32px) `,
-          // },
-          bgcolor: 'background.default',
+          height: {
+            lg: `calc(${viewHeight}px - ${height}px - 33px - 32px) `,
+          },
+          bgcolor: mode !== 'dark' ? ' #171820' : 'background.default',
           ml: { lg: `${drawerWidth.desktop}px` },
           px: { xs: '20px', md: '32px' },
           pb: { xs: '40px', md: '38px', lg: '32px' },

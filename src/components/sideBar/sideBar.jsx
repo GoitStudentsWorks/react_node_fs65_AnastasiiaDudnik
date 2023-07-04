@@ -3,12 +3,12 @@ import { Logo } from '../logo/logo';
 import { UserNav } from '../userNav/userNav';
 import { LogoutBtn } from 'components/logoutBtn/logoutBtn';
 
-const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
+const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle, mode }) => {
   const drawer = (
     <>
       <Box>
         <Logo handleDrawerToggle={handleDrawerToggle} />
-        <UserNav handleDrawerToggle={handleDrawerToggle} />
+        <UserNav handleDrawerToggle={handleDrawerToggle} mode={mode} />
       </Box>
       <LogoutBtn />
     </>
@@ -47,6 +47,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle }) => {
             pt: '32px',
             pb: '24px',
             px: '24px',
+            bgcolor: mode !== 'dark' ? ' #171820' : 'background.default',
           },
         }}
         open

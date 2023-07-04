@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
 
-
 export const Header = ({
   handleDrawerToggle,
   drawerWidth,
@@ -28,13 +27,12 @@ export const Header = ({
   const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
-  // console.log(matchesDesktop);
 
   const dispatch = useDispatch();
   const { id } = useSelector(selectUser);
 
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
@@ -56,7 +54,7 @@ export const Header = ({
         ml: {
           lg: `${drawerWidth.desktop}px`,
         },
-        bgcolor: 'background.default',
+        bgcolor: mode !== 'dark' ? ' #171820' : 'background.default',
         boxShadow: 'none',
       }}
     >
@@ -66,6 +64,7 @@ export const Header = ({
           px: { xs: '20px', md: '32px' },
           minHeight: { xs: '0px' },
           pt: '24px',
+          pb: '24px',
         }}
       >
         {!matchesDesktop ? (
@@ -73,9 +72,10 @@ export const Header = ({
             fontSize={'32px'}
             fontWeight={700}
             fontFamily="Inter, sans-serif"
-            color="text.primary"
             lineHeight={1}
             sx={{
+              color: mode !== 'dark' ? ' #fff' : 'text.primary',
+
               textShadow:
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
             }}
@@ -143,10 +143,6 @@ export const Header = ({
             gap={{ xs: '8px', md: '14px' }}
             alignItems={'center'}
           >
-            {/* <IconButton sx={{ padding: 0 }}>
-              <Icons name="moon" size="32px" />
-            </IconButton> */}
-
             <IconButton
               sx={{ padding: 0 }}
               onClick={toggleColorMode}
@@ -178,7 +174,7 @@ export const Header = ({
               fontSize={{ xs: '14px', md: '18px' }}
               fontWeight={700}
               fontFamily="Inter, sans-serif"
-              color="text.secondary"
+              color={mode !== 'dark' ? ' #fff' : 'text.secondary'}
               lineHeight={{ xs: 1.286, md: 1 }}
             >
               {userState.name}
