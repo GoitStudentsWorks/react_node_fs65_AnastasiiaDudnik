@@ -1,9 +1,9 @@
 import { Box, IconButton, Modal } from '@mui/material';
-import ModalWrapper from 'components/modalWrapper/modalWrapper';
+import ModalWrapper from 'components/taskModal/modal/modal';
 import TaskForm from 'components/taskForm/taskForm';
 import { colorsLight } from 'components/variables/colors';
 
-const TaskModal = ({ isVisible, closeModal, currentTask }) => {
+const TaskModal = ({ closeModal, currentTask }) => {
   return (
     <ModalWrapper>
       <Box
