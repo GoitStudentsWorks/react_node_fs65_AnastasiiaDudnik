@@ -6,7 +6,7 @@ import { selectIsRefreshing } from 'redux/auth/selectors';
 import { RestrictedRoute } from 'redux/restriktedRoute';
 import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
-import { ColorRing } from 'react-loader-spinner';
+import { ColorRing, MutatingDots } from 'react-loader-spinner';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
@@ -29,17 +29,20 @@ export const App = () => {
   }, [dispatch]);
 
   return isFatching ? (
-    <ColorRing
-      visible={true}
-      height="80"
-      width="80"
-      ariaLabel="blocks-loading"
+    <MutatingDots
+      height="100"
+      width="100"
+      color="#3E85F3"
+      secondaryColor="#2d60ac"
+      radius="12.5"
+      ariaLabel="mutating-dots-loading"
       wrapperStyle={{
-        width: '100%',
-        marginTop: '25%',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
       }}
-      wrapperClass="blocks-wrapper"
-      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+      wrapperClass=""
+      visible={true}
     />
   ) : (
     <Suspense>
