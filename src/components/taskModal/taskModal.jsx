@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal } from '@mui/material';
+import { Box  } from '@mui/material';
 import ModalWrapper from 'components/taskModal/modal/modal';
 import TaskForm from 'components/taskForm/taskForm';
 import { colorsLight } from 'components/variables/colors';
