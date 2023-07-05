@@ -19,6 +19,7 @@ const Account = lazy(() => import('../pages/accountPage/accountPage'));
 const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
 // const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
 const ChoosedDay = lazy(() => import('./choosedDay/choosedDay'));
+const ChoosedMonth = lazy(() => import('./choosedMonth/choosedMonth'));
 
 export const App = () => {
   const [mode, setMode] = useState('dark');
@@ -87,15 +88,45 @@ export const App = () => {
           <Route
             path="main/calendar"
             element={
-              <PrivateRoute redirectTo="/login" component={<Calendar />} />
+              <PrivateRoute
+                redirectTo="/login"
+                component={<Calendar mode={mode} />}
+              />
             }
           >
             <Route
               index
               element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<ChoosedDay mode={mode} />}
+                />
+              }
+            />
+
+            <Route
+              path="month"
+              element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<ChoosedMonth mode={mode} />}
+                />
+              }
+            />
+
+            <Route
+              path="day"
+              element={
                 <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
               }
             />
+
+            {/* <Route
+              index
+              element={
+                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
+              }
+            /> */}
           </Route>
           {/* <Route
             path="main/statistics"
