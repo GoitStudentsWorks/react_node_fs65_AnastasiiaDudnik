@@ -1,11 +1,36 @@
-import { Box  } from '@mui/material';
+import { Box } from '@mui/material';
 import ModalWrapper from 'components/taskModal/modal/modal';
 import TaskForm from 'components/taskForm/taskForm';
 import { colorsLight } from 'components/variables/colors';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const TaskModal = ({ closeModal, currentTask }) => {
+  const [data, setData] = useState(null);
+  const { currentDay } = useParams();
+
+  // useEffect(() => {
+  //   const { _id, category } = currentTask;
+
+  //   if (_id) {
+  //     setData({ ...data, status: 'edit' });
+  //   } else if (category) {
+  //     setData({
+  //       title: '',
+  //       date: currentDay,
+  //       start: '00:00',
+  //       end: '00:00',
+  //       priority: 'Low',
+  //       category,
+  //       statusOperation: 'create',
+  //     });
+  //   } else {
+  //     closeModal();
+  //   }
+  // }, [closeModal, currentTask, currentDay]);
+
   return (
-    <ModalWrapper>
+    <ModalWrapper closeModal={closeModal}>
       <Box
         sx={{
           borderRadius: '8px',
@@ -14,12 +39,10 @@ const TaskModal = ({ closeModal, currentTask }) => {
           backgroundColor: colorsLight.mainBackgroundColor,
           width: { xs: '100%', md: '396px', lg: '396px' },
           height: { xs: '100%', md: '360px', lg: '360px' },
-          // width: '100%',
-          // height: '100%',
           padding: 0,
         }}
       >
-        <TaskForm />
+        <TaskForm currentTask={currentTask} closeModal={closeModal} />
       </Box>
     </ModalWrapper>
   );
