@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 import { PeriodPaginator } from 'components/periodPaginator/periodPaginator';
 import { PeriodTypeSelect } from 'components/periodTypeSelect/periodTypeSelect';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const CalendarToolbar = ({ mode }) => {
   return (
@@ -11,7 +13,9 @@ export const CalendarToolbar = ({ mode }) => {
         marginBottom: { xs: '24px', lg: '32px' },
       }}
     >
-      <PeriodPaginator mode={mode} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <PeriodPaginator mode={mode} />
+      </LocalizationProvider>
       <PeriodTypeSelect mode={mode} />
     </Box>
   );

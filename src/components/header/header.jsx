@@ -11,13 +11,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-// import Icons from 'icons/Icons';
 import Sprite from '../../icons/sprite.svg';
 
 import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
+import { useLocation } from 'react-router-dom';
 
 export const Header = ({
   handleDrawerToggle,
@@ -27,7 +27,7 @@ export const Header = ({
   const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const { id } = useSelector(selectUser);
 
@@ -80,7 +80,9 @@ export const Header = ({
                 '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
             }}
           >
-            User Profile
+            {location.pathname === '/main/account'
+              ? 'User Profile'
+              : 'Calendar'}
           </Typography>
         ) : (
           <IconButton
@@ -100,7 +102,6 @@ export const Header = ({
               },
             }}
           >
-            {/* <Icons name="menu" size="24px" color="text.secondary" /> */}
             <SvgIcon
               sx={{
                 width: { xs: '24px', md: '34px' },

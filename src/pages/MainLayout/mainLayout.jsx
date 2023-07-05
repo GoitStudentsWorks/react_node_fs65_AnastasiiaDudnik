@@ -19,7 +19,6 @@ export const MainLayout = ({ handleModeChange, mode }) => {
   useLayoutEffect(() => {
     setHeight(elRef.current.children[0].clientHeight);
   }, []);
-
   return (
     <Box sx={{ display: 'flex' }} ref={elRef}>
       <Header
@@ -37,7 +36,7 @@ export const MainLayout = ({ handleModeChange, mode }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          
+
           width: {
             lg: `calc(100% - ${drawerWidth.desktop}px - 64px)`,
           },
