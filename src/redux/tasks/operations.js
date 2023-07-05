@@ -135,7 +135,7 @@ export const deleteTask = createAsyncThunk(
       setAuthHeader(persistedToken);
       const response = await instance.delete(`/tasks/${id}`);
       console.log('deletedTask', response.data);
-      return {...response.data, _id: id};
+      return { ...response.data, _id: id };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
