@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sprite from 'icons/sprite.svg';
 
@@ -7,7 +7,6 @@ import {
   Container,
   Typography,
   Button,
-  useTheme,
   Avatar,
   SvgIcon,
 } from '@mui/material';
@@ -19,22 +18,60 @@ import 'slick-carousel/slick/slick-theme.css';
 import { getReviews } from '../../redux/reviews/operations';
 import { selectReviews } from '../../redux/reviews/selectors';
 
+const StarRating = ({ rating }) => {
+  const maxRating = 5;
+
+  const stars = [];
+
+  for (let i = 1; i <= maxRating; i += 1) {
+    if (i <= rating) {
+      stars.push(
+        <SvgIcon
+          key={i}
+          style={{
+            width: '14px',
+            height: '14px',
+            fill: 'rgba(255, 172, 51, 1)',
+          }}
+        >
+          <use href={`${Sprite}#starYellow`} />
+        </SvgIcon>
+      );
+    } else {
+      stars.push(
+        <SvgIcon
+          key={i}
+          style={{
+            width: '14px',
+            height: '14px',
+          }}
+        >
+          <use href={`${Sprite}#starGrey`} />
+        </SvgIcon>
+      );
+    }
+  }
+
+  return <Box sx={{ display: 'flex', gap: '10px' }}>{stars}</Box>;
+};
+
 const ReviewSlider = () => {
-  const theme = useTheme();
   const reviews = useSelector(selectReviews);
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
+  const sliderRef = useRef(null);
 
   const maxSteps = reviews.length;
 
   const settings = {
     dots: false,
     infinite: true,
-    speed: 2000,
+    speed: 1000,
     slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+
     responsive: [
       {
         breakpoint: 768,
@@ -42,7 +79,7 @@ const ReviewSlider = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           autoplay: true,
-          autoplaySpeed: 2000,
+          autoplaySpeed: 4000,
           infinite: true,
           dots: false,
         },
@@ -54,20 +91,25 @@ const ReviewSlider = () => {
     dispatch(getReviews());
   }, [dispatch]);
 
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+  const handlePrevClick = () => {
+    sliderRef.current.slickPrev();
   };
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+  const handleNextClick = () => {
+    sliderRef.current.slickNext();
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep(prevActiveStep => (prevActiveStep + 1) % maxSteps);
-    }, 4000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [maxSteps]);
+
+  const sliderStyle = `
+  .slick-list { margin: 0 -7px; & .slick-slide > div { padding: 0 10px; } }
+  
+`;
 
   return (
     <Box
@@ -96,28 +138,34 @@ const ReviewSlider = () => {
         >
           Reviews
         </Typography>
-
-        <Container
-          sx={{
-            height: { xs: '194px', md: '187px', lg: '187px' },
-            width: { xs: '335px', md: '580px', lg: '580px' },
-            padding: { xs: '24px', md: '32px', lg: '32px' },
-            paddingLeft: { xs: '20px' },
-            paddingBottom: { md: '50px', lg: '50px' },
-            mb: { xs: '8px', md: '18px', lg: '32px' },
-            borderRadius: '8px',
-            border: '1px solid rgba(17, 17, 17, 0.10)',
+        <style>{sliderStyle}</style>
+        <div
+          style={{
+            width: '100%',
           }}
         >
-          <Slider {...settings}>
+          <Slider ref={sliderRef} {...settings}>
             {reviews.map(
               ({ comment, _id, rating, owner: { avatarURL, name } }) => (
-                <div key={_id}>
+                <Container
+                  key={_id}
+                  sx={{
+                    height: { xs: '194px', md: '187px', lg: '187px' },
+                    width: { xs: '335px', md: '580px', lg: '580px' },
+                    padding: { xs: '24px', md: '32px', lg: '32px' },
+                    paddingLeft: { xs: '20px' },
+                    paddingBottom: { md: '50px', lg: '50px' },
+                    mb: { xs: '8px', md: '18px', lg: '32px' },
+                    borderRadius: '8px',
+                    border: '1px solid rgba(17, 17, 17, 0.10)',
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '24px',
+
                       width: '100%',
                     }}
                   >
@@ -125,6 +173,7 @@ const ReviewSlider = () => {
                       sx={{
                         display: 'flex',
                         gap: '18px',
+                        mb: '24px',
                       }}
                     >
                       <Avatar
@@ -149,7 +198,7 @@ const ReviewSlider = () => {
                         >
                           {name}
                         </Typography>
-                        <Typography>{rating}</Typography>
+                        <StarRating rating={rating} />
                       </Container>
                     </Container>
                     <Typography
@@ -163,11 +212,11 @@ const ReviewSlider = () => {
                       {comment}
                     </Typography>
                   </Box>
-                </div>
+                </Container>
               )
             )}
           </Slider>
-        </Container>
+        </div>
         <Box
           sx={{
             display: 'flex',
@@ -175,35 +224,29 @@ const ReviewSlider = () => {
             justifyContent: 'center',
           }}
         >
-          <Button onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <SvgIcon
-                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
-              >
-                <use href={`${Sprite}#arrow-right`} />
-              </SvgIcon>
-            ) : (
-              <SvgIcon
-                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
-              >
-                <use href={`${Sprite}#arrow-left`} />
-              </SvgIcon>
-            )}
+          <Button onClick={handlePrevClick} disabled={activeStep === 0}>
+            <SvgIcon
+              style={{
+                cursor: 'pointer',
+                width: '61px',
+                height: '61px',
+                fill: 'rgba(17, 17, 17, 1)',
+              }}
+            >
+              <use href={`${Sprite}#arrow-left`} />
+            </SvgIcon>
           </Button>
-          <Button onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-            {theme.direction === 'rtl' ? (
-              <SvgIcon
-                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
-              >
-                <use href={`${Sprite}#arrow-left`} />
-              </SvgIcon>
-            ) : (
-              <SvgIcon
-                style={{ cursor: 'pointer', width: '61px', height: '61px' }}
-              >
-                <use href={`${Sprite}#arrow-right`} />
-              </SvgIcon>
-            )}
+          <Button onClick={handleNextClick} disabled={activeStep === 0}>
+            <SvgIcon
+              style={{
+                cursor: 'pointer',
+                width: '61px',
+                height: '61px',
+                fill: 'rgba(17, 17, 17, 1)',
+              }}
+            >
+              <use href={`${Sprite}#arrow-right`} />
+            </SvgIcon>
           </Button>
         </Box>
       </Container>
