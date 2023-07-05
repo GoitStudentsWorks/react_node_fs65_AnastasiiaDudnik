@@ -53,12 +53,12 @@ const tasksSlice = createSlice({
         state.currentTask = action.payload;
       })
       .addCase(updateTask.fulfilled, (state, action) => {
-        if (state.tasks.length > 0) {
-          const index = state.tasks.findIndex(
+        if (state.tasks.tasks.length > 0) {
+          const index = state.tasks.tasks.findIndex(
             task => task._id === action.payload._id
           );
-          state.tasks.splice(index, 1);
-          state.tasks.push(action.payload);
+          state.tasks.tasks.splice(index, 1);
+          state.tasks.tasks.push(action.payload);
         }
         state.currentTask = action.payload;
       })
