@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-export const PeriodTypeSelect = ({ mode }) => {
+export const PeriodTypeSelect = ({ mode, setType }) => {
   return (
     <List
       component="nav"
@@ -23,6 +23,7 @@ export const PeriodTypeSelect = ({ mode }) => {
       <ListItem sx={{ p: 0 }}>
         <ListItemButton
           LinkComponent={NavLink}
+          onClick={() => setType('month')}
           to="/main/calendar/month"
           sx={{
             backgroundColor: mode !== 'dark' ? '#21222C' : '#E3F3FF',
@@ -61,6 +62,7 @@ export const PeriodTypeSelect = ({ mode }) => {
       <ListItem sx={{ p: 0 }}>
         <ListItemButton
           LinkComponent={NavLink}
+          onClick={() => setType('day')}
           to="/main/calendar/day/2023-11-1"
           sx={{
             backgroundColor: mode !== 'dark' ? '#21222C' : '#E3F3FF',
