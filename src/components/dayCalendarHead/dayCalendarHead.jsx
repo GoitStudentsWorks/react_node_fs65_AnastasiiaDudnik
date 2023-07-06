@@ -5,7 +5,7 @@ import weekday from 'dayjs/plugin/weekday'
 dayjs.extend(weekday)
 
 export default function DayCalendarHead({ value, handleChange, weekend }) {
-    
+
     return (
         <>
             <Tabs
@@ -31,9 +31,9 @@ export default function DayCalendarHead({ value, handleChange, weekend }) {
     )
 }
 
-const style = {
-    iconDayTask: {
-
+const style = { 
+    
+    iconDayTask: { 
         paddingInline: '0',
         '&.Mui-selected': {
             color: '#343434',
