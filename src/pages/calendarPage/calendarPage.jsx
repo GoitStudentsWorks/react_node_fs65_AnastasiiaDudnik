@@ -1,12 +1,10 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Outlet } from 'react-router-dom';
+import CalendarComponent from 'components/calendar/calendar';
 
 const Calendar = () => {
   return (
     <Box>
-      <Typography paragraph>Calendar</Typography>
-      <Outlet />
+      <CalendarComponent />
     </Box>
   );
 };
