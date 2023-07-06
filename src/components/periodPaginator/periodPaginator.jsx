@@ -15,7 +15,6 @@ export const PeriodPaginator = ({ mode, type }) => {
     const today = moment(day, 'YYYY-MM-DD');
     const currentDate = today.format('DD MMMM YYYY');
     setDate(currentDate);
-
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
@@ -28,8 +27,10 @@ export const PeriodPaginator = ({ mode, type }) => {
   }, []);
 
   const handleDatePicker = date => {
-    const formattedDate = moment(date.$d).format('DD/MM/YYYY');
-    setDate(formattedDate);
+    const today = moment(date.$d, 'YYYY-MM-DD');
+    const currentDate = today.format('DD MMMM YYYY');
+
+    setDate(currentDate);
     setCalendar(false);
   };
 
