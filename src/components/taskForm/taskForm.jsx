@@ -47,7 +47,7 @@ const TaskForm = ({ closeModal, date, category }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(addTask(task));
+      dispatch(addTask({ ...task, date: '2023-07-07' }));
       closeModal();
     }
   };
