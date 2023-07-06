@@ -26,8 +26,9 @@ export const PeriodPaginator = ({ mode }) => {
   }, []);
 
   const handleDatePicker = date => {
-    const formattedDate = moment(date.$d).format('YYYY/MM/DD');
+    const formattedDate = moment(date.$d).format('DD/MM/YYYY');
     setDate(formattedDate);
+    setCalendar(false);
   };
 
   return (
@@ -71,9 +72,11 @@ export const PeriodPaginator = ({ mode }) => {
           borderRadius: '8px',
           color: '#fff',
           '& *': { color: '#fff' },
+          '& * .css-x2lq26-MuiButtonBase-root-MuiPickersDay-root:hover': {
+            backgroundColor: '#00a3ff',
+          },
         }}
         onChange={handleDatePicker}
-        defaultValue={date}
       />
       <Box
         sx={{
