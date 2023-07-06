@@ -5,15 +5,16 @@ import { colorsLight } from 'components/variables/colors';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-export const PeriodPaginator = ({ mode }) => {
+const day = new Date();
+export const PeriodPaginator = ({ mode, type }) => {
   const [calendar, setCalendar] = useState(false);
   const calendarRef = useRef(null);
   const [date, setDate] = useState('');
-  var day = new Date();
 
   useEffect(() => {
-    setDate(moment(day).format('DD/MM/YYYY'));
-
+    const today = moment(day, 'YYYY-MM-DD');
+    const currentDate = today.format('DD MMMM YYYY');
+    setDate(currentDate);
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
@@ -26,8 +27,11 @@ export const PeriodPaginator = ({ mode }) => {
   }, []);
 
   const handleDatePicker = date => {
-    const formattedDate = moment(date.$d).format('YYYY/MM/DD');
-    setDate(formattedDate);
+    const today = moment(date.$d, 'YYYY-MM-DD');
+    const currentDate = today.format('DD MMMM YYYY');
+
+    setDate(currentDate);
+    setCalendar(false);
   };
 
   return (
@@ -58,7 +62,7 @@ export const PeriodPaginator = ({ mode }) => {
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {date}
+          {type === 'month' ? date.slice(3, date.length) : date}
         </Typography>
       </Box>
       <DateCalendar
@@ -71,9 +75,11 @@ export const PeriodPaginator = ({ mode }) => {
           borderRadius: '8px',
           color: '#fff',
           '& *': { color: '#fff' },
+          '& * .css-x2lq26-MuiButtonBase-root-MuiPickersDay-root:hover': {
+            backgroundColor: '#00a3ff',
+          },
         }}
         onChange={handleDatePicker}
-        defaultValue={date}
       />
       <Box
         sx={{

@@ -41,7 +41,6 @@ export const getWeekTasks = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks/week`, { params: props });
-      console.log('allTasks', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

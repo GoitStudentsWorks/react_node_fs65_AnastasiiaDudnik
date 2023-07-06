@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
 import { useLocation } from 'react-router-dom';
-
+import hay from './hay.png';
 export const Header = ({
   handleDrawerToggle,
   drawerWidth,
@@ -44,6 +44,34 @@ export const Header = ({
     setFeedbackModalOpen(!feedbackModalOpen);
   };
 
+  const spanDay = () => {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            fontWeight: 600,
+            fontFamily: 'Inter, sans-serif',
+            lineHeight: '18px',
+            color: '#3E85F3',
+          }}
+        >
+          Let go
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            fontWeight: 600,
+            fontFamily: 'Inter, sans-serif',
+            lineHeight: '18px',
+            color: '#000',
+          }}
+        >
+          of the past and focus on the present!
+        </Typography>
+      </Box>
+    );
+  };
   return (
     <AppBar
       position="fixed"
@@ -68,22 +96,37 @@ export const Header = ({
         }}
       >
         {!matchesDesktop ? (
-          <Typography
-            fontSize={'32px'}
-            fontWeight={700}
-            fontFamily="Inter, sans-serif"
-            lineHeight={1}
+          <Box
             sx={{
-              color: mode !== 'dark' ? ' #fff' : 'text.primary',
-
-              textShadow:
-                '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
             }}
           >
-            {location.pathname === '/main/account'
-              ? 'User Profile'
-              : 'Calendar'}
-          </Typography>
+            {location.pathname === '/main/calendar/day' && (
+              <img src={hay} width={64} alt="goose" />
+            )}
+            <Box>
+              <Typography
+                fontSize={'32px'}
+                fontWeight={700}
+                fontFamily="Inter, sans-serif"
+                lineHeight={1}
+                sx={{
+                  color: mode !== 'dark' ? ' #fff' : 'text.primary',
+
+                  textShadow:
+                    '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
+                }}
+              >
+                {location.pathname === '/main/account'
+                  ? 'User Profile'
+                  : 'Calendar'}
+              </Typography>
+              {location.pathname === '/main/calendar/day' && spanDay()}
+            </Box>
+          </Box>
         ) : (
           <IconButton
             color="text.secondary"
