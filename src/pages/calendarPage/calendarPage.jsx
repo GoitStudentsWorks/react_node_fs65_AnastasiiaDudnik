@@ -1,20 +1,14 @@
 import Box from '@mui/material/Box';
-import CalendarComponent from 'components/calendar/calendar';
+import Calendar from 'components/calendar/calendar';
 import { CalendarToolbar } from 'components/calendarToolbar/calendarToolbar';
-// import Typography from '@mui/material/Typography';
-import { Outlet } from 'react-router-dom';
 
-
-const Calendar = ({ mode }) => {
+const CalendarPage = ({ mode }) => {
   return (
     <Box>
-      <CalendarComponentmode/>
-      {/* <Typography paragraph>Calendar</Typography> */}
       <CalendarToolbar mode={mode} />
-      <Outlet />
-
+      <Calendar />
     </Box>
   );
 };
 
-export default Calendar;
+export default CalendarPage;
