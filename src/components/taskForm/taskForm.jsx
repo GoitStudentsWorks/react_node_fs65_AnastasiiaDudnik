@@ -15,9 +15,9 @@ import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask } from 'redux/tasks/operations';
-import { selectError } from 'redux/tasks/selectors';
+// import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ currentTask, closeModal }) => {
+const TaskForm = ({ closeModal }) => {
   const defaultTask = {
     title: '',
     start: '00:00',
@@ -27,7 +27,7 @@ const TaskForm = ({ currentTask, closeModal }) => {
   };
 
   const [task, setTask] = useState(defaultTask);
-  const [savedTask, setSavedTask] = useState(null);
+  // const [savedTask, setSavedTask] = useState(null);
 
   const dispatch = useDispatch();
 

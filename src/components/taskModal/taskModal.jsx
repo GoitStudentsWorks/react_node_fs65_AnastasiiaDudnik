@@ -2,12 +2,12 @@ import { Box } from '@mui/material';
 import ModalWrapper from 'components/taskModal/modal/modal';
 import TaskForm from 'components/taskForm/taskForm';
 import { colorsLight } from 'components/variables/colors';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useState } from 'react';
+// import { useParams } from 'react-router-dom';
 
 const TaskModal = ({ closeModal, currentTask }) => {
-  const [data, setData] = useState(null);
-  const { currentDay } = useParams();
+  // const [data, setData] = useState(null);
+  // const { currentDay } = useParams();
 
   // useEffect(() => {
   //   const { _id, category } = currentTask;

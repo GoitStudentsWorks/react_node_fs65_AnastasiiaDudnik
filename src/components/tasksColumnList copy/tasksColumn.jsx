@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import AddTaskBtn from 'components/addTaskBtn/addTaskBtn';
 import { useState } from 'react';
 import TasksColumnList from 'components/tasksColumnList/tasksColumnList';
