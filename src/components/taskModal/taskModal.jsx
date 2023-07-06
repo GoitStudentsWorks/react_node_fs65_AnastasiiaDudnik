@@ -42,7 +42,7 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
           padding: 0,
         }}
       >
-        <TaskForm date={date ? date : new Date()} category={category ? category : 'to-do'} currentTask={currentTask} closeModal={closeModal} />
+        <TaskForm date={date} category={category ? category : 'to-do'} currentTask={currentTask} closeModal={closeModal} />
       </Box>
     </ModalWrapper>
   );
