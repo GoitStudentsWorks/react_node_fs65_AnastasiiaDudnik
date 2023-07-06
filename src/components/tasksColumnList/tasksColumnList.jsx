@@ -2,21 +2,15 @@ import { List, ListItem } from '@mui/material'
 import TaskColumnCard from 'components/taskColumnCard/taskColumnCard'
 import React from 'react'
 
-export default function TasksColumnList() {
+export default function TasksColumnList({ todos }) {
+
     return (
         <List sx={style.list}>
-            <ListItem sx={style.item}>
-                <TaskColumnCard />
-            </ListItem>
-            <ListItem sx={style.item}>
-                <TaskColumnCard />
-            </ListItem>
-            <ListItem sx={style.item}>
-                <TaskColumnCard />
-            </ListItem>
-            <ListItem sx={style.item}>
-                <TaskColumnCard />
-            </ListItem>
+            {todos.map(todo =>
+                <ListItem key={todo._id} sx={style.item}>
+                    <TaskColumnCard todo={todo} />
+                </ListItem>
+            )}
         </List>
     )
 }
@@ -28,8 +22,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
-        marginTop: '24px',
-        overflowY: 'auto',
+        marginTop: '24px', 
         height: '400px',
         padding: '0',
         paddingInline: '21px',

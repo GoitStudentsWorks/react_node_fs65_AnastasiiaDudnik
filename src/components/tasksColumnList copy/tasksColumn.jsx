@@ -1,23 +1,36 @@
-import { Box, Typography } from '@mui/material'
-import AddTaskBtn from 'components/addTaskBtn/addTaskBtn'
-import TasksColumnList from 'components/tasksColumnList/tasksColumnList'
-import React from 'react'
+import { Box, Button, Typography } from '@mui/material';
+import AddTaskBtn from 'components/addTaskBtn/addTaskBtn';
+import { useState } from 'react';
+import TasksColumnList from 'components/tasksColumnList/tasksColumnList';
+import React from 'react';
+import TaskModal from 'components/taskModal/taskModal';
 
-export default function TasksColumn() {
+export default function TasksColumn({ title, todos }) {
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <Box sx={style.listTodos}>
       <Box sx={style.addPanel}>
-        <Typography> To do</Typography>
-        <AddTaskBtn />
+        <Typography>{title}</Typography>
+        <AddTaskBtn openModal={openModal} />
       </Box>
 
-      <TasksColumnList />
+      <TasksColumnList todos={todos} />
 
       <Box sx={style.btnAdd}>
-        <AddTaskBtn btnList />
+        <AddTaskBtn btnList openModal={openModal} />
       </Box>
+      {showModal && <TaskModal currentTask={todos} closeModal={closeModal} />}
     </Box>
-  )
+  );
 }
 
 const style = {
@@ -34,11 +47,11 @@ const style = {
     left: '18px',
     boxSizing: 'border-box',
     paddingInline: {
-      md: '21px'
+      md: '21px',
     },
     marginTop: {
-      md: '32px'
-    }
+      md: '32px',
+    },
   },
   addPanel: {
     paddingInline: '21px',
@@ -67,7 +80,6 @@ const style = {
     scrollSnapAlign: 'center',
     alignItems: 'space-between',
     position: 'relative',
-    padding: '18px 0 22px 0'
+    padding: '18px 0 22px 0',
   },
-
-}
+};

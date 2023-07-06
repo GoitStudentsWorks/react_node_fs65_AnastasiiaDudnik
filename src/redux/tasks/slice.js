@@ -5,11 +5,13 @@ import {
   addTask,
   updateTask,
   deleteTask,
+  getWeekTasks,
 } from './operations';
 import { logout } from '../../redux/auth/operations';
 
 const extraActions = [
   getTasks,
+  getWeekTasks,
   getTaskById,
   addTask,
   updateTask,
@@ -40,6 +42,9 @@ const tasksSlice = createSlice({
       .addCase(getTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
       })
+      .addCase(getWeekTasks.fulfilled, (state, action) => {
+        state.tasks = action.payload;
+      })
       .addCase(getTaskById.fulfilled, (state, action) => {
         state.currentTask = action.payload;
       })
@@ -48,20 +53,22 @@ const tasksSlice = createSlice({
         state.currentTask = action.payload;
       })
       .addCase(updateTask.fulfilled, (state, action) => {
-        if (state.tasks.length > 0) {
-          const index = state.tasks.findIndex(
+        if (state.tasks.tasks.length > 0) {
+          const index = state.tasks.tasks.findIndex(
             task => task._id === action.payload._id
           );
-          state.tasks.splice(index, 1);
-          state.tasks.push(action.payload);
+          state.tasks.tasks.splice(index, 1);
+          state.tasks.tasks.push(action.payload);
         }
         state.currentTask = action.payload;
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
-        const index = state.tasks.findIndex(
-          task => task._id === action.payload._id
-        );
-        state.tasks.splice(index, 1);
+        // const index = state.tasks.findIndex(
+        //   task => task._id === action.payload._id
+        // );
+        // state.tasks.splice(index, 1);
+        state.tasks.tasks = state.tasks.tasks.filter(task => task._id !== action.payload._id)
+
         state.currentTask = null;
       })
       .addCase(logout.fulfilled, state => {

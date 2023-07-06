@@ -2,11 +2,14 @@ import { useDispatch } from 'react-redux';
 import { Button, SvgIcon, Typography } from '@mui/material';
 import Sprite from '../../icons/sprite.svg';
 import { logout } from '../../redux/auth/operations';
+import { useNavigate } from 'react-router-dom';
 
 export const LogoutBtn = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onLogout = () => {
     dispatch(logout());
+    navigate('/');
   };
   return (
     <Button

@@ -301,9 +301,8 @@ const UserForm = ({ mode }) => {
                           '#FFFFFF26'
                         } solid 1px`
                       : `${
-                          (isValid('username') === 'is-invalid' &&
-                            borderColor.invalidColor) ||
-                          borderColor.validColor
+                          isValid('username') === 'is-invalid' &&
+                          borderColor.invalidColor
                         } solid 1px`,
                   borderRadius: '8px',
 

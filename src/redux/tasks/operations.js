@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-const { REACT_APP_API_URL } = process.env;
+import dayjs from 'dayjs';
 const instance = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: 'https://goose-calendar.onrender.com/',
 });
 
 const setAuthHeader = token => {
@@ -22,6 +22,25 @@ export const getTasks = createAsyncThunk(
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks`, { date });
       console.log('allTasks', response.data);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getWeekTasks = createAsyncThunk(
+  'tasks/getWeekTasks',
+  async (props, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      setAuthHeader(persistedToken);
+      const response = await instance.get(`/tasks/week`, { params: props });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -78,7 +97,7 @@ export const addTask = createAsyncThunk(
 
 export const updateTask = createAsyncThunk(
   'tasks/updateTask',
-  async ({ id, title, start, end, priority, date, category }, thunkAPI) => {
+  async ({ _id, title, start, end, priority, date, category }, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
@@ -87,12 +106,12 @@ export const updateTask = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.patch(`/tasks/${id}`, {
+      const response = await instance.patch(`/tasks/${_id}`, {
         title,
         start,
         end,
         priority,
-        date,
+        date: dayjs(date).format('YYYY-MM-DD'),
         category,
       });
       console.log('updatedTask', response.data);
@@ -116,7 +135,7 @@ export const deleteTask = createAsyncThunk(
       setAuthHeader(persistedToken);
       const response = await instance.delete(`/tasks/${id}`);
       console.log('deletedTask', response.data);
-      return response.data;
+      return { ...response.data, _id: id };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
