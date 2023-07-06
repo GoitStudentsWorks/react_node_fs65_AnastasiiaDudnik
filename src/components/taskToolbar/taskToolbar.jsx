@@ -1,5 +1,5 @@
 import { Box, IconButton, List, ListItem, SvgIcon } from '@mui/material'
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import Sprite from '../../icons/sprite.svg'
 import { useDispatch } from 'react-redux'
 import { deleteTask, updateTask } from 'redux/tasks/operations';
@@ -7,8 +7,18 @@ import { deleteTask, updateTask } from 'redux/tasks/operations';
 function MiniModal({ todo }) {
     const dispatch = useDispatch();
 
+    const right = {   }
+
+    if (todo.category === 'done') {
+        right.right = { xs: '-66px' }
+    } else {
+        
+        right.left = { md: '0px', }
+    }
+
     return (
-        <Box sx={style.miniModal} id={'modal'}>
+        
+        <Box sx={ {...style.miniModal, ...right} } id={'modal'}>
             <Box sx={{ ...style.btnMiniModal, display: todo.category === 'to-do' ? 'none' : 'flex' }}
                 onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))} >
                 To do
@@ -42,11 +52,11 @@ export default function TaskToolbar({ todo }) {
 
             <ListItem sx={{ padding: '0', position: { xs: 'static', md: 'relative' } }}>
                 <IconButton aria-label="drag" sx={style.btnMenu} onClick={() => setIsOpen(isOpen => !isOpen)}>
-                    <SvgIcon sx={{...style.iconButton, stroke: isOpen === true ? 'blue' : '#111111'}}   >
+                    <SvgIcon sx={{ ...style.iconButton, stroke: isOpen === true ? '#3E85F3' : '#111111' }}   >
                         <use href={`${Sprite}#arrow-circle`}></use>
                     </SvgIcon>
                 </IconButton>
-                {isOpen && <MiniModal todo={todo}/>}
+                {isOpen && <MiniModal todo={todo} />}
 
             </ListItem>
 
@@ -71,6 +81,8 @@ export default function TaskToolbar({ todo }) {
 }
 
 const style = {
+
+
     taskMenu: {
         maxWidth: 360,
         display: 'flex',
@@ -79,6 +91,11 @@ const style = {
     },
     btnMenu: {
         padding: '0',
+        '&:hover, &:focus': {
+            '& svg': {
+                stroke: '#3E85F3'
+            },
+        }
     },
     iconButton: {
         width: { xs: '14px', md: '16px' },
@@ -91,7 +108,6 @@ const style = {
         gap: '14px',
         position: 'absolute',
         right: { xs: '-15px' },
-        left: { md: '0px', },
         bottom: '-10px',
         padding: '20px 24px',
         boxSizing: 'border-box',
@@ -115,6 +131,13 @@ const style = {
 
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        '&:hover, &:focus': {
+            color: ' #3E85F3',
+            '& svg': {
+                stroke: '#3E85F3'
+            },
+            cursor: 'pointer',
+        }
     }
 }

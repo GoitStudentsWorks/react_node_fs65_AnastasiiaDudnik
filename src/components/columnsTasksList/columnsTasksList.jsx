@@ -4,27 +4,27 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectTasks } from 'redux/tasks/selectors'
 
-export default function ColumnsTasksList({value, weekend}) {
-  const {tasks} = useSelector(selectTasks);
+export default function ColumnsTasksList({ value, weekend }) {
+  const { tasks } = useSelector(selectTasks);
   const day = new Date(weekend[value].date).getDate();
 
   if (!tasks) {
     return
   }
-  
-  const dayTasks = tasks.filter(({date}) => new Date(date).getDate() === day) 
-  
+
+  const dayTasks = tasks.filter(({ date }) => new Date(date).getDate() === day)
+
   return (
     <Box sx={style.taskPanel}>
-      <TasksColumn title={'To do'} todos={dayTasks.filter(({category}) => category === "to-do")}/>
-      <TasksColumn title={'In progress'} todos={dayTasks.filter(({category}) => category === "in-progress")}/>
-      <TasksColumn title={'Done'} todos={dayTasks.filter(({category}) => category === "done")}/>
+      <TasksColumn title={'To do'} category={'to-do'} date={day} todos={dayTasks.filter(({ category }) => category === "to-do")} />
+      <TasksColumn title={'In progress'} category={'in-progress'} date={day} todos={dayTasks.filter(({ category }) => category === "in-progress")} />
+      <TasksColumn title={'Done'} category={'done'} date={day} todos={dayTasks.filter(({ category }) => category === "done")} />
     </Box>
   )
 }
 
 const style = {
-  
+
   taskPanel: {
     scrollbarColor: 'black',
     display: 'flex  ',
@@ -47,5 +47,10 @@ const style = {
     boxSizing: 'border-box',
 
     paddingBottom: '46px',
+
+    maxHeight: {
+      md: '100%',
+      lg: '100%'
+    },
   }
 }

@@ -5,7 +5,7 @@ import { colorsLight } from 'components/variables/colors';
 // import { useState } from 'react';
 // import { useParams } from 'react-router-dom';
 
-const TaskModal = ({ closeModal, currentTask }) => {
+const TaskModal = ({ closeModal, currentTask, date, category }) => {
   // const [data, setData] = useState(null);
   // const { currentDay } = useParams();
 
@@ -42,7 +42,7 @@ const TaskModal = ({ closeModal, currentTask }) => {
           padding: 0,
         }}
       >
-        <TaskForm currentTask={currentTask} closeModal={closeModal} />
+        <TaskForm date={date ? date : new Date()} category={category ? category : 'to-do'} currentTask={currentTask} closeModal={closeModal} />
       </Box>
     </ModalWrapper>
   );

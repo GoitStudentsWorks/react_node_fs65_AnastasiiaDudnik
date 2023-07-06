@@ -15,15 +15,17 @@ import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask } from 'redux/tasks/operations';
+import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal }) => {
+const TaskForm = ({ closeModal, date, category }) => {
   const defaultTask = {
     title: '',
     start: '00:00',
     end: '00:00',
-    priority: 'Low',
-    category: 'in-progress',
+    priority: 'low',
+    category,
+    date: dayjs(new Date(date)).format('YYYY-MM-DD'),
   };
 
   const [task, setTask] = useState(defaultTask);
@@ -185,7 +187,7 @@ const TaskForm = ({ closeModal }) => {
           >
             <FormControlLabel
               label="Low"
-              value={'Low'}
+              value={'low'}
               control={
                 <Radio
                   sx={{
@@ -202,7 +204,7 @@ const TaskForm = ({ closeModal }) => {
             />
             <FormControlLabel
               label="Medium"
-              value={'Medium'}
+              value={'medium'}
               control={
                 <Radio
                   sx={{
@@ -220,7 +222,7 @@ const TaskForm = ({ closeModal }) => {
             />
             <FormControlLabel
               label="High"
-              value={'High'}
+              value={'high'}
               control={
                 <Radio
                   sx={{
