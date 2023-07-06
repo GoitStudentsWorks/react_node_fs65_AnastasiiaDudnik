@@ -22,7 +22,7 @@ const TaskForm = ({ closeModal }) => {
     title: '',
     start: '00:00',
     end: '00:00',
-    priority: 'Low',
+    priority: 'low',
     category: 'in-progress',
   };
 
@@ -45,7 +45,7 @@ const TaskForm = ({ closeModal }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(addTask(task));
+      dispatch(addTask({ ...task, date: '2023-07-07' }));
       closeModal();
     }
   };
@@ -185,7 +185,7 @@ const TaskForm = ({ closeModal }) => {
           >
             <FormControlLabel
               label="Low"
-              value={'Low'}
+              value={'low'}
               control={
                 <Radio
                   sx={{
@@ -202,7 +202,7 @@ const TaskForm = ({ closeModal }) => {
             />
             <FormControlLabel
               label="Medium"
-              value={'Medium'}
+              value={'medium'}
               control={
                 <Radio
                   sx={{
@@ -220,7 +220,7 @@ const TaskForm = ({ closeModal }) => {
             />
             <FormControlLabel
               label="High"
-              value={'High'}
+              value={'high'}
               control={
                 <Radio
                   sx={{
