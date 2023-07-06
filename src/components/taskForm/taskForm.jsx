@@ -21,8 +21,8 @@ import dayjs from 'dayjs';
 const TaskForm = ({ closeModal, date, category }) => {
   const defaultTask = {
     title: '',
-    start: '00:00',
-    end: '00:00',
+    start: '09:00',
+    end: '09:30',
     priority: 'low',
     category,
     date: dayjs(new Date(date)).format('YYYY-MM-DD'),
@@ -47,7 +47,7 @@ const TaskForm = ({ closeModal, date, category }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(addTask({ ...task, date: '2023-07-07' }));
+      dispatch(addTask({ ...task, date: dayjs(new Date(date)).format('YYYY-MM-DD') }));
       closeModal();
     }
   };

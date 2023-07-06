@@ -7,7 +7,7 @@ import { selectTasks } from 'redux/tasks/selectors'
 export default function ColumnsTasksList({ value, weekend }) {
   const { tasks } = useSelector(selectTasks);
   const day = new Date(weekend[value].date).getDate();
-
+  const dateTask = new Date(weekend[value].date)
   if (!tasks) {
     return
   }
@@ -16,9 +16,9 @@ export default function ColumnsTasksList({ value, weekend }) {
 
   return (
     <Box sx={style.taskPanel}>
-      <TasksColumn title={'To do'} category={'to-do'} date={day} todos={dayTasks.filter(({ category }) => category === "to-do")} />
-      <TasksColumn title={'In progress'} category={'in-progress'} date={day} todos={dayTasks.filter(({ category }) => category === "in-progress")} />
-      <TasksColumn title={'Done'} category={'done'} date={day} todos={dayTasks.filter(({ category }) => category === "done")} />
+      <TasksColumn title={'To do'} category={'to-do'} date={dateTask} todos={dayTasks.filter(({ category }) => category === "to-do")} />
+      <TasksColumn title={'In progress'} category={'in-progress'} date={dateTask} todos={dayTasks.filter(({ category }) => category === "in-progress")} />
+      <TasksColumn title={'Done'} category={'done'} date={dateTask} todos={dayTasks.filter(({ category }) => category === "done")} />
     </Box>
   )
 }
