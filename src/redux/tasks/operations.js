@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 const instance = axios.create({
   baseURL: 'https://goose-calendar.onrender.com/',
 });
@@ -97,7 +98,7 @@ export const addTask = createAsyncThunk(
 
 export const updateTask = createAsyncThunk(
   'tasks/updateTask',
-  async ({ id, title, start, end, priority, date, category }, thunkAPI) => {
+  async ({ _id, title, start, end, priority, date, category }, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
@@ -106,12 +107,12 @@ export const updateTask = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.patch(`/tasks/${id}`, {
+      const response = await instance.patch(`/tasks/${_id}`, {
         title,
         start,
         end,
         priority,
-        date,
+        date: dayjs(date).format('YYYY-MM-DD'),
         category,
       });
       console.log('updatedTask', response.data);

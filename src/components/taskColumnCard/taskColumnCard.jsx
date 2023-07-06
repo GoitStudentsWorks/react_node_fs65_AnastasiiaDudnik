@@ -16,7 +16,7 @@ export default function TaskColumnCard({todo}) {
                         todo.priority === 'low' ? "#72C2F8" : todo.priority === 'medium' ? '#F3B249' : '#EA3D65'
                     }}>{todo.priority}</Box>
                 </Box>
-                <TaskToolbar id={todo._id}/>
+                <TaskToolbar todo={todo}/>
             </Box>
         </Box>
     )
@@ -39,8 +39,10 @@ const style = {
         padding: '15px',
         boxSizing: 'border-box',
         bgcolor: '#F7F6F9',
-        width: '100%',
-        borderRadius: '8px'
+        minWidth: '100%',
+        maxWidth: '100%',
+        borderRadius: '8px',
+        position: 'relative',
     },
     avatarBox: {
         display: 'flex',

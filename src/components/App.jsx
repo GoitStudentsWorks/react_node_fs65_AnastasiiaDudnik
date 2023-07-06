@@ -95,7 +95,7 @@ export const App = () => {
             }
           >
             <Route
-              index
+              path='day/:currentDay'
               element={
                 <PrivateRoute
                   redirectTo="/login"

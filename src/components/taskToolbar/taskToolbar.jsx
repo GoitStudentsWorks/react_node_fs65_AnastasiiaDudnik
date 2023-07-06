@@ -1,22 +1,53 @@
-import { IconButton, List, ListItem, SvgIcon } from '@mui/material'
-import React from 'react'
+import { Box, IconButton, List, ListItem, SvgIcon } from '@mui/material'
+import React, {  useState } from 'react'
 import Sprite from '../../icons/sprite.svg'
 import { useDispatch } from 'react-redux'
-import { deleteTask } from 'redux/tasks/operations';
+import { deleteTask, updateTask } from 'redux/tasks/operations';
 
-export default function TaskToolbar({ id }) {
+function MiniModal({ todo }) {
     const dispatch = useDispatch();
 
+    return (
+        <Box sx={style.miniModal} id={'modal'}>
+            <Box sx={{ ...style.btnMiniModal, display: todo.category === 'to-do' ? 'none' : 'flex' }}
+                onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))} >
+                To do
+                <SvgIcon sx={style.iconButton} stroke="#111111" >
+                    <use href={`${Sprite}#arrow-circle`}></use>
+                </SvgIcon>
+            </Box>
+            <Box sx={{ ...style.btnMiniModal, display: todo.category === 'in-progress' ? 'none' : 'flex' }}
+                onClick={() => dispatch(updateTask({ ...todo, category: 'in-progress' }))}>
+                In progress
+                <SvgIcon sx={style.iconButton} stroke="#111111" >
+                    <use href={`${Sprite}#arrow-circle`}></use>
+                </SvgIcon>
+            </Box>
+            <Box sx={{ ...style.btnMiniModal, display: todo.category === 'done' ? 'none' : 'flex' }}
+                onClick={() => dispatch(updateTask({ ...todo, category: 'done' }))}>
+                Done
+                <SvgIcon sx={style.iconButton} stroke="#111111" >
+                    <use href={`${Sprite}#arrow-circle`}></use>
+                </SvgIcon>
+            </Box>
+        </Box>)
+}
+
+export default function TaskToolbar({ todo }) {
+    const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <List sx={style.taskMenu} >
 
-            <ListItem sx={{ padding: '0' }}>
-                <IconButton aria-label="drag" sx={style.btnMenu}>
-                    <SvgIcon sx={style.iconButton} stroke="#111111" >
+            <ListItem sx={{ padding: '0', position: { xs: 'static', md: 'relative' } }}>
+                <IconButton aria-label="drag" sx={style.btnMenu} onClick={() => setIsOpen(isOpen => !isOpen)}>
+                    <SvgIcon sx={{...style.iconButton, stroke: isOpen === true ? 'blue' : '#111111'}}   >
                         <use href={`${Sprite}#arrow-circle`}></use>
                     </SvgIcon>
                 </IconButton>
+                {isOpen && <MiniModal todo={todo}/>}
+
             </ListItem>
 
             <ListItem sx={{ padding: '0' }}>
@@ -28,7 +59,7 @@ export default function TaskToolbar({ id }) {
             </ListItem>
 
             <ListItem sx={{ padding: '0' }}>
-                <IconButton aria-label="delete" sx={style.btnMenu} onClick={() => dispatch(deleteTask(id))}>
+                <IconButton aria-label="delete" sx={style.btnMenu} onClick={() => dispatch(deleteTask(todo._id))}>
                     <SvgIcon sx={style.iconButton} stroke="#111111" >
                         <use href={`${Sprite}#trash`}></use>
                     </SvgIcon>
@@ -48,10 +79,42 @@ const style = {
     },
     btnMenu: {
         padding: '0',
-        color: 'transparent'
     },
     iconButton: {
         width: { xs: '14px', md: '16px' },
         height: { xs: '14px', md: '16px' },
+        color: 'transparent'
     },
+    miniModal: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px',
+        position: 'absolute',
+        right: { xs: '-15px' },
+        left: { md: '0px', },
+        bottom: '-10px',
+        padding: '20px 24px',
+        boxSizing: 'border-box',
+        width: '148px',
+        height: '90px',
+        bgcolor: '#FFFFFF',
+        borderRadius: '8px',
+        transform: 'translateY(100%)',
+        zIndex: '1000',
+        boxShadow: '0px 4px 16px 0px rgba(17, 17, 17, 0.10)'
+
+    },
+    btnMiniModal: {
+        height: '18px',
+        color: '#343434',
+        fontSize: '14px',
+        fontFamily: 'Inter',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: '18px',
+
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
 }
