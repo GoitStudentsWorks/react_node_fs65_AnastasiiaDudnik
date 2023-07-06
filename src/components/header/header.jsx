@@ -105,7 +105,7 @@ export const Header = ({
             }}
           >
             {location.pathname === '/main/calendar/day' && (
-              <img src={hay} width={64} />
+              <img src={hay} width={64} alt="goose" />
             )}
             <Box>
               <Typography

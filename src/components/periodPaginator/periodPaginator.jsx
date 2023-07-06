@@ -5,14 +5,16 @@ import { colorsLight } from 'components/variables/colors';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-export const PeriodPaginator = ({ mode }) => {
+const day = new Date();
+export const PeriodPaginator = ({ mode, type }) => {
   const [calendar, setCalendar] = useState(false);
   const calendarRef = useRef(null);
   const [date, setDate] = useState('');
-  var day = new Date();
 
   useEffect(() => {
-    setDate(moment(day).format('DD/MM/YYYY'));
+    const today = moment(day, 'YYYY-MM-DD');
+    const currentDate = today.format('DD MMMM YYYY');
+    setDate(currentDate);
 
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
@@ -59,7 +61,7 @@ export const PeriodPaginator = ({ mode }) => {
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {date}
+          {type === 'month' ? date.slice(3, date.length) : date}
         </Typography>
       </Box>
       <DateCalendar
