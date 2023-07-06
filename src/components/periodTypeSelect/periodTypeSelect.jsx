@@ -63,7 +63,7 @@ export const PeriodTypeSelect = ({ mode, setType }) => {
         <ListItemButton
           LinkComponent={NavLink}
           onClick={() => setType('day')}
-          to="/main/calendar/day/2023-11-1"
+          to="/main/calendar/day"
           sx={{
             backgroundColor: mode !== 'dark' ? '#21222C' : '#E3F3FF',
             color: '#3E85F3',
