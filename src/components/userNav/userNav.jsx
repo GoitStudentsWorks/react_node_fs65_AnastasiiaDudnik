@@ -127,7 +127,7 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
           </ListItemButton>
         </ListItem>
 
-        {/* <ListItem onClick={handleDrawerToggle} disablePadding>
+        <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
             to="/main/statistics"
@@ -169,8 +169,7 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
               }
             />
           </ListItemButton>
-        </ListItem> */}
-
+        </ListItem>
       </List>
     </Box>
   );
