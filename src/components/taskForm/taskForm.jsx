@@ -15,15 +15,17 @@ import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask } from 'redux/tasks/operations';
+import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal }) => {
+const TaskForm = ({ closeModal, date, category }) => {
   const defaultTask = {
     title: '',
     start: '00:00',
     end: '00:00',
     priority: 'low',
-    category: 'in-progress',
+    category,
+    date: dayjs(new Date(date)).format('YYYY-MM-DD'),
   };
 
   const [task, setTask] = useState(defaultTask);
