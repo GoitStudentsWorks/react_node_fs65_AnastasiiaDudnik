@@ -3,8 +3,8 @@ import { PeriodPaginator } from 'components/periodPaginator/periodPaginator';
 import { PeriodTypeSelect } from 'components/periodTypeSelect/periodTypeSelect';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 const day = new Date();
@@ -12,9 +12,16 @@ const today = moment(day, 'YYYY-MM-DD');
 const currentDate = today.format('YYYY-MM-DD');
 
 export const CalendarToolbar = ({ mode }) => {
+  const location = useLocation()
   const [type, setType] = useState('month');
   const [date, setDate] = useState(currentDate);
   const navigate = useNavigate();
+  
+  useEffect(()=>{
+   if (location.pathname.includes('day')) {
+    setType(location.pathname.slice(15,18))
+   }
+  })
 
   const selectDate = date => {
     navigate(`/main/calendar/${type}/${date}`);

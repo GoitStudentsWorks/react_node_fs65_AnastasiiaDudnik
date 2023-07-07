@@ -15,6 +15,8 @@ export const PeriodPaginator = ({
   nextArray,
   backArray,
 }) => {
+
+
   const calendarRef = useRef(null);
   const [calendar, setCalendar] = useState(false);
 
