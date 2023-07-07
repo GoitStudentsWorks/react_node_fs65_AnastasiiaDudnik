@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-// import Calendar from 'components/calendar/calendar';
 import { CalendarToolbar } from 'components/calendarToolbar/calendarToolbar';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const CalendarPage = ({ mode }) => {
@@ -8,7 +8,6 @@ const CalendarPage = ({ mode }) => {
     <Box>
       <CalendarToolbar mode={mode} />
       <Outlet />
-      {/* <Calendar /> */}
     </Box>
   );
 };
