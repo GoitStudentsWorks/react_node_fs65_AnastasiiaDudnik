@@ -6,16 +6,21 @@ import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 
-const day = new Date();
-export const PeriodPaginator = ({ mode, type, selectDate }) => {
-  const [calendar, setCalendar] = useState(false);
+export const PeriodPaginator = ({
+  mode,
+  type,
+  selectDate,
+  date,
+  nextArray,
+  backArray,
+}) => {
   const calendarRef = useRef(null);
-  const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState(false);
+
+  const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
+  const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
 
   useEffect(() => {
-    const today = moment(day, 'YYYY-MM-DD');
-    const currentDate = today.format('DD MMMM YYYY');
-    setDate(currentDate);
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
@@ -29,10 +34,8 @@ export const PeriodPaginator = ({ mode, type, selectDate }) => {
 
   const handleDatePicker = date => {
     const today = moment(date.$d, 'YYYY-MM-DD');
-    const currentDate = today.format('DD MMMM YYYY');
     const urlDate = today.format('YYYY-MM-DD');
     selectDate(urlDate);
-    setDate(currentDate);
     setCalendar(false);
   };
 
@@ -64,7 +67,9 @@ export const PeriodPaginator = ({ mode, type, selectDate }) => {
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {type === 'month' ? date.slice(3, date.length) : date}
+          {type === 'month'
+            ? formattedDate.slice(0, date.slength)
+            : chooseFormattedDate}
         </Typography>
       </Box>
       <DateCalendar
@@ -85,6 +90,7 @@ export const PeriodPaginator = ({ mode, type, selectDate }) => {
       />
       <Box
         sx={{
+          maxHeight: '34px',
           borderRadius: '8px',
           border:
             mode === 'dark'
@@ -94,6 +100,9 @@ export const PeriodPaginator = ({ mode, type, selectDate }) => {
         }}
       >
         <Button
+          onClick={() => {
+            backArray();
+          }}
           sx={{
             minWidth: '38px',
             backgroundColor: mode === 'dark' ? '#fff' : '#21222C',
@@ -110,6 +119,9 @@ export const PeriodPaginator = ({ mode, type, selectDate }) => {
           </SvgIcon>
         </Button>
         <Button
+          onClick={() => {
+            nextArray();
+          }}
           sx={{
             minWidth: '38px',
             backgroundColor: mode === 'dark' ? '#fff' : '#21222C',

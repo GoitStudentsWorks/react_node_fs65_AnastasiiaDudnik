@@ -21,6 +21,25 @@ export const CalendarToolbar = ({ mode }) => {
     setDate(date);
   };
 
+  const nextArray = () => {
+    if (type === 'month') {
+      const nextDate = moment(date).add(1, 'month').format('YYYY-MM-DD');
+      return selectDate(nextDate);
+    }
+    const nextDate = moment(date).add(1, 'day').format('YYYY-MM-DD');
+    return selectDate(nextDate);
+  };
+  const backArray = () => {
+    if (type === 'month') {
+      const previousDate = moment(date)
+        .subtract(1, 'month')
+        .format('YYYY-MM-DD');
+      return selectDate(previousDate);
+    }
+    const previousDate = moment(date).subtract(1, 'day').format('YYYY-MM-DD');
+    return selectDate(previousDate);
+  };
+
   return (
     <Box
       sx={{
@@ -30,7 +49,14 @@ export const CalendarToolbar = ({ mode }) => {
       }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <PeriodPaginator mode={mode} type={type} selectDate={selectDate} />
+        <PeriodPaginator
+          mode={mode}
+          type={type}
+          selectDate={selectDate}
+          date={date}
+          nextArray={nextArray}
+          backArray={backArray}
+        />
       </LocalizationProvider>
       <PeriodTypeSelect mode={mode} setType={setType} date={date} />
     </Box>
