@@ -3,20 +3,42 @@ import { PeriodPaginator } from 'components/periodPaginator/periodPaginator';
 import { PeriodTypeSelect } from 'components/periodTypeSelect/periodTypeSelect';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+
+const day = new Date();
+const today = moment(day, 'YYYY-MM-DD');
+const currentDate = today.format('YYYY-MM-DD');
 
 export const CalendarToolbar = ({ mode }) => {
   const [type, setType] = useState('month');
-  const location = useLocation();
-  const pathname = location.pathname.slice(0, -11);
-  useEffect(() => {
-    if (pathname.endsWith('main/c')) {
-      setType('day');
-      return;
+  const [date, setDate] = useState(currentDate);
+  const navigate = useNavigate();
+
+  const selectDate = date => {
+    navigate(`/main/calendar/${type}/${date}`);
+    setDate(date);
+  };
+
+  const nextArray = () => {
+    if (type === 'month') {
+      const nextDate = moment(date).add(1, 'month').format('YYYY-MM-DD');
+      return selectDate(nextDate);
     }
-    setType('month');
-  }, [pathname]);
+    const nextDate = moment(date).add(1, 'day').format('YYYY-MM-DD');
+    return selectDate(nextDate);
+  };
+  const backArray = () => {
+    if (type === 'month') {
+      const previousDate = moment(date)
+        .subtract(1, 'month')
+        .format('YYYY-MM-DD');
+      return selectDate(previousDate);
+    }
+    const previousDate = moment(date).subtract(1, 'day').format('YYYY-MM-DD');
+    return selectDate(previousDate);
+  };
 
   return (
     <Box
@@ -27,9 +49,16 @@ export const CalendarToolbar = ({ mode }) => {
       }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <PeriodPaginator mode={mode} type={type} />
+        <PeriodPaginator
+          mode={mode}
+          type={type}
+          selectDate={selectDate}
+          date={date}
+          nextArray={nextArray}
+          backArray={backArray}
+        />
       </LocalizationProvider>
-      <PeriodTypeSelect mode={mode} />
+      <PeriodTypeSelect mode={mode} setType={setType} date={date} />
     </Box>
   );
 };

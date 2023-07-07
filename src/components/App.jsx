@@ -16,10 +16,10 @@ const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
 const MainPage = lazy(() => import('pages/mainPage/MainPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 const Account = lazy(() => import('../pages/accountPage/accountPage'));
-const Calendar = lazy(() => import('../pages/calendarPage/calendarPage'));
-// const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
+const CalendarPage = lazy(() => import('../pages/calendarPage/calendarPage'));
+const Statistics = lazy(() => import('../pages/statisticsPage/statisticsPage'));
 const ChoosedDay = lazy(() => import('./choosedDay/choosedDay'));
-const ChoosedMonth = lazy(() => import('./choosedMonth/choosedMonth'));
+const Calendar = lazy(() => import('./calendar/calendar'));
 
 export const App = () => {
   const [mode, setMode] = useState('dark');
@@ -90,12 +90,30 @@ export const App = () => {
             element={
               <PrivateRoute
                 redirectTo="/login"
-                component={<Calendar mode={mode} />}
+                component={<CalendarPage mode={mode} />}
               />
             }
           >
             <Route
-              path='day/:currentDay'
+              index
+              element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<Calendar mode={mode} />}
+                />
+              }
+            />
+            <Route
+              path="month/:day"
+              element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<Calendar mode={mode} />}
+                />
+              }
+            />
+            <Route
+              path="day/:day"
               element={
                 <PrivateRoute
                   redirectTo="/login"
@@ -104,36 +122,22 @@ export const App = () => {
               }
             />
 
-            <Route
-              path="month"
+            {/* <Route
+              path="day/:currentDay"
               element={
                 <PrivateRoute
                   redirectTo="/login"
-                  component={<ChoosedMonth mode={mode} />}
+                  component={<ChoosedDay mode={mode} />}
                 />
-              }
-            />
-
-            <Route
-              path="day"
-              element={
-                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
-              }
-            />
-
-            {/* <Route
-              index
-              element={
-                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
               }
             /> */}
           </Route>
-          {/* <Route
+          <Route
             path="main/statistics"
             element={
               <PrivateRoute redirectTo="/login" component={<Statistics />} />
             }
-          /> */}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

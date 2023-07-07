@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 const Calendar = () => {
   const currentDate = dayjs();
   const daysInMonth = currentDate.daysInMonth();
-  console.log(daysInMonth);
   const monthStart = currentDate.startOf('month').day();
   const firstDayOfWeek = 1; // Set the first day of the week as 1 (Monday)
 

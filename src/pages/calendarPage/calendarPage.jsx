@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import CalendarComponent from 'components/calendar/calendar';
 import { CalendarToolbar } from 'components/calendarToolbar/calendarToolbar';
 
-const Calendar = ({ mode }) => {
+const CalendarPage = ({ mode }) => {
   return (
     <Box>
       <CalendarToolbar mode={mode} />
@@ -11,4 +11,4 @@ const Calendar = ({ mode }) => {
   );
 };
 
-export default Calendar;
+export default CalendarPage;

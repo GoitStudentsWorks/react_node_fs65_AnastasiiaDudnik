@@ -2,19 +2,27 @@ import { Button, SvgIcon, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { colorsLight } from 'components/variables/colors';
+import dayjs from 'dayjs';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-const day = new Date();
-export const PeriodPaginator = ({ mode, type }) => {
-  const [calendar, setCalendar] = useState(false);
+
+export const PeriodPaginator = ({
+  mode,
+  type,
+  selectDate,
+  date,
+  nextArray,
+  backArray,
+}) => {
   const calendarRef = useRef(null);
-  const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState(false);
+
+  const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
+  const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
+  const dateObj = dayjs(date);
 
   useEffect(() => {
-    const today = moment(day, 'YYYY-MM-DD');
-    const currentDate = today.format('DD MMMM YYYY');
-    setDate(currentDate);
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
@@ -28,9 +36,8 @@ export const PeriodPaginator = ({ mode, type }) => {
 
   const handleDatePicker = date => {
     const today = moment(date.$d, 'YYYY-MM-DD');
-    const currentDate = today.format('DD MMMM YYYY');
-
-    setDate(currentDate);
+    const urlDate = today.format('YYYY-MM-DD');
+    selectDate(urlDate);
     setCalendar(false);
   };
 
@@ -62,10 +69,13 @@ export const PeriodPaginator = ({ mode, type }) => {
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {type === 'month' ? date.slice(3, date.length) : date}
+          {type === 'month'
+            ? formattedDate.slice(0, date.slength)
+            : chooseFormattedDate}
         </Typography>
       </Box>
       <DateCalendar
+        value={dateObj}
         sx={{
           display: calendar ? 'block' : 'none',
           position: 'absolute',
@@ -83,6 +93,7 @@ export const PeriodPaginator = ({ mode, type }) => {
       />
       <Box
         sx={{
+          maxHeight: '34px',
           borderRadius: '8px',
           border:
             mode === 'dark'
@@ -92,6 +103,9 @@ export const PeriodPaginator = ({ mode, type }) => {
         }}
       >
         <Button
+          onClick={() => {
+            backArray();
+          }}
           sx={{
             minWidth: '38px',
             backgroundColor: mode === 'dark' ? '#fff' : '#21222C',
@@ -108,6 +122,9 @@ export const PeriodPaginator = ({ mode, type }) => {
           </SvgIcon>
         </Button>
         <Button
+          onClick={() => {
+            nextArray();
+          }}
           sx={{
             minWidth: '38px',
             backgroundColor: mode === 'dark' ? '#fff' : '#21222C',

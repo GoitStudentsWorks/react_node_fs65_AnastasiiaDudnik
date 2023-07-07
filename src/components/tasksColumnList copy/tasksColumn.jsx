@@ -1,11 +1,11 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import AddTaskBtn from 'components/addTaskBtn/addTaskBtn';
 import { useState } from 'react';
 import TasksColumnList from 'components/tasksColumnList/tasksColumnList';
 import React from 'react';
 import TaskModal from 'components/taskModal/taskModal';
 
-export default function TasksColumn({ title, todos }) {
+export default function TasksColumn({ title, todos, date, category }) {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -28,7 +28,7 @@ export default function TasksColumn({ title, todos }) {
       <Box sx={style.btnAdd}>
         <AddTaskBtn btnList openModal={openModal} />
       </Box>
-      {showModal && <TaskModal currentTask={todos} closeModal={closeModal} />}
+      {showModal && <TaskModal currentTask={todos} date={date} category={category} closeModal={closeModal} />}
     </Box>
   );
 }

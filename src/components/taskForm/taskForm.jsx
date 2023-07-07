@@ -15,19 +15,21 @@ import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask } from 'redux/tasks/operations';
-import { selectError } from 'redux/tasks/selectors';
+import dayjs from 'dayjs';
+// import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ currentTask, closeModal }) => {
+const TaskForm = ({ closeModal, date, category }) => {
   const defaultTask = {
     title: '',
-    start: '00:00',
-    end: '00:00',
-    priority: 'Low',
-    category: 'in-progress',
+    start: '09:00',
+    end: '09:30',
+    priority: 'low',
+    category,
+    date: dayjs(new Date(date)).format('YYYY-MM-DD'),
   };
 
   const [task, setTask] = useState(defaultTask);
-  const [savedTask, setSavedTask] = useState(null);
+  // const [savedTask, setSavedTask] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -45,7 +47,7 @@ const TaskForm = ({ currentTask, closeModal }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(addTask(task));
+      dispatch(addTask({ ...task, date: dayjs(new Date(date)).format('YYYY-MM-DD') }));
       closeModal();
     }
   };
@@ -185,7 +187,7 @@ const TaskForm = ({ currentTask, closeModal }) => {
           >
             <FormControlLabel
               label="Low"
-              value={'Low'}
+              value={'low'}
               control={
                 <Radio
                   sx={{
@@ -202,7 +204,7 @@ const TaskForm = ({ currentTask, closeModal }) => {
             />
             <FormControlLabel
               label="Medium"
-              value={'Medium'}
+              value={'medium'}
               control={
                 <Radio
                   sx={{
@@ -220,7 +222,7 @@ const TaskForm = ({ currentTask, closeModal }) => {
             />
             <FormControlLabel
               label="High"
-              value={'High'}
+              value={'high'}
               control={
                 <Radio
                   sx={{
