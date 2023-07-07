@@ -7,18 +7,9 @@ import { deleteTask, updateTask } from 'redux/tasks/operations';
 function MiniModal({ todo }) {
     const dispatch = useDispatch();
 
-    const right = {   }
-
-    if (todo.category === 'done') {
-        right.right = { xs: '-66px' }
-    } else {
-        
-        right.left = { md: '0px', }
-    }
-
     return (
-        
-        <Box sx={ {...style.miniModal, ...right} } id={'modal'}>
+
+        <Box sx={style.miniModal} id={'modal'}>
             <Box sx={{ ...style.btnMiniModal, display: todo.category === 'to-do' ? 'none' : 'flex' }}
                 onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))} >
                 To do
@@ -107,7 +98,10 @@ const style = {
         flexDirection: 'column',
         gap: '14px',
         position: 'absolute',
-        right: { xs: '-15px' },
+        right: {
+            xs: '-66px',
+            md: '-66px',
+        },
         bottom: '-10px',
         padding: '20px 24px',
         boxSizing: 'border-box',
