@@ -2,6 +2,7 @@ import { Button, SvgIcon, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { colorsLight } from 'components/variables/colors';
+import dayjs from 'dayjs';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
@@ -19,6 +20,7 @@ export const PeriodPaginator = ({
 
   const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
   const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
+  const dateObj = dayjs(date);
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -73,6 +75,7 @@ export const PeriodPaginator = ({
         </Typography>
       </Box>
       <DateCalendar
+        value={dateObj}
         sx={{
           display: calendar ? 'block' : 'none',
           position: 'absolute',
