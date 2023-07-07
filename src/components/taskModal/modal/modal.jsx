@@ -5,14 +5,14 @@ import Sprite from 'icons/sprite.svg';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const ModalWrapper = ({ children, closeModal, open }) => {
+const ModalWrapper = ({ children, closeModal }) => {
   useEffect(() => {
     const handleEscape = e => {
       if (e.code === `Escape`) {
         closeModal();
-
       }
     };
+
     window.addEventListener('keydown', handleEscape);
     return () => {
       window.removeEventListener('keydown', handleEscape);
@@ -26,7 +26,7 @@ const ModalWrapper = ({ children, closeModal, open }) => {
   };
 
   return createPortal(
-    <Modal open onClose={closeModal} disablePortal>
+    <Modal open onClose={handleClose} disablePortal>
       <Box
         sx={{
           position: 'absolute',

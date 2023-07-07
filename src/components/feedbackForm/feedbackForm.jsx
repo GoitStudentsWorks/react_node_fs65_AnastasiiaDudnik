@@ -1,4 +1,4 @@
-import ModalWrapper from '../taskModal/modal/modal';
+import { FeedbackModalWrapper } from '../addFeedbackModal/addFeedbackModal';
 import {
   Box,
   Button,
@@ -81,7 +81,7 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
   };
 
   return (
-    <ModalWrapper open={feedbackModalOpen} onClose={handleModalToggle}>
+    <FeedbackModalWrapper open={feedbackModalOpen} onClose={handleModalToggle}>
       <Formik
         initialValues={{ rating: 0, comment: '' }}
         validationSchema={validationSchema}
@@ -396,6 +396,6 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
           );
         }}
       </Formik>
-    </ModalWrapper>
+    </FeedbackModalWrapper>
   );
 };

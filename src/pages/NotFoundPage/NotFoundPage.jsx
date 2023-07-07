@@ -1,4 +1,5 @@
 // import { UseSelector } from "react-redux";
+import TaskModal from 'components/taskModal/taskModal';
 import error from './img/error.webp';
 import error2x from './img/error@2x.webp';
 import error3x from './img/error@3x.webp';

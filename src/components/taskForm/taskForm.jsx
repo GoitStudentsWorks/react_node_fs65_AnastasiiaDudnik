@@ -10,13 +10,14 @@ import {
   FormControlLabel,
   Button,
   SvgIcon,
-  Alert,
-  Snackbar,
 } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
+import { Notify } from 'notiflix';
+import { addTask } from 'redux/tasks/operations';
+import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ initialData, closeModal }) => {
+const TaskForm = ({ currentTask, closeModal }) => {
   const defaultTask = {
     title: '',
     start: '00:00',
@@ -26,6 +27,8 @@ const TaskForm = ({ initialData, closeModal }) => {
   };
 
   const [task, setTask] = useState(defaultTask);
+  const [savedTask, setSavedTask] = useState(null);
+
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -39,9 +42,11 @@ const TaskForm = ({ initialData, closeModal }) => {
     e.preventDefault();
 
     if (task.start > task.end) {
-      console.log('time error');
+      Notify.failure('Start time must be later than end time');
+      return;
     } else {
-      console.log('dispatch', task);
+      dispatch(addTask(task));
+      closeModal();
     }
   };
 
@@ -247,17 +252,18 @@ const TaskForm = ({ initialData, closeModal }) => {
                 flexGrow: '1',
                 backgroundColor: colorsLight.accentBackgroundColor,
                 boxShadow: 'none',
+                gap: '8px',
               }}
             >
               <SvgIcon
                 stroke="currentColor"
                 sx={{
-                  width: { xs: '20px', md: '24px' },
-                  height: { xs: '20px', md: '24px' },
+                  width: { xs: '18px', md: '20px', lg: '20px' },
+                  height: { xs: '18px', md: '20px', lg: '20px' },
                   fill: '#3E85F3;',
                 }}
               >
-                <use href={`${Sprite}#plus-circle`}></use>
+                <use href={`${Sprite}#add`}></use>
               </SvgIcon>
               Add
             </Button>

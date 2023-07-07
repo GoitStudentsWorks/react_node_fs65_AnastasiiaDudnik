@@ -3,16 +3,20 @@ import TaskToolbar from 'components/taskToolbar/taskToolbar'
 import React from 'react'
 
 
-export default function TaskColumnCard() {
+export default function TaskColumnCard({todo}) {
+
     return (
         <Box sx={style.taskBox}>
-            <Typography sx={style.text}>Title: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, laboriosam!   </Typography>
+            <Typography sx={style.text}>{todo.title}</Typography>
             <Box sx={style.flexBox}>
                 <Box sx={style.avatarBox}>
                     <Avatar sx={style.avatar} />
-                    <Box sx={style.priorityLabel}>Medium</Box>
+                    
+                    <Box sx={{...style.priorityLabel, backgroundColor: 
+                        todo.priority === 'low' ? "#72C2F8" : todo.priority === 'medium' ? '#F3B249' : '#EA3D65'
+                    }}>{todo.priority}</Box>
                 </Box>
-                <TaskToolbar />
+                <TaskToolbar todo={todo}/>
             </Box>
         </Box>
     )
@@ -35,8 +39,10 @@ const style = {
         padding: '15px',
         boxSizing: 'border-box',
         bgcolor: '#F7F6F9',
-        width: '100%',
-        borderRadius: '8px'
+        minWidth: '100%',
+        maxWidth: '100%',
+        borderRadius: '8px',
+        position: 'relative',
     },
     avatarBox: {
         display: 'flex',
@@ -50,7 +56,7 @@ const style = {
         height: { xs: '32px', md: '44px' },
     },
     priorityLabel: {
-        bgcolor: '#F3B249',
+        // bgcolor: '#F3B249',
         paddingInline: '15px',
         height: '20px',
         borderRadius: '4px',
