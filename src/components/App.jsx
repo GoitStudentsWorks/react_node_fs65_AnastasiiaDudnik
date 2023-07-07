@@ -94,21 +94,12 @@ export const App = () => {
               />
             }
           >
-            {/* <Route
+            <Route
               index
               element={
                 <PrivateRoute
                   redirectTo="/login"
                   component={<Calendar mode={mode} />}
-                />
-              }
-            /> */}
-            <Route
-              path="day/:day"
-              element={
-                <PrivateRoute
-                  redirectTo="/login"
-                  component={<ChoosedDay mode={mode} />}
                 />
               }
             />
@@ -118,6 +109,15 @@ export const App = () => {
                 <PrivateRoute
                   redirectTo="/login"
                   component={<Calendar mode={mode} />}
+                />
+              }
+            />
+            <Route
+              path="day/:day"
+              element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<ChoosedDay mode={mode} />}
                 />
               }
             />
