@@ -12,6 +12,8 @@ import { NavLink } from 'react-router-dom';
 import Sprite from '../../icons/sprite.svg';
 
 export const UserNav = ({ handleDrawerToggle, mode }) => {
+  const dayjs = require('dayjs');
+  const formattedDate = dayjs().format('YYYY-MM-DD');
   return (
     <Box
       sx={{
@@ -86,7 +88,7 @@ export const UserNav = ({ handleDrawerToggle, mode }) => {
         <ListItem onClick={handleDrawerToggle} disablePadding>
           <ListItemButton
             LinkComponent={NavLink}
-            to="/main/calendar"
+            to={`/main/calendar/month/${formattedDate}`}
             sx={{
               backgroundColor:
                 mode !== 'dark' ? '#13151A' : 'background.default',

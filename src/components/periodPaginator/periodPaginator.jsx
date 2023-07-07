@@ -5,8 +5,9 @@ import { colorsLight } from 'components/variables/colors';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
+
 const day = new Date();
-export const PeriodPaginator = ({ mode, type }) => {
+export const PeriodPaginator = ({ mode, type, selectDate }) => {
   const [calendar, setCalendar] = useState(false);
   const calendarRef = useRef(null);
   const [date, setDate] = useState('');
@@ -29,7 +30,8 @@ export const PeriodPaginator = ({ mode, type }) => {
   const handleDatePicker = date => {
     const today = moment(date.$d, 'YYYY-MM-DD');
     const currentDate = today.format('DD MMMM YYYY');
-
+    const urlDate = today.format('YYYY-MM-DD');
+    selectDate(urlDate);
     setDate(currentDate);
     setCalendar(false);
   };
