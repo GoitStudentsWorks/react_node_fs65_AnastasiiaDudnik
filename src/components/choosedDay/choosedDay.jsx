@@ -4,14 +4,23 @@ import DayCalendarHead from 'components/dayCalendarHead/dayCalendarHead';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
 export default function ChoosedDay() {
-  const location = useLocation();
-  const [day] = useState(() => location.pathname.slice(19, 29));
+  const params = useParams()
+  const [day, setDay] = useState(() => params.day);
   const [value, setValue] = React.useState(null);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (day !== params.day) {
+      setDay(params.day)
+    }
+
+  }, [day, params.day])
+
+
 
   const weekend = useMemo(() => {
     const arr = [];
@@ -31,6 +40,7 @@ export default function ChoosedDay() {
         weekDay: String(test.$d).slice(0, 3),
         weekDayMob: String(test.$d).slice(0, 1),
         date: test.$d,
+        dayFormat: dayjs(test.$d).format('YYYY-MM-DD')
       };
       e++;
     }
@@ -43,14 +53,27 @@ export default function ChoosedDay() {
     }
     return num;
   }
+
+  useEffect(() => {
+    if (weekend) {
+      const index = weekend.findIndex(({ dayFormat }) =>
+        dayFormat === day
+      );
+
+      setValue(index)
+    }
+  }, [day, weekend])
+
   useEffect(() => {
     if (value === null) {
       setValue(dayjs(day).day() === 0 ? 6 : dayjs(day).day() - 1);
     }
   }, [day, value]);
 
+  // console.log(weekend)
+
   useEffect(() => {
-    if (weekend[0] && day) {
+    if (weekend[0] && day && weekend.findIndex(({ dayFormat }) => dayFormat === day) === -1) {
       dispatch(
         getWeekTasks({
           years: new Date(weekend[0].date).getFullYear(),
@@ -64,13 +87,11 @@ export default function ChoosedDay() {
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
-  if (!day) {
-    return;
-  }
 
-  if (value === null || !weekend) {
-    return;
-  }
+
+  if (!day) { return }
+  if (value === null || !weekend) { return }
+
   return (
     <Box sx={style.boxDay}>
       <Box sx={{ boxSizing: 'border-box' }}>
