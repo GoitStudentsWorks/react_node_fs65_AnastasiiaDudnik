@@ -1,40 +1,57 @@
-import { List, ListItem } from '@mui/material';
-import TaskColumnCard from 'components/taskColumnCard/taskColumnCard';
-import React from 'react';
+import { List, ListItem } from '@mui/material'
+import TaskColumnCard from 'components/taskColumnCard/taskColumnCard'
+import React from 'react'
 
 export default function TasksColumnList({ todos }) {
-  return (
-    <List sx={style.list}>
-      {todos.map(todo => (
-        <ListItem key={todo._id} sx={style.item}>
-          <TaskColumnCard todo={todo} />
-        </ListItem>
-      ))}
-    </List>
-  );
+
+    const listSetts = {
+        marginBottom: '',
+    }
+    if (todos.length === 0) { listSetts.marginBottom = '0px' }
+    else { listSetts.marginBottom = '32px'}
+
+
+    return (
+        <List sx={{ ...style.list, ...listSetts }}>
+            {todos.map(todo =>
+                <ListItem key={todo._id} sx={style.item}>
+                    <TaskColumnCard todo={todo} />
+                </ListItem>
+            )}
+        </List>
+    )
 }
 
 const style = {
+    list: {
+        boxSizing: 'border-box',
 
-  list: {
-    boxSizing: 'border-box',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '18px',
-    marginTop: '24px',
-    height: '400px',
-    padding: '0',
-    paddingInline: '21px',
-  },
-  item: {
-    '&:last-child': {
-      marginBottom: {
-        xs: '46px',
-        md: '0',
-      },
+        display: 'flex',
+        width: '100%',
+        maxHeight: '400px',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        
 
+        gap: '18px',
+
+        padding: '0',
+        paddingInline: '21px',
+        overflowY: 'auto',
+        scrollbars: 'none'
     },
-    padding: '0',
-  },
-};
+    item: {
+        padding: '0',
+        '&:last-child': {
+            marginBottom: {xs: '28px', md: 0}
+        },
+        '&:last-child #modal': {
+            top: 0,
+            transform: 'translateY(-110%)'
+        },
+    },
+}
+
+
+
+

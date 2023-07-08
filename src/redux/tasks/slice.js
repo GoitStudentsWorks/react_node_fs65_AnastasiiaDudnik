@@ -6,6 +6,7 @@ import {
   updateTask,
   deleteTask,
   getWeekTasks,
+  getTasksStatistics,
 } from './operations';
 import { logout } from '../../redux/auth/operations';
 
@@ -17,6 +18,7 @@ const extraActions = [
   updateTask,
   deleteTask,
   logout,
+  getTasksStatistics,
 ];
 
 const handlePending = state => {
@@ -28,6 +30,7 @@ const handleRejected = (state, action) => {
 };
 
 const initialState = {
+  tasksStatistics: {},
   tasks: [],
   currentTask: null,
   isRefreshing: false,
@@ -39,6 +42,9 @@ const tasksSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder
+      .addCase(getTasksStatistics.fulfilled, (state, action) => {
+        state.tasksStatistics = action.payload;
+      })
       .addCase(getTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
       })
@@ -67,7 +73,9 @@ const tasksSlice = createSlice({
         //   task => task._id === action.payload._id
         // );
         // state.tasks.splice(index, 1);
-        state.tasks.tasks = state.tasks.tasks.filter(task => task._id !== action.payload._id)
+        state.tasks.tasks = state.tasks.tasks.filter(
+          task => task._id !== action.payload._id
+        );
 
         state.currentTask = null;
       })
