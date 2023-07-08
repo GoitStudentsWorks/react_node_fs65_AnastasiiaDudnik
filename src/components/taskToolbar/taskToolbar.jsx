@@ -9,7 +9,7 @@ function MiniModal({ todo }) {
 
     return (
 
-        <Box sx={style.miniModal} id={'modal'}>
+        <Box sx={style.miniModal} id={'modal'} >
             <Box sx={{ ...style.btnMiniModal, display: todo.category === 'to-do' ? 'none' : 'flex' }}
                 onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))} >
                 To do
@@ -98,15 +98,24 @@ const style = {
         flexDirection: 'column',
         gap: '14px',
         position: 'absolute',
-        right: {
-            xs: '-66px',
-            md: '-66px',
+        left: {
+            xs: '-38px',
+            md: '-64px'
         },
-        bottom: '-10px',
-        padding: '20px 24px',
+        bottom:  '-10px',
+        padding: {
+            xs: '14px',
+            md: '20px 24px'
+        },
         boxSizing: 'border-box',
-        width: '148px',
-        height: '90px',
+        width: {
+            xs: '115px',
+            md: '148px'
+        },
+        height: {
+            xs: '70px',
+            md: '90px'
+        },
         bgcolor: '#FFFFFF',
         borderRadius: '8px',
         transform: 'translateY(100%)',
@@ -115,7 +124,10 @@ const style = {
 
     },
     btnMiniModal: {
-        height: '18px',
+        height: {
+            xs: '14px',
+            md: '18px',
+        },
         color: '#343434',
         fontSize: '14px',
         fontFamily: 'Inter',

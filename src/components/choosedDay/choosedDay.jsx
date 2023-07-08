@@ -88,15 +88,6 @@ export default function ChoosedDay() {
 }
 
 const style = {
-  '&::-webkit--scrollbar': {
-    borderRadius: '5px',
-    width: '.65em',
-    backgroundColor: '#ffffff',
-  },
-  '&::-webkit-scrollbar-track, &::-webkit-scrollbar-corner': {
-    backgroundColor: 'rgba(170, 170, 170, 0)',
-  },
-
   '&::-webkit-scrollbar-thumb, &::-webkit-resizer': {
     background: 'rgba(170, 170, 170, 0.6)',
     borderRadius: '5px',
