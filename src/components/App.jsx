@@ -137,7 +137,10 @@ export const App = () => {
           <Route
             path="main/statistics"
             element={
-              <PrivateRoute redirectTo="/login" component={<Statistics />} />
+              <PrivateRoute
+                redirectTo="/login"
+                component={<Statistics mode={mode} />}
+              />
             }
           />
           <Route path="*" element={<NotFoundPage />} />
