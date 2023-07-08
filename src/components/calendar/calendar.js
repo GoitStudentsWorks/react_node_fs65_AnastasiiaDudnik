@@ -157,7 +157,7 @@ const Calendar = () => {
     };
 
     fetchTasks();
-  }, [dispatch]);
+  }, [dispatch, currentDate]);
 
   return (
     <Container
