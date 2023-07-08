@@ -41,7 +41,7 @@ const style = {
     item: {
         padding: '0',
         '&:last-child': {
-            marginBottom: '28px'
+            marginBottom: {xs: '28px', md: 0}
         },
         '&:last-child #modal': {
             top: 0,

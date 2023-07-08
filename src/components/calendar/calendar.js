@@ -146,7 +146,6 @@ const Calendar = () => {
     const fetchTasks = async () => {
       try {
         const response = await dispatch(getTasks({ date: currentDate }));
-        console.log(1)
 
         if (response.meta.requestStatus === 'fulfilled') {
           const tasks = response.payload.tasks;
