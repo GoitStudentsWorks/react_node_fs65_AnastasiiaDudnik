@@ -121,18 +121,8 @@ export const App = () => {
                 />
               }
             />
-
-            {/* <Route
-              path="day/:currentDay"
-              element={
-                <PrivateRoute
-                  redirectTo="/login"
-                  component={<ChoosedDay mode={mode} />}
-                />
-              }
-            /> */}
           </Route>
-          <Route
+          {/* <Route
             path="main/statistics"
             element={
               <PrivateRoute
@@ -140,7 +130,7 @@ export const App = () => {
                 component={<Statistics mode={mode} />}
               />
             }
-          />
+          /> */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
