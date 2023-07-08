@@ -103,9 +103,8 @@ export const App = () => {
                 />
               }
             />
-
             <Route
-              path="month"
+              path="month/:day"
               element={
                 <PrivateRoute
                   redirectTo="/login"
@@ -113,9 +112,8 @@ export const App = () => {
                 />
               }
             />
-
             <Route
-              path="day/:currentDay"
+              path="day/:day"
               element={
                 <PrivateRoute
                   redirectTo="/login"
@@ -125,16 +123,12 @@ export const App = () => {
             />
 
             {/* <Route
-              path="day"
+              path="day/:currentDay"
               element={
-                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
-              }
-            /> */}
-
-            {/* <Route
-              index
-              element={
-                <PrivateRoute redirectTo="/login" component={<ChoosedDay />} />
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<ChoosedDay mode={mode} />}
+                />
               }
             /> */}
           </Route>

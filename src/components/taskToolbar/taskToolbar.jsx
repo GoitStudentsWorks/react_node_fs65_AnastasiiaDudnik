@@ -6,6 +6,7 @@ import { deleteTask, updateTask } from 'redux/tasks/operations';
 import TaskModal from 'components/taskModal/taskModal';
 
 function MiniModal({ todo }) {
+
   const dispatch = useDispatch();
 
   const right = {};
@@ -58,6 +59,7 @@ function MiniModal({ todo }) {
       </Box>
     </Box>
   );
+
 }
 
 export default function TaskToolbar({ todo }) {
@@ -173,5 +175,7 @@ const style = {
       },
       cursor: 'pointer',
     },
+
   },
 };
+

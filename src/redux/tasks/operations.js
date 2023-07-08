@@ -21,7 +21,6 @@ export const getTasks = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks`, { date });
-      console.log('allTasks', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

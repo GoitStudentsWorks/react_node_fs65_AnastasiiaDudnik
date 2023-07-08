@@ -15,6 +15,7 @@ export default function TasksColumnList({ todos }) {
 }
 
 const style = {
+
   list: {
     boxSizing: 'border-box',
     width: '100%',
@@ -32,6 +33,7 @@ const style = {
         xs: '46px',
         md: '0',
       },
+
     },
     padding: '0',
   },
