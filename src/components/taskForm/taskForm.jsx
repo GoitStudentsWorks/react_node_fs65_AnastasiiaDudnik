@@ -18,13 +18,13 @@ import { addTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal, date, currentTask }) => {
+const TaskForm = ({ closeModal, date, currentTask, category }) => {
   const defaultTask = {
     title: '',
     start: '09:00',
     end: '09:30',
     priority: 'low',
-    category: 'in-progress',
+    category ,
     date: dayjs(new Date(date)).format('YYYY-MM-DD'),
   };
 

@@ -10,8 +10,7 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
   const { currentDay } = useParams();
 
   useEffect(() => {
-    const { _id, category } = currentTask;
-
+    const { _id } = currentTask;
     if (_id) {
       setData({ ...currentTask, status: 'edit' });
     } else if (category) {
@@ -27,7 +26,8 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
     } else {
       closeModal();
     }
-  }, [closeModal, currentTask, currentDay]);
+ 
+  }, [closeModal, currentTask, currentDay, category]);
 
   return (
     <ModalWrapper closeModal={closeModal}>
