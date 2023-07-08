@@ -7,85 +7,101 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
-export default function ChoosedDay() {
-  const location = useLocation();
-  const [day] = useState(() => location.pathname.slice(19, 29));
-  const [value, setValue] = React.useState(null);
+const ChoosedDay = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [weekStartDate, setWeekStartDate] = useState(dayjs(location.pathname.slice(19, 29)));
+  const [value, setValue] = useState(null);
+  const [prevDate, setPrevDate] = useState('');
+
+  useEffect(() => {
+    setPrevDate(location.pathname.slice(27, 29));
+  }, []);
 
   const weekend = useMemo(() => {
     const arr = [];
     let i = 0;
     let y = 7;
 
-    if (dayjs(day).weekday() === 0) {
+    if (weekStartDate.weekday() === 0) {
       i = -7;
       y = 0;
     }
-    let e = 0;
-    for (i; i < y; i++) {
-      const test = dayjs(day).weekday(i + 1);
 
-      arr[e] = {
+    for (let j = i; j < y; j++) {
+      const test = weekStartDate.weekday(j + 1);
+
+      arr.push({
         day: test.$D,
         weekDay: String(test.$d).slice(0, 3),
         weekDayMob: String(test.$d).slice(0, 1),
         date: test.$d,
-      };
-      e++;
+      });
     }
-    return arr;
-  }, [day]);
 
-  function addZero(num) {
-    if (num < 10) {
-      return `0${num}`;
-    }
-    return num;
-  }
+    return arr;
+  }, [weekStartDate]);
+
+  const addZero = (num) => {
+    return num < 10 ? `0${num}` : num;
+  };
+
   useEffect(() => {
     if (value === null) {
-      setValue(dayjs(day).day() === 0 ? 6 : dayjs(day).day() - 1);
+      setValue(weekStartDate.day() === 0 ? 6 : weekStartDate.day() - 1);
+    } else {
+      const currentDate = location.pathname.slice(27, 29);
+
+      if (currentDate > prevDate) {
+        setValue((prevValue) => {
+          if (prevValue === 6) {
+            setWeekStartDate((prevStartDate) => prevStartDate.add(1, 'week'));
+            return 0;
+          }
+          return prevValue + 1;
+        });
+      } else if (currentDate < prevDate) {
+        setValue((prevValue) => {
+          if (prevValue === 0) {
+            setWeekStartDate((prevStartDate) => prevStartDate.subtract(1, 'week'));
+            return 6;
+          }
+          return prevValue - 1;
+        });
+      }
+
+      setPrevDate(currentDate);
     }
-  }, [day, value]);
+  }, [weekStartDate, value, location.pathname, prevDate]);
 
   useEffect(() => {
-    if (weekend[0] && day) {
-      dispatch(
-        getWeekTasks({
-          years: new Date(weekend[0].date).getFullYear(),
-          month: addZero(new Date(weekend[0].date).getMonth() + 1),
-          day: addZero(new Date(weekend[0].date).getDate()),
-        })
-      );
+    if (weekend[0]) {
+      const { date } = weekend[0];
+      const years = new Date(date).getFullYear();
+      const month = addZero(new Date(date).getMonth() + 1);
+      const day = addZero(new Date(date).getDate());
+
+      dispatch(getWeekTasks({ years, month, day }));
     }
-  }, [day, dispatch, weekend]);
+  }, [weekStartDate, dispatch, weekend]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
-  if (!day) {
-    return;
+
+  if (!weekStartDate || value === null || !weekend) {
+    return null;
   }
 
-  if (value === null || !weekend) {
-    return;
-  }
   return (
     <Box sx={style.boxDay}>
-      <Box sx={{ boxSizing: 'border-box' }}>
-        <Box sx={{ borderColor: 'divider' }}>
-          <DayCalendarHead
-            value={value}
-            weekend={weekend}
-            handleChange={handleChange}
-          />
-        </Box>
+      <Box sx={{ boxSizing: 'border-box', borderColor: 'divider' }}>
+        <DayCalendarHead value={value} weekend={weekend} handleChange={handleChange} />
       </Box>
       <ColumnsTasksList weekend={weekend} value={value} />
     </Box>
   );
-}
+};
 
 const style = {
   '&::-webkit--scrollbar': {
@@ -96,7 +112,6 @@ const style = {
   '&::-webkit-scrollbar-track, &::-webkit-scrollbar-corner': {
     backgroundColor: 'rgba(170, 170, 170, 0)',
   },
-
   '&::-webkit-scrollbar-thumb, &::-webkit-resizer': {
     background: 'rgba(170, 170, 170, 0.6)',
     borderRadius: '5px',
@@ -111,3 +126,5 @@ const style = {
     margin: '0',
   },
 };
+
+export default ChoosedDay;
