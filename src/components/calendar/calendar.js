@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Calendar = () => {
   const navigate = useNavigate();
-  const currentDate = dayjs();
+  // const currentDate = dayjs();
+  const [currentDate ] = useState(() => dayjs());
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
   const daysInMonth = currentDate.daysInMonth();

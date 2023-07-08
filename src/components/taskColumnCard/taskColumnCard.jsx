@@ -43,6 +43,8 @@ const style = {
         maxWidth: '100%',
         borderRadius: '8px',
         position: 'relative',
+
+        
     },
     avatarBox: {
         display: 'flex',
