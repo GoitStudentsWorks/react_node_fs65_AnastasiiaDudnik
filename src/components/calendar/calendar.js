@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Calendar = () => {
   const navigate = useNavigate();
-  const currentDate = dayjs();
+  // const currentDate = dayjs();
+  const [currentDate ] = useState(() => dayjs());
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
   const daysInMonth = currentDate.daysInMonth();
@@ -144,6 +145,7 @@ const Calendar = () => {
     const fetchTasks = async () => {
       try {
         const response = await dispatch(getTasks({ date: currentDate }));
+        console.log(1)
 
         if (response.meta.requestStatus === 'fulfilled') {
           const tasks = response.payload.tasks;
