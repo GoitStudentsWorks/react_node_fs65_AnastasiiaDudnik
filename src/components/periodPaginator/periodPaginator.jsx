@@ -22,6 +22,7 @@ export const PeriodPaginator = ({
 
   const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
   const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
+  
   const dateObj = dayjs(date);
 
   useEffect(() => {
