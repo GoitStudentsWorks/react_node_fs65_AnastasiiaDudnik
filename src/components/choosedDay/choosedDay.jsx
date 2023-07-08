@@ -16,7 +16,7 @@ const ChoosedDay = () => {
 
   useEffect(() => {
     setPrevDate(location.pathname.slice(27, 29));
-  }, []);
+  }, [location.pathname]);
 
   const weekend = useMemo(() => {
     const arr = [];
