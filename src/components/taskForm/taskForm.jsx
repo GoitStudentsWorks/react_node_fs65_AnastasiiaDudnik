@@ -33,7 +33,7 @@ const TaskForm = ({ closeModal, date, currentTask, category }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentTask !== null) {
+    if (currentTask !== null ) {
       const { _id, ...data } = currentTask;
       if (_id) {
         setTask(data);
