@@ -31,12 +31,14 @@ const style = {
         maxHeight: '400px',
         flexDirection: 'column',
         alignItems: 'flex-start',
+        
 
         gap: '18px',
 
         padding: '0',
         paddingInline: '21px',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        scrollbars: 'none'
     },
     item: {
         padding: '0',
