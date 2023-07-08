@@ -4,7 +4,7 @@ import DayCalendarHead from 'components/dayCalendarHead/dayCalendarHead';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
 export default function ChoosedDay() {
@@ -12,6 +12,9 @@ export default function ChoosedDay() {
   const [day, setDay] = useState(() => params.day);
   const [value, setValue] = React.useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [weekYear, setWeekYear] = useState(null);
 
   useEffect(() => {
     if (day !== params.day) {
@@ -19,8 +22,6 @@ export default function ChoosedDay() {
     }
 
   }, [day, params.day])
-
-
 
   const weekend = useMemo(() => {
     const arr = [];
@@ -70,10 +71,10 @@ export default function ChoosedDay() {
     }
   }, [day, value]);
 
-  // console.log(weekend)
-
   useEffect(() => {
-    if (weekend[0] && day && weekend.findIndex(({ dayFormat }) => dayFormat === day) === -1) {
+    const currentWeek = dayjs(weekend[0].dayFormat).week(); 
+
+    if (weekend[0] && currentWeek !== weekYear) {
       dispatch(
         getWeekTasks({
           years: new Date(weekend[0].date).getFullYear(),
@@ -81,11 +82,13 @@ export default function ChoosedDay() {
           day: addZero(new Date(weekend[0].date).getDate()),
         })
       );
+      setWeekYear(currentWeek)
     }
-  }, [day, dispatch, weekend]);
+  }, [dispatch, weekYear, weekend]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
+    navigate(`/main/calendar/day/${weekend[newValue].dayFormat}`)
   };
 
 
