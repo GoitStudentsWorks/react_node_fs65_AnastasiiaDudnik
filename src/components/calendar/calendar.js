@@ -12,6 +12,7 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
   const daysInMonth = currentDate.daysInMonth();
+
   const monthStart = currentDate.startOf('month').day();
   const firstDayOfWeek = 1; // Set the first day of the week as 1 (Monday)
 

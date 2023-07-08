@@ -34,7 +34,14 @@ export default function TasksColumn({ title, todos, date, category }) {
       <Box sx={style.btnAdd}>
         <AddTaskBtn btnList openModal={openModal} />
       </Box>
-      {showModal && <TaskModal currentTask={todos} date={date} category={category} closeModal={closeModal} />}
+      {showModal && (
+        <TaskModal
+          currentTask={todos}
+          date={date}
+          category={category}
+          closeModal={closeModal}
+        />
+      )}
     </Box>
   );
 }

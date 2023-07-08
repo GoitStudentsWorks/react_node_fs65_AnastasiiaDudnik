@@ -2,32 +2,32 @@ import { Box } from '@mui/material';
 import ModalWrapper from 'components/taskModal/modal/modal';
 import TaskForm from 'components/taskForm/taskForm';
 import { colorsLight } from 'components/variables/colors';
-// import { useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const TaskModal = ({ closeModal, currentTask, date, category }) => {
-  // const [data, setData] = useState(null);
-  // const { currentDay } = useParams();
+  const [data, setData] = useState(null);
+  const { currentDay } = useParams();
 
-  // useEffect(() => {
-  //   const { _id, category } = currentTask;
+  useEffect(() => {
+    const { _id, category } = currentTask;
 
-  //   if (_id) {
-  //     setData({ ...data, status: 'edit' });
-  //   } else if (category) {
-  //     setData({
-  //       title: '',
-  //       date: currentDay,
-  //       start: '00:00',
-  //       end: '00:00',
-  //       priority: 'Low',
-  //       category,
-  //       statusOperation: 'create',
-  //     });
-  //   } else {
-  //     closeModal();
-  //   }
-  // }, [closeModal, currentTask, currentDay]);
+    if (_id) {
+      setData({ ...currentTask, status: 'edit' });
+    } else if (category) {
+      setData({
+        title: '',
+        date: currentDay,
+        start: '00:00',
+        end: '00:00',
+        priority: 'low',
+        category,
+        statusOperation: 'create',
+      });
+    } else {
+      closeModal();
+    }
+  }, [closeModal, currentTask, currentDay]);
 
   return (
     <ModalWrapper closeModal={closeModal}>
@@ -42,7 +42,12 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
           padding: 0,
         }}
       >
-        <TaskForm date={date} category={category ? category : 'to-do'} currentTask={currentTask} closeModal={closeModal} />
+        <TaskForm
+          date={date}
+          category={category ? category : 'to-do'}
+          currentTask={data}
+          closeModal={closeModal}
+        />
       </Box>
     </ModalWrapper>
   );
