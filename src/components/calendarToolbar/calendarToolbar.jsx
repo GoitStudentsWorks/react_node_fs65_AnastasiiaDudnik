@@ -12,16 +12,16 @@ const today = moment(day, 'YYYY-MM-DD');
 const currentDate = today.format('YYYY-MM-DD');
 
 export const CalendarToolbar = ({ mode }) => {
-  const location = useLocation()
+  const location = useLocation();
   const [type, setType] = useState('month');
   const [date, setDate] = useState(currentDate);
   const navigate = useNavigate();
-  
-  useEffect(()=>{
-   if (location.pathname.includes('day')) {
-    setType(location.pathname.slice(15,18))
-   }
-  })
+
+  useEffect(() => {
+    if (location.pathname.includes('day')) {
+      setType(location.pathname.slice(15, 18));
+    }
+  }, [location.pathname]);
 
   const selectDate = date => {
     navigate(`/main/calendar/${type}/${date}`);
