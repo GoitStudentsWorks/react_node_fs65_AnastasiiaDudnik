@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Typography, createTheme, useMediaQuery } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { getTasks } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Calendar = () => {
+  const theme = createTheme();
   const { day } = useParams();
   const navigate = useNavigate();
   const currentDate = useMemo(() => dayjs(new Date(day)), [day]);
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
-  // console.log(tasks);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const daysInMonth = currentDate.daysInMonth();
 
   const monthStart = currentDate.startOf('month').day();
@@ -172,15 +173,20 @@ const Calendar = () => {
   }, [currentDate, dispatch]);
 
   return (
-    <Container
+    <Box
       key={tasks.length}
-      sx={{ height: 'auto', display: 'flex', flexDirection: 'column' }}
+      sx={{
+        height: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '100%',
+      }}
     >
       <Box sx={{ flex: 1 }}>
         <Box
           display={'flex'}
           maxWidth={'100%'}
-          p={'14px 60px'}
+          p={{ xs: '16px', md: '14px 60px' }}
           justifyContent={'space-between'}
           bgcolor={'#FFF'}
           borderRadius={'8px'}
@@ -188,25 +194,25 @@ const Calendar = () => {
           mb={'15px'}
         >
           <Typography align="center" sx={cellTextStyle}>
-            Mon
+            {isMobile ? 'M' : 'Mon'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Tue
+            {isMobile ? 'T' : 'Tue'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Wed
+            {isMobile ? 'W' : 'Wed'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Thu
+            {isMobile ? 'T' : 'Thu'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Fri
+            {isMobile ? 'F' : 'Fri'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Sat
+            {isMobile ? 'S' : 'Sat'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
-            Sun
+            {isMobile ? 'S' : 'Sun'}
           </Typography>
         </Box>
 
@@ -226,7 +232,7 @@ const Calendar = () => {
           {renderCalendar()}
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
