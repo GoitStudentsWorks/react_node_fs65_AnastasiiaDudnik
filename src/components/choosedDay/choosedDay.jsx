@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
-const ChoosedDay = () => {
+const ChoosedDay = ({date}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [weekStartDate, setWeekStartDate] = useState(dayjs(location.pathname.slice(19, 29)));
   const [value, setValue] = useState(null);
   const [prevDate, setPrevDate] = useState('');
-
+console.log(date);
   useEffect(() => {
     setPrevDate(location.pathname.slice(27, 29));
   }, [location.pathname]);
