@@ -18,7 +18,7 @@ import { addTask, updateTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal, date, currentTask, category }) => {
+const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
   const defaultTask = {
     title: '',
     start: '09:00',
@@ -58,9 +58,11 @@ const TaskForm = ({ closeModal, date, currentTask, category }) => {
       return;
     } else {
       if (status === 'edit') {
+        const { _id } = currentTask;
         dispatch(
           updateTask({
-            task,
+            _id,
+            ...task,
           })
         );
       } else {
@@ -264,29 +266,56 @@ const TaskForm = ({ closeModal, date, currentTask, category }) => {
               gap: '14px',
             }}
           >
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{
-                height: '100%',
-                flexGrow: '1',
-                backgroundColor: colorsLight.accentBackgroundColor,
-                boxShadow: 'none',
-                gap: '8px',
-              }}
-            >
-              <SvgIcon
-                stroke="currentColor"
+            {!editingTask ? (
+              <Button
+                variant="contained"
+                type="submit"
                 sx={{
-                  width: { xs: '18px', md: '20px', lg: '20px' },
-                  height: { xs: '18px', md: '20px', lg: '20px' },
-                  fill: '#3E85F3;',
+                  height: '100%',
+                  flexGrow: '1',
+                  backgroundColor: colorsLight.accentBackgroundColor,
+                  boxShadow: 'none',
+                  gap: '8px',
                 }}
               >
-                <use href={`${Sprite}#add`}></use>
-              </SvgIcon>
-              Add
-            </Button>
+                <SvgIcon
+                  stroke="currentColor"
+                  sx={{
+                    width: { xs: '18px', md: '20px', lg: '20px' },
+                    height: { xs: '18px', md: '20px', lg: '20px' },
+                    fill: '#3E85F3;',
+                  }}
+                >
+                  <use href={`${Sprite}#add`}></use>
+                </SvgIcon>
+                Add
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{
+                  height: '100%',
+                  flexGrow: '1',
+                  backgroundColor: colorsLight.accentBackgroundColor,
+                  boxShadow: 'none',
+                  gap: '8px',
+                }}
+              >
+                <SvgIcon
+                  stroke="currentColor"
+                  sx={{
+                    width: { xs: '18px', md: '20px', lg: '20px' },
+                    height: { xs: '18px', md: '20px', lg: '20px' },
+                    fill: '#3E85F3;',
+                  }}
+                >
+                  <use href={`${Sprite}#pencil`}></use>
+                </SvgIcon>
+                Edit
+              </Button>
+            )}
+
             <Button
               variant="contained"
               onClick={closeModal}

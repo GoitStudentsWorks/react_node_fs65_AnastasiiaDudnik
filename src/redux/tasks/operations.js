@@ -59,7 +59,7 @@ export const getTaskById = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks/${id}`);
-      console.log('oneTask', response.data);
+      // console.log('oneTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -86,7 +86,7 @@ export const addTask = createAsyncThunk(
         date,
         category,
       });
-      console.log('newTask', response.data);
+      // console.log('newTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -113,7 +113,7 @@ export const updateTask = createAsyncThunk(
         date: dayjs(date).format('YYYY-MM-DD'),
         category,
       });
-      console.log('updatedTask', response.data);
+      // console.log('updatedTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -133,7 +133,7 @@ export const deleteTask = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.delete(`/tasks/${id}`);
-      console.log('deletedTask', response.data);
+      // console.log('deletedTask', response.data);
       return { ...response.data, _id: id };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
