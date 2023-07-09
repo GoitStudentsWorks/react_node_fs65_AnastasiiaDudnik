@@ -6,8 +6,8 @@ export const StatisticsContainer = styled.section`
   background-color: ${props => props.theme.statistics_bg};
   @media screen and (max-width: 374px) {
     max-width: 335px;
-    padding-top: 28px;
-    padding-bottom: 135px;
+    // padding-top: 28px;
+    // padding-bottom: 135px;
     padding-left: 14px;
     padding-right: 14px;
   }
@@ -15,8 +15,8 @@ export const StatisticsContainer = styled.section`
   @media screen and (min-width: 375px) and (max-width: 768px) {
     width: 335px;
     border-radius: 16px;
-    padding-top: 28px;
-    padding-bottom: 135px;
+    // padding-top: 28px;
+    // padding-bottom: 135px;
     padding-left: 14px;
     padding-right: 14px;
   }
@@ -24,8 +24,8 @@ export const StatisticsContainer = styled.section`
   @media screen and (min-width: 768px) and (max-width: 1439px) {
     width: 704px;
     /* height: 100px; */
-    padding-top: 140px;
-    padding-bottom: 224px;
+    // padding-top: 140px;
+    // padding-bottom: 224px;
     padding-left: 32px;
     padding-right: 32px;
   }
