@@ -6,10 +6,11 @@ import dayjs from 'dayjs';
 import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const PeriodPaginator = ({
   mode,
-  type,
+  setOpenCalendar,
   selectDate,
   date,
   nextArray,
@@ -19,16 +20,20 @@ export const PeriodPaginator = ({
 
   const calendarRef = useRef(null);
   const [calendar, setCalendar] = useState(false);
-
+  const location = useLocation()
   const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
   const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
-  
   const dateObj = dayjs(date);
+  
+useEffect(()=>{
+  setOpenCalendar(calendar)
+},[calendar])
 
   useEffect(() => {
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
+  
       }
     };
     document.addEventListener('click', handleClickOutside);
@@ -72,7 +77,7 @@ export const PeriodPaginator = ({
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {type === 'month'
+          {location.pathname.slice(15,20) === 'month'
             ? formattedDate.slice(0, date.slength)
             : chooseFormattedDate}
         </Typography>

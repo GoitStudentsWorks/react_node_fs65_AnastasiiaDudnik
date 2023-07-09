@@ -23,6 +23,10 @@ const Calendar = lazy(() => import('./calendar/calendar'));
 
 export const App = () => {
   const [mode, setMode] = useState('dark');
+  const [date, setDate] = useState('')
+  const readDate = (newDate)=>[
+    setDate(newDate)
+  ]
   const handleModeChange = newMode => {
     setMode(newMode);
   };
@@ -90,7 +94,7 @@ export const App = () => {
             element={
               <PrivateRoute
                 redirectTo="/login"
-                component={<CalendarPage mode={mode} />}
+                component={<CalendarPage mode={mode} readDate={readDate}/>}
               />
             }
           >
@@ -117,7 +121,7 @@ export const App = () => {
               element={
                 <PrivateRoute
                   redirectTo="/login"
-                  component={<ChoosedDay mode={mode} />}
+                  component={<ChoosedDay mode={mode} date={date}/>}
                 />
               }
             />
