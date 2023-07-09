@@ -13,6 +13,7 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const daysInMonth = currentDate.daysInMonth();
 
   const monthStart = currentDate.startOf('month').day();
@@ -26,7 +27,6 @@ const Calendar = () => {
     flexDirection: 'column',
     boxSizing: 'border-box',
     justifyContent: 'flex-start',
-    height: { xs: '94px', md: '126px' },
     padding: '8px 4px 2px',
     bgcolor: '#FFF',
     transition: 'transform 0.3s',
@@ -63,7 +63,6 @@ const Calendar = () => {
     const offset = (monthStart - firstDayOfWeek + 7) % 7;
     const getTasksForDate = date => {
       return tasks.filter(task => {
-        // console.log(dayjs(task.date).$d);
         return dayjs(task.date).isSame(date, 'day');
       });
     };
@@ -74,7 +73,6 @@ const Calendar = () => {
 
     for (let i = 1; i <= daysInMonth; i++) {
       const date = currentDate.date(i);
-      // console.log(date.$d);
       const isCurrentDay = dayjs().isSame(date, 'day');
 
       const tasksForDate = getTasksForDate(date);
@@ -151,7 +149,6 @@ const Calendar = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      console.log(currentDate.$M);
       try {
         const response = await dispatch(
           getTasks({
@@ -171,7 +168,6 @@ const Calendar = () => {
 
     fetchTasks();
   }, [currentDate, dispatch]);
-
   return (
     <Box
       key={tasks.length}
@@ -208,23 +204,29 @@ const Calendar = () => {
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'F' : 'Fri'}
           </Typography>
+
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'S' : 'Sat'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'S' : 'Sun'}
           </Typography>
+          <Typography align="center" sx={cellTextStyle} color={'#3E85F3'}>
+            Sat
+          </Typography>
+          <Typography align="center" sx={cellTextStyle} color={'#3E85F3'}>
+            Sun
+          </Typography>
         </Box>
-
         <Box
           display="grid"
           gridTemplateColumns="repeat(7, 1fr)"
           gridTemplate-rows="repeat(6, 1fr)"
           sx={{
             height: {
-              xs: 'calc(100vh - 340px)',
+              xs: 'calc(100vh - 248px)',
               md: 'calc(100vh - 280px);',
-              lg: 'height: calc(100vh - 270px);',
+              lg: 'calc(100vh - 290px);',
             },
             overflowY: 'auto',
           }}
