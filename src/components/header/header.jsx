@@ -23,6 +23,7 @@ export const Header = ({
   handleDrawerToggle,
   drawerWidth,
   handleModeChange,
+  mode
 }) => {
   const userState = useSelector(selectUser);
   const theme = useTheme();
@@ -32,11 +33,10 @@ export const Header = ({
   const { id } = useSelector(selectUser);
 
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [mode, setMode] = useState('dark');
+
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
-    setMode(newMode);
     handleModeChange(newMode);
   };
 

@@ -25,6 +25,7 @@ export const MainLayout = ({ handleModeChange, mode }) => {
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={drawerWidth}
         handleModeChange={handleModeChange}
+        mode={mode}
       />
       <SideBar
         drawerWidth={drawerWidth}
