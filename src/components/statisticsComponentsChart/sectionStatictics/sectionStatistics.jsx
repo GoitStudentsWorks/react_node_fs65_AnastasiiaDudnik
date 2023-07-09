@@ -10,7 +10,7 @@ import {
   Period,
   ChartContainer,
 } from '../../../pages/statisticsPage/statisticsPage.styled';
-import { CalendarBar } from '../statisticsDateBar/calendarBar';
+import CalendarBar from '../statisticsDateBar/calendarBar';
 import { getTasksStatistics } from 'redux/tasks/operations';
 import { selectTasksStatistics } from 'redux/tasks/selectors';
 
@@ -22,7 +22,7 @@ export const SectionStatistics = ({ mode }) => {
     dispatch(getTasksStatistics(currentDate.format('YYYY-MM-DD')));
     // eslint-disable-next-line
   }, []);
-
+  console.log(data);
   return (
     <>
       <HeadContainer>
@@ -38,11 +38,7 @@ export const SectionStatistics = ({ mode }) => {
         </PeriodTime>
       </HeadContainer>
       <ChartContainer>
-        {!data.tasksStatistics ? (
-          <Spinner />
-        ) : (
-          <StatisticsChart data={data} mode={mode} />
-        )}
+        {!data ? <Spinner /> : <StatisticsChart data={data} mode={mode} />}
       </ChartContainer>
     </>
   );

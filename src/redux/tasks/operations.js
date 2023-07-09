@@ -158,7 +158,7 @@ export const getTasksStatistics = createAsyncThunk(
       setAuthHeader(persistedToken);
 
       const response = await instance.post(`/tasks/statistics`, { date: body });
-
+      console.log(response);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

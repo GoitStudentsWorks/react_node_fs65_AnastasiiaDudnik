@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
 import { PeriodPag } from './periodPag';
 
-export const CalendarBar = ({ mode }) => {
+const CalendarBar = ({ mode }) => {
   const type = useState('month');
 
   return (
@@ -21,3 +21,5 @@ export const CalendarBar = ({ mode }) => {
     </Box>
   );
 };
+
+export default CalendarBar;

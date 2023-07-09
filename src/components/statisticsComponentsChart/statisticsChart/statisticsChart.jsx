@@ -12,7 +12,7 @@ import {
 
 export const StatisticsChart = ({ data, mode }) => {
   const percentagesLabel = props => {
-    const { x, y, width } = props;
+    const { x, y, width, value } = props;
     const radius = 10;
     const labelY = y - (y === 0 ? radius : 0);
     // console.log(mode);
@@ -27,7 +27,7 @@ export const StatisticsChart = ({ data, mode }) => {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {/* {`${Math.round(value)}%`} */}
+          {`${value}%`}
         </text>
       </svg>
     ) : (
@@ -41,11 +41,13 @@ export const StatisticsChart = ({ data, mode }) => {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {/* {`${Math.round(value)}%`} */}
+          {`${Math.round(value)}%`}
         </text>
       </svg>
     );
   };
+
+  console.log(data.tasksStatistics);
 
   const {
     todoByDayPercentage,
@@ -54,7 +56,7 @@ export const StatisticsChart = ({ data, mode }) => {
     todoByMonthPercentage,
     inprogressByMonthPercentage,
     doneByMonthPercentage,
-  } = data.tasksStatistics;
+  } = data;
 
   const columns = [
     {
@@ -116,7 +118,7 @@ export const StatisticsChart = ({ data, mode }) => {
           stroke={mode === 'dark' ? 'rgba(52, 52, 52, 1)' : '#ffffff'}
         />
         <YAxis
-          domain={[0, 20, 40, 60, 80, 100]}
+          domain={[0, 100]}
           position="left"
           axisLine={false}
           tickLine={false}
