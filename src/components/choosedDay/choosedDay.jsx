@@ -14,7 +14,7 @@ const ChoosedDay = ({date}) => {
   const [value, setValue] = useState(null);
   const [prevDate, setPrevDate] = useState('');
   const {day}=useParams()
-console.log(location.pathname.slice(19, 29));
+
 
 useEffect(() => {
   const newStartDate = dayjs(location.pathname.slice(19, 29));

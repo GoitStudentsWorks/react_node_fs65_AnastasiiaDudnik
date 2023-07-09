@@ -12,20 +12,26 @@ export const CalendarToolbar = ({ mode,readDate }) => {
   const { day } = useParams();
   const [type, setType] = useState(location.pathname.slice(15, 20));
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const [openCalendat , setOpenCalendar]= useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     setDate(day);
-    if (location.pathname.includes('day')) {
-      setType('day');
-    } else {
+    if (location.pathname.includes('month')) {
       setType('month');
+    } else {
+      setType('day');
     }
   }, [day, location.pathname]);
 
   const selectDate = (date) => {
+    if (type === 'month' && openCalendat) {
     navigate(`/main/calendar/day/${date}`);
+    } else if (type === 'month' && !openCalendat) {
+      navigate(`/main/calendar/month/${date}`);
+    } else {
+      navigate(`/main/calendar/day/${date}`);
+    }
   };
 
   const nextArray = () => {
@@ -45,7 +51,7 @@ export const CalendarToolbar = ({ mode,readDate }) => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PeriodPaginator
           mode={mode}
-          type={type}
+          setOpenCalendar={setOpenCalendar}
           selectDate={selectDate}
           date={date}
           nextArray={nextArray}
