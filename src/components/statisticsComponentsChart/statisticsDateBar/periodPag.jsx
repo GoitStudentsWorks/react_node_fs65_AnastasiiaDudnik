@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { getTasksStatistics } from 'redux/tasks/operations';
 const day = new Date();
 
-export const PeriodPag = ({ mode, type }) => {
+export const PeriodPag = ({ mode, type, data }) => {
   const [calendar, setCalendar] = useState(false);
   const calendarRef = useRef(null);
   const [date, setDate] = useState('');
@@ -27,7 +27,7 @@ export const PeriodPag = ({ mode, type }) => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [data]);
 
   const handleDatePicker = date => {
     const today = moment(date.$d, 'YYYY-MM-DD');
@@ -74,7 +74,7 @@ export const PeriodPag = ({ mode, type }) => {
           position: 'absolute',
           zIndex: 100,
           backgroundColor: colorsLight.accentColor,
-          top: '165px',
+          top: '40px',
           borderRadius: '8px',
           color: '#fff',
           '& *': { color: '#fff' },

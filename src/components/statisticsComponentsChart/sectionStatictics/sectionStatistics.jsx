@@ -26,7 +26,7 @@ export const SectionStatistics = ({ mode }) => {
   return (
     <>
       <HeadContainer>
-        <CalendarBar mode={mode} />
+        <CalendarBar mode={mode} data={data} />
 
         <PeriodTime>
           <Period>
