@@ -16,24 +16,21 @@ export const PeriodPaginator = ({
   nextArray,
   backArray,
 }) => {
-
-
   const calendarRef = useRef(null);
   const [calendar, setCalendar] = useState(false);
-  const location = useLocation()
+  const location = useLocation();
   const formattedDate = moment(date).locale('uk').format('MMMM YYYY');
   const chooseFormattedDate = moment(date).locale('uk').format('DD MMMM YYYY');
   const dateObj = dayjs(date);
-  
-useEffect(()=>{
-  setOpenCalendar(calendar)
-},[calendar])
+
+  useEffect(() => {
+    setOpenCalendar(calendar);
+  }, [calendar, setOpenCalendar]);
 
   useEffect(() => {
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendar(false);
-  
       }
     };
     document.addEventListener('click', handleClickOutside);
@@ -77,7 +74,7 @@ useEffect(()=>{
           }}
           onClick={() => setCalendar(!calendar)}
         >
-          {location.pathname.slice(15,20) === 'month'
+          {location.pathname.slice(15, 20) === 'month'
             ? formattedDate.slice(0, date.slength)
             : chooseFormattedDate}
         </Typography>

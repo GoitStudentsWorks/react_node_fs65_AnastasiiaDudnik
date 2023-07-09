@@ -7,23 +7,24 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
-const ChoosedDay = ({date}) => {
+const ChoosedDay = ({ date }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [weekStartDate, setWeekStartDate] = useState(dayjs(location.pathname.slice(19, 29)));
+  const [weekStartDate, setWeekStartDate] = useState(
+    dayjs(location.pathname.slice(19, 29))
+  );
   const [value, setValue] = useState(null);
   const [prevDate, setPrevDate] = useState('');
-  const {day}=useParams()
+  const { day } = useParams();
 
+  useEffect(() => {
+    const newStartDate = dayjs(location.pathname.slice(19, 29));
+    setWeekStartDate(newStartDate);
+  }, [location.pathname]);
 
-useEffect(() => {
-  const newStartDate = dayjs(location.pathname.slice(19, 29));
-  setWeekStartDate(newStartDate);
-}, [location.pathname]);
-
-useEffect(() => {
-  setPrevDate(day);
-}, [day]);
+  useEffect(() => {
+    setPrevDate(day);
+  }, [day]);
 
   useEffect(() => {
     setPrevDate(location.pathname.slice(27, 29));
@@ -53,7 +54,7 @@ useEffect(() => {
     return arr;
   }, [weekStartDate]);
 
-  const addZero = (num) => {
+  const addZero = num => {
     return num < 10 ? `0${num}` : num;
   };
 
@@ -64,17 +65,19 @@ useEffect(() => {
       const currentDate = location.pathname.slice(27, 29);
 
       if (currentDate > prevDate) {
-        setValue((prevValue) => {
+        setValue(prevValue => {
           if (prevValue === 6) {
-            setWeekStartDate((prevStartDate) => prevStartDate.add(1, 'week'));
+            setWeekStartDate(prevStartDate => prevStartDate.add(1, 'week'));
             return 0;
           }
           return prevValue + 1;
         });
       } else if (currentDate < prevDate) {
-        setValue((prevValue) => {
+        setValue(prevValue => {
           if (prevValue === 0) {
-            setWeekStartDate((prevStartDate) => prevStartDate.subtract(1, 'week'));
+            setWeekStartDate(prevStartDate =>
+              prevStartDate.subtract(1, 'week')
+            );
             return 6;
           }
           return prevValue - 1;
@@ -83,7 +86,7 @@ useEffect(() => {
 
       setPrevDate(currentDate);
     }
-  }, [date]);
+  }, [date, location.pathname, prevDate, weekStartDate, value]);
 
   useEffect(() => {
     if (weekend[0]) {
@@ -107,7 +110,11 @@ useEffect(() => {
   return (
     <Box sx={style.boxDay}>
       <Box sx={{ boxSizing: 'border-box', borderColor: 'divider' }}>
-        <DayCalendarHead value={value} weekend={weekend} handleChange={handleChange} />
+        <DayCalendarHead
+          value={value}
+          weekend={weekend}
+          handleChange={handleChange}
+        />
       </Box>
       <ColumnsTasksList weekend={weekend} value={value} />
     </Box>
@@ -126,7 +133,8 @@ const style = {
   '&::-webkit-scrollbar-thumb, &::-webkit-resizer': {
     background: 'rgba(170, 170, 170, 0.6)',
     borderRadius: '5px',
-    boxShadow: 'inset 0.05em 0.05em 0 rgba(0, 0, 0, 0.1), inset 0 - 0.05em 0 rgba(0, 0, 0, 0.07)',
+    boxShadow:
+      'inset 0.05em 0.05em 0 rgba(0, 0, 0, 0.1), inset 0 - 0.05em 0 rgba(0, 0, 0, 0.07)',
   },
   boxDay: {
     width: {
