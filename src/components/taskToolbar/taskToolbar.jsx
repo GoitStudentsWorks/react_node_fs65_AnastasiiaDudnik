@@ -56,6 +56,7 @@ export default function TaskToolbar({ todo }) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [editingTask, setEditingTask] = useState(false);
 
   const closeModal = () => {
     setShowModal(false);
@@ -63,6 +64,7 @@ export default function TaskToolbar({ todo }) {
 
   const openModal = () => {
     setShowModal(true);
+    setEditingTask(true);
   };
 
   return (
@@ -93,7 +95,13 @@ export default function TaskToolbar({ todo }) {
             <use href={`${Sprite}#pencil`}></use>
           </SvgIcon>
         </IconButton>
-        {showModal && <TaskModal currentTask={todo} closeModal={closeModal} />}
+        {showModal && (
+          <TaskModal
+            currentTask={todo}
+            closeModal={closeModal}
+            editingTask={editingTask}
+          />
+        )}
       </ListItem>
 
       <ListItem sx={{ padding: '0' }}>

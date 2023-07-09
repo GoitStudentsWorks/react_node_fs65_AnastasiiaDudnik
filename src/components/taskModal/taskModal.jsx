@@ -5,7 +5,13 @@ import { colorsLight } from 'components/variables/colors';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const TaskModal = ({ closeModal, currentTask, date, category }) => {
+const TaskModal = ({
+  closeModal,
+  currentTask,
+  date,
+  category,
+  editingTask,
+}) => {
   const [data, setData] = useState(null);
   const { currentDay } = useParams();
 
@@ -26,7 +32,6 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
     } else {
       closeModal();
     }
- 
   }, [closeModal, currentTask, currentDay, category]);
 
   return (
@@ -47,6 +52,7 @@ const TaskModal = ({ closeModal, currentTask, date, category }) => {
           category={category ? category : 'to-do'}
           currentTask={data}
           closeModal={closeModal}
+          editingTask={editingTask}
         />
       </Box>
     </ModalWrapper>
