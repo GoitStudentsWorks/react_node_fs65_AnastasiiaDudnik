@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import {
   Typography,
@@ -14,11 +14,11 @@ import {
 import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
-import { addTask } from 'redux/tasks/operations';
+import { addTask, updateTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal, date, category }) => {
+const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
   const defaultTask = {
     title: '',
     start: '09:00',
@@ -29,9 +29,19 @@ const TaskForm = ({ closeModal, date, category }) => {
   };
 
   const [task, setTask] = useState(defaultTask);
-  // const [savedTask, setSavedTask] = useState(null);
+  const [status, setStatus] = useState('create');
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentTask !== null) {
+      const { _id, status, ...data } = currentTask;
+      if (_id) {
+        setTask(data);
+        setStatus(status);
+      }
+    }
+  }, [currentTask]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -47,9 +57,19 @@ const TaskForm = ({ closeModal, date, category }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(addTask({ ...task, date: dayjs(new Date(date)).format('YYYY-MM-DD') }));
-      closeModal();
+      if (status === 'edit') {
+        const { _id } = currentTask;
+        dispatch(
+          updateTask({
+            _id,
+            ...task,
+          })
+        );
+      } else {
+        dispatch(addTask(task));
+      }
     }
+    closeModal();
   };
 
   return (
@@ -246,29 +266,56 @@ const TaskForm = ({ closeModal, date, category }) => {
               gap: '14px',
             }}
           >
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{
-                height: '100%',
-                flexGrow: '1',
-                backgroundColor: colorsLight.accentBackgroundColor,
-                boxShadow: 'none',
-                gap: '8px',
-              }}
-            >
-              <SvgIcon
-                stroke="currentColor"
+            {!editingTask ? (
+              <Button
+                variant="contained"
+                type="submit"
                 sx={{
-                  width: { xs: '18px', md: '20px', lg: '20px' },
-                  height: { xs: '18px', md: '20px', lg: '20px' },
-                  fill: '#3E85F3;',
+                  height: '100%',
+                  flexGrow: '1',
+                  backgroundColor: colorsLight.accentBackgroundColor,
+                  boxShadow: 'none',
+                  gap: '8px',
                 }}
               >
-                <use href={`${Sprite}#add`}></use>
-              </SvgIcon>
-              Add
-            </Button>
+                <SvgIcon
+                  stroke="currentColor"
+                  sx={{
+                    width: { xs: '18px', md: '20px', lg: '20px' },
+                    height: { xs: '18px', md: '20px', lg: '20px' },
+                    fill: '#3E85F3;',
+                  }}
+                >
+                  <use href={`${Sprite}#add`}></use>
+                </SvgIcon>
+                Add
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{
+                  height: '100%',
+                  flexGrow: '1',
+                  backgroundColor: colorsLight.accentBackgroundColor,
+                  boxShadow: 'none',
+                  gap: '8px',
+                }}
+              >
+                <SvgIcon
+                  stroke="currentColor"
+                  sx={{
+                    width: { xs: '18px', md: '20px', lg: '20px' },
+                    height: { xs: '18px', md: '20px', lg: '20px' },
+                    fill: '#3E85F3;',
+                  }}
+                >
+                  <use href={`${Sprite}#pencil`}></use>
+                </SvgIcon>
+                Edit
+              </Button>
+            )}
+
             <Button
               variant="contained"
               onClick={closeModal}

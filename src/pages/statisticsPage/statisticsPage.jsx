@@ -1,12 +1,30 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+// import Box from '@mui/material/Box';
+// import Typography from '@mui/material/Typography';
 
-const Statistics = () => {
+import { StatisticsContainer } from './statisticsPage.styled';
+
+import { SectionStatistics } from '../../components/statisticsComponentsChart/sectionStatictics/sectionStatistics';
+
+const Statistics = ({ mode }) => {
+  // console.log({ mode });
   return (
-    <Box>
-      <Typography paragraph>Statistics</Typography>
-    </Box>
+    <StatisticsContainer>
+      <SectionStatistics mode={mode} />
+    </StatisticsContainer>
   );
 };
 
 export default Statistics;
+
+// import React from 'react';
+// import { StatisticsContainer } from 'pages/StatisticsPage/StatisticsPage.styled';
+
+// import { SectionStatistics } from 'components/StatisticsPageComponents/SectionStatistics/SectionStatistics';
+
+// export default function StatisticsPage() {
+//   return (
+//     <StatisticsContainer>
+//       <SectionStatistics />
+//     </StatisticsContainer>
+//   );
+// }

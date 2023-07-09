@@ -13,6 +13,7 @@ const Calendar = () => {
   const [tasks, setTasks] = useState([]);
   // console.log(tasks);
   const daysInMonth = currentDate.daysInMonth();
+
   const monthStart = currentDate.startOf('month').day();
   const firstDayOfWeek = 1;
 
@@ -168,8 +169,8 @@ const Calendar = () => {
     };
 
     fetchTasks();
-  }, [currentDate, dispatch, getTasks]);
-  // console.log(renderCalendar());
+  }, [currentDate, dispatch]);
+
   return (
     <Container
       key={tasks.length}

@@ -129,7 +129,7 @@ const ReviewSlider = () => {
           sx={{
             color: '#3E85F3',
             fontSize: { xs: '28px', md: '40px', lg: '40px' },
-            fontFamily: 'Inter',
+            fontFamily: 'Inter, sans-serif',
             fontWeight: '700',
             lineHeight: { xs: '32px', md: '44px', lg: '44px' },
             textTransform: 'uppercase',

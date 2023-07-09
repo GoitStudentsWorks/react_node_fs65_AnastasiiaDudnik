@@ -207,6 +207,7 @@ const UserForm = ({ mode }) => {
         >
           {userState.name}
         </Typography>
+        <Typography>User</Typography>
         <Box
           sx={{
             display: 'flex',

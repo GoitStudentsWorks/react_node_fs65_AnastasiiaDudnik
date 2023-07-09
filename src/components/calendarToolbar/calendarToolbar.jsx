@@ -3,55 +3,55 @@ import { PeriodPaginator } from 'components/periodPaginator/periodPaginator';
 import { PeriodTypeSelect } from 'components/periodTypeSelect/periodTypeSelect';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
-const day = new Date();
-const today = moment(day, 'YYYY-MM-DD');
-const currentDate = today.format('YYYY-MM-DD');
-
-export const CalendarToolbar = ({ mode }) => {
-  const [type, setType] = useState('month');
-  const [date, setDate] = useState(currentDate);
+export const CalendarToolbar = ({ mode,readDate }) => {
+  const location = useLocation();
+  const { day } = useParams();
+  const [type, setType] = useState(location.pathname.slice(15, 20));
+  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const [openCalendat , setOpenCalendar]= useState(false)
   const navigate = useNavigate();
 
-  const selectDate = date => {
-    navigate(`/main/calendar/${type}/${date}`);
-    setDate(date);
+  useEffect(() => {
+    setDate(day);
+    if (location.pathname.includes('month')) {
+      setType('month');
+    } else {
+      setType('day');
+    }
+  }, [day, location.pathname]);
+
+  const selectDate = (date) => {
+    if (type === 'month' && openCalendat) {
+    navigate(`/main/calendar/day/${date}`);
+    } else if (type === 'month' && !openCalendat) {
+      navigate(`/main/calendar/month/${date}`);
+    } else {
+      navigate(`/main/calendar/day/${date}`);
+    }
   };
 
   const nextArray = () => {
-    if (type === 'month') {
-      const nextDate = moment(date).add(1, 'month').format('YYYY-MM-DD');
-      return selectDate(nextDate);
-    }
-    const nextDate = moment(date).add(1, 'day').format('YYYY-MM-DD');
-    return selectDate(nextDate);
+    const nextDate = type === 'month' ? moment(date).add(1, 'month') : moment(date).add(1, 'day');
+    selectDate(nextDate.format('YYYY-MM-DD'));
+    readDate(nextDate.format('YYYY-MM-DD'))
   };
+
   const backArray = () => {
-    if (type === 'month') {
-      const previousDate = moment(date)
-        .subtract(1, 'month')
-        .format('YYYY-MM-DD');
-      return selectDate(previousDate);
-    }
-    const previousDate = moment(date).subtract(1, 'day').format('YYYY-MM-DD');
-    return selectDate(previousDate);
+    const previousDate = type === 'month' ? moment(date).subtract(1, 'month') : moment(date).subtract(1, 'day');
+    selectDate(previousDate.format('YYYY-MM-DD'));
+    readDate(previousDate.format('YYYY-MM-DD'))
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: { xs: '24px', lg: '32px' },
-      }}
-    >
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: { xs: '24px', lg: '32px' } }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PeriodPaginator
           mode={mode}
-          type={type}
+          setOpenCalendar={setOpenCalendar}
           selectDate={selectDate}
           date={date}
           nextArray={nextArray}

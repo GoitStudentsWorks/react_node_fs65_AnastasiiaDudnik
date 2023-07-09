@@ -16,9 +16,15 @@ export default function TasksColumn({ title, todos, date, category }) {
     setShowModal(true);
   };
 
+  const panelSetts = {
+    marginBottom: '28px',
+  }
+  if (todos.length === 0) { panelSetts.marginBottom = {xs: '64px', md: '28px'} }
+  else { panelSetts.marginBottom = '28px' }
+
   return (
     <Box sx={style.listTodos}>
-      <Box sx={style.addPanel}>
+      <Box sx={{...style.addPanel, ...panelSetts}}>
         <Typography>{title}</Typography>
         <AddTaskBtn openModal={openModal} />
       </Box>
@@ -28,7 +34,14 @@ export default function TasksColumn({ title, todos, date, category }) {
       <Box sx={style.btnAdd}>
         <AddTaskBtn btnList openModal={openModal} />
       </Box>
-      {showModal && <TaskModal currentTask={todos} date={date} category={category} closeModal={closeModal} />}
+      {showModal && (
+        <TaskModal
+          currentTask={todos}
+          date={date}
+          category={category}
+          closeModal={closeModal}
+        />
+      )}
     </Box>
   );
 }
@@ -49,15 +62,13 @@ const style = {
     paddingInline: {
       md: '21px',
     },
-    marginTop: {
-      md: '32px',
-    },
   },
   addPanel: {
     paddingInline: '21px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: '28px'
   },
   listTodos: {
     boxSizing: 'border-box',
@@ -74,7 +85,8 @@ const style = {
     },
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    height: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
     scrollSnapAlign: 'center',

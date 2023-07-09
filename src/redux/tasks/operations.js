@@ -63,7 +63,7 @@ export const getTaskById = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.get(`/tasks/${id}`);
-      console.log('oneTask', response.data);
+      // console.log('oneTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -90,7 +90,7 @@ export const addTask = createAsyncThunk(
         date,
         category,
       });
-      console.log('newTask', response.data);
+      // console.log('newTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -117,7 +117,7 @@ export const updateTask = createAsyncThunk(
         date: dayjs(date).format('YYYY-MM-DD'),
         category,
       });
-      console.log('updatedTask', response.data);
+      // console.log('updatedTask', response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -137,8 +137,28 @@ export const deleteTask = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       const response = await instance.delete(`/tasks/${id}`);
-      console.log('deletedTask', response.data);
+      // console.log('deletedTask', response.data);
       return { ...response.data, _id: id };
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getTasksStatistics = createAsyncThunk(
+  'tasks/getTasksStatistics',
+  async ({ date }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      setAuthHeader(persistedToken);
+      const response = await instance.post(`/tasks/statistics`, { date });
+      console.log('getTasksStatistics', response.data);
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
