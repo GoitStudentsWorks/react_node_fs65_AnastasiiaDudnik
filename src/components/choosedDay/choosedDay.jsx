@@ -4,7 +4,7 @@ import DayCalendarHead from 'components/dayCalendarHead/dayCalendarHead';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
 const ChoosedDay = ({date}) => {
@@ -13,7 +13,18 @@ const ChoosedDay = ({date}) => {
   const [weekStartDate, setWeekStartDate] = useState(dayjs(location.pathname.slice(19, 29)));
   const [value, setValue] = useState(null);
   const [prevDate, setPrevDate] = useState('');
-console.log(date);
+  const {day}=useParams()
+console.log(location.pathname.slice(19, 29));
+
+useEffect(() => {
+  const newStartDate = dayjs(location.pathname.slice(19, 29));
+  setWeekStartDate(newStartDate);
+}, [location.pathname]);
+
+useEffect(() => {
+  setPrevDate(day);
+}, [day]);
+
   useEffect(() => {
     setPrevDate(location.pathname.slice(27, 29));
   }, [location.pathname]);
@@ -72,7 +83,7 @@ console.log(date);
 
       setPrevDate(currentDate);
     }
-  }, [weekStartDate, value, location.pathname, prevDate]);
+  }, [date]);
 
   useEffect(() => {
     if (weekend[0]) {

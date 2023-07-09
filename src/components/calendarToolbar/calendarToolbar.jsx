@@ -31,13 +31,13 @@ export const CalendarToolbar = ({ mode,readDate }) => {
   const nextArray = () => {
     const nextDate = type === 'month' ? moment(date).add(1, 'month') : moment(date).add(1, 'day');
     selectDate(nextDate.format('YYYY-MM-DD'));
-    readDate(nextDate)
+    readDate(nextDate.format('YYYY-MM-DD'))
   };
 
   const backArray = () => {
     const previousDate = type === 'month' ? moment(date).subtract(1, 'month') : moment(date).subtract(1, 'day');
     selectDate(previousDate.format('YYYY-MM-DD'));
-    readDate(previousDate)
+    readDate(previousDate.format('YYYY-MM-DD'))
   };
 
   return (
