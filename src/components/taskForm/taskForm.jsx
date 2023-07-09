@@ -14,7 +14,7 @@ import {
 import Sprite from 'icons/sprite.svg';
 import { colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
-import { addTask } from 'redux/tasks/operations';
+import { addTask, updateTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
@@ -24,19 +24,21 @@ const TaskForm = ({ closeModal, date, currentTask, category }) => {
     start: '09:00',
     end: '09:30',
     priority: 'low',
-    category ,
+    category,
     date: dayjs(new Date(date)).format('YYYY-MM-DD'),
   };
 
   const [task, setTask] = useState(defaultTask);
+  const [status, setStatus] = useState('create');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentTask !== null ) {
-      const { _id, ...data } = currentTask;
+    if (currentTask !== null) {
+      const { _id, status, ...data } = currentTask;
       if (_id) {
         setTask(data);
+        setStatus(status);
       }
     }
   }, [currentTask]);
@@ -55,11 +57,17 @@ const TaskForm = ({ closeModal, date, currentTask, category }) => {
       Notify.failure('Start time must be later than end time');
       return;
     } else {
-      dispatch(
-        addTask({ ...task, date: dayjs(new Date(date)).format('YYYY-MM-DD') })
-      );
-      closeModal();
+      if (status === 'edit') {
+        dispatch(
+          updateTask({
+            task,
+          })
+        );
+      } else {
+        dispatch(addTask(task));
+      }
     }
+    closeModal();
   };
 
   return (
