@@ -11,7 +11,7 @@ const setAuthHeader = token => {
 
 export const getTasks = createAsyncThunk(
   'tasks/getTasks',
-  async ({ date }, thunkAPI) => {
+  async ({ month, year }, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
@@ -20,7 +20,11 @@ export const getTasks = createAsyncThunk(
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await instance.get(`/tasks`, { date });
+      console.log({ month, year });
+      const response = await instance.get(
+        `/tasks/?years=${year}&month=${month}`
+      );
+
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
