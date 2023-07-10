@@ -84,7 +84,7 @@ export const PeriodPag = ({ mode, type, data }) => {
         }}
         onChange={handleDatePicker}
       />
-      <Box
+{/*       <Box
         sx={{
           borderRadius: '8px',
           border:
@@ -130,7 +130,7 @@ export const PeriodPag = ({ mode, type, data }) => {
             <use href={`${Sprite}#chevron-right`} />
           </SvgIcon>
         </Button>
-      </Box>
+      </Box>  */}
     </Box>
   );
 };
