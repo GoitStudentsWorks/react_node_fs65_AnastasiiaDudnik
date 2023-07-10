@@ -29,10 +29,18 @@ export const SectionStatistics = ({ mode }) => {
         <CalendarBar mode={mode} data={data} />
 
         <PeriodTime>
-          <Period>
+          <Period
+            style={{
+              color: mode === 'dark' ? '#000' : '#fff',
+            }}
+          >
             <BsFillCircleFill fill="#FFD2DD" size={8} /> By Day
           </Period>
-          <Period>
+          <Period
+            style={{
+              color: mode === 'dark' ? '#000' : '#fff',
+            }}
+          >
             <BsFillCircleFill fill="#3E85F3" size={8} /> By Month
           </Period>
         </PeriodTime>

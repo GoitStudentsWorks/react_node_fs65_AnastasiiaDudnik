@@ -87,6 +87,7 @@ export const HeadContainer = styled.section`
   @media screen and (min-width: 375px) and (max-width: 768px) {
     flex-wrap: wrap;
     gap: 20px;
+    padding-bottom: 20px;
   }
 
   @media screen and (min-width: 768px) {
