@@ -9,12 +9,19 @@ function MiniModal({ todo, mode }) {
   const dispatch = useDispatch();
 
   return (
-    <Box sx={{
-      ...style.miniModal,
-      backgroundColor: mode === 'light' ? '#171820' : '#FFFFFF',
-      boxShadow: mode === 'light' ? '0px 4px 16px 0px rgba(17, 17, 17, 0.10)' : '0px 4px 16px 0px rgba(17, 17, 17, 0.10)',
-      border: mode === 'light' ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
-    }} id={'modal'}>
+    <Box
+      sx={{
+        ...style.miniModal,
+        backgroundColor: mode === 'light' ? '#171820' : '#FFFFFF',
+        boxShadow:
+          mode === 'light'
+            ? '0px 4px 16px 0px rgba(17, 17, 17, 0.10)'
+            : '0px 4px 16px 0px rgba(17, 17, 17, 0.10)',
+        border:
+          mode === 'light' ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
+      }}
+      id={'modal'}
+    >
       <Box
         sx={{
           ...style.btnMiniModal,
@@ -24,7 +31,10 @@ function MiniModal({ todo, mode }) {
         onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))}
       >
         To do
-        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon
+          sx={style.iconButton}
+          stroke={mode === 'light' ? '#FFFFFF' : '#111111'}
+        >
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -33,14 +43,16 @@ function MiniModal({ todo, mode }) {
           ...style.btnMiniModal,
           display: todo.category === 'in-progress' ? 'none' : 'flex',
           color: mode === 'light' ? 'white' : 'black',
-
         }}
         onClick={() =>
           dispatch(updateTask({ ...todo, category: 'in-progress' }))
         }
       >
         In progress
-        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon
+          sx={style.iconButton}
+          stroke={mode === 'light' ? '#FFFFFF' : '#111111'}
+        >
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -49,12 +61,14 @@ function MiniModal({ todo, mode }) {
           ...style.btnMiniModal,
           display: todo.category === 'done' ? 'none' : 'flex',
           color: mode === 'light' ? 'white' : 'black',
-
         }}
         onClick={() => dispatch(updateTask({ ...todo, category: 'done' }))}
       >
         Done
-        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon
+          sx={style.iconButton}
+          stroke={mode === 'light' ? '#FFFFFF' : '#111111'}
+        >
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -90,7 +104,12 @@ export default function TaskToolbar({ todo, mode }) {
           <SvgIcon
             sx={{
               ...style.iconButton,
-              stroke: isOpen === true ? '#3E85F3' : mode === 'light' ? '#FFFFFF' : '#111111',
+              stroke:
+                isOpen === true
+                  ? '#3E85F3'
+                  : mode === 'light'
+                  ? '#FFFFFF'
+                  : '#111111',
             }}
           >
             <use href={`${Sprite}#arrow-circle`}></use>
@@ -101,7 +120,10 @@ export default function TaskToolbar({ todo, mode }) {
 
       <ListItem sx={{ padding: '0' }}>
         <IconButton aria-label="edit" sx={style.btnMenu} onClick={openModal}>
-          <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
+          <SvgIcon
+            sx={style.iconButton}
+            stroke={mode === 'light' ? '#FFFFFF' : '#111111'}
+          >
             <use href={`${Sprite}#pencil`}></use>
           </SvgIcon>
         </IconButton>
@@ -110,6 +132,7 @@ export default function TaskToolbar({ todo, mode }) {
             currentTask={todo}
             closeModal={closeModal}
             editingTask={editingTask}
+            mode={mode}
           />
         )}
       </ListItem>
@@ -120,7 +143,10 @@ export default function TaskToolbar({ todo, mode }) {
           sx={style.btnMenu}
           onClick={() => dispatch(deleteTask(todo._id))}
         >
-          <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
+          <SvgIcon
+            sx={style.iconButton}
+            stroke={mode === 'light' ? '#FFFFFF' : '#111111'}
+          >
             <use href={`${Sprite}#trash`}></use>
           </SvgIcon>
         </IconButton>
