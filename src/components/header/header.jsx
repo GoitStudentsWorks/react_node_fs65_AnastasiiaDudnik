@@ -12,31 +12,31 @@ import {
   useTheme,
 } from '@mui/material';
 import Sprite from '../../icons/sprite.svg';
-
 import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
 import { useLocation } from 'react-router-dom';
 import hay from './hay.png';
+import { selectTasks } from 'redux/tasks/selectors';
+
 export const Header = ({
   handleDrawerToggle,
   drawerWidth,
   handleModeChange,
+  mode,
 }) => {
+  const tasksInProgres = useSelector(selectTasks);
+  const dispatch = useDispatch();
+  const location = useLocation();
   const userState = useSelector(selectUser);
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
-  const location = useLocation();
-  const dispatch = useDispatch();
   const { id } = useSelector(selectUser);
-
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [mode, setMode] = useState('dark');
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
-    setMode(newMode);
     handleModeChange(newMode);
   };
 
@@ -64,7 +64,7 @@ export const Header = ({
             fontWeight: 600,
             fontFamily: 'Inter, sans-serif',
             lineHeight: '18px',
-            color: '#000',
+            color: mode === 'light' ? '#fff' : '#111',
           }}
         >
           of the past and focus on the present!
@@ -104,7 +104,7 @@ export const Header = ({
               alignItems: 'center',
             }}
           >
-            {location.pathname === '/main/calendar/day' && (
+            {location.pathname.startsWith('/main/calendar/day/') && (
               <img src={hay} width={64} alt="goose" />
             )}
             <Box>
@@ -120,11 +120,13 @@ export const Header = ({
                     '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
                 }}
               >
-                {location.pathname === '/main/account'
-                  ? 'User Profile'
-                  : 'Calendar'}
+                {(location.pathname === '/main/account' && 'User Profile') ||
+                  (location.pathname.startsWith('/main/calendar/') &&
+                    'Calendar') ||
+                  (location.pathname.startsWith('/main/statistics') &&
+                    'Statistics')}
               </Typography>
-              {location.pathname === '/main/calendar/day' && spanDay()}
+              {location.pathname.startsWith('/main/calendar/day/') && spanDay()}
             </Box>
           </Box>
         ) : (

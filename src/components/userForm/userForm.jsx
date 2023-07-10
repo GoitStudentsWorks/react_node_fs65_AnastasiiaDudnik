@@ -207,7 +207,7 @@ const UserForm = ({ mode }) => {
         >
           {userState.name}
         </Typography>
-        <Typography>User</Typography>
+        <Typography sx={{ color: mode === 'light' ? '#fff' : '#111',}}>User</Typography>
         <Box
           sx={{
             display: 'flex',

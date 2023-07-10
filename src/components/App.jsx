@@ -7,9 +7,9 @@ import { RestrictedRoute } from 'redux/restriktedRoute';
 import { MainLayout } from 'pages/MainLayout/mainLayout';
 import { PrivateRoute } from 'redux/privareRoute';
 import {
-  // ColorRing,
   MutatingDots,
 } from 'react-loader-spinner';
+import dayjs from 'dayjs';
 
 const LoginPage = lazy(() => import('pages/loginPage/loginPage'));
 const RegisterPage = lazy(() => import('pages/registerPage/registerPage'));
@@ -22,11 +22,14 @@ const ChoosedDay = lazy(() => import('./choosedDay/choosedDay'));
 const Calendar = lazy(() => import('./calendar/calendar'));
 
 export const App = () => {
-  const [mode, setMode] = useState('dark');
+  const today = dayjs().format('YYYY-MM-DD');
+  const [mode, setMode] = useState(localStorage.getItem('mode') || 'dark'); 
   const [date, setDate] = useState('');
   const readDate = newDate => [setDate(newDate)];
+
   const handleModeChange = newMode => {
     setMode(newMode);
+    localStorage.setItem('mode', newMode); 
   };
   const dispatch = useDispatch();
   const isFatching = useSelector(selectIsRefreshing);
@@ -58,7 +61,7 @@ export const App = () => {
           path="register"
           element={
             <RestrictedRoute
-              redirectTo="/main/account"
+              redirectTo={`/main/calendar/month/${today}`}
               component={<RegisterPage />}
             />
           }
@@ -67,7 +70,7 @@ export const App = () => {
           path="login"
           element={
             <RestrictedRoute
-              redirectTo="/main/account"
+              redirectTo={`/main/calendar/month/${today}`}
               component={<LoginPage />}
             />
           }
