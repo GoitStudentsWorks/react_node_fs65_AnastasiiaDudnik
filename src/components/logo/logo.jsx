@@ -13,6 +13,8 @@ import logoTb from '../../images/GOOSE2.png';
 import logoDes from '../../images/GOOSE3.png';
 
 export const Logo = ({ handleDrawerToggle, mode }) => {
+  const dayjs = require('dayjs');
+  const formattedDate = dayjs().format('YYYY-MM-DD');
   return (
     <Toolbar
       sx={{
@@ -24,7 +26,7 @@ export const Logo = ({ handleDrawerToggle, mode }) => {
     >
       <Button
         component={NavLink}
-        to="/main/calendar"
+        to={`/main/calendar/month/${formattedDate}`}
         onClick={handleDrawerToggle}
         sx={{
           py: 0,

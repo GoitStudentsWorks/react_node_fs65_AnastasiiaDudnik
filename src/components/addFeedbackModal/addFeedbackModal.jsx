@@ -5,7 +5,7 @@ import Sprite from 'icons/sprite.svg';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export const FeedbackModalWrapper = ({ children, onClose, open }) => {
+export const FeedbackModalWrapper = ({ children, onClose, open, mode }) => {
   useEffect(() => {
     const handleEscape = e => {
       if (e.code === `Escape`) {
@@ -23,15 +23,17 @@ export const FeedbackModalWrapper = ({ children, onClose, open }) => {
       <Box
         sx={{
           position: 'absolute',
-          border: '1px solid rgba(220, 227, 229, 0.8)',
-          boxShadow: '0px 4px 16px rgba(17, 17, 17, 0.1)',
+          boxShadow:
+            mode !== 'dark'
+              ? '0px 4px 57px 0px rgba(17, 17, 17, 0.05)'
+              : '0px 4px 16px rgba(17, 17, 17, 0.1)',
           borderRadius: '8px',
           maxWidth: '95%',
           padding: ' 48px 18px 40px',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: mode !== 'dark' ? '#171820' : '#FFFFFF',
         }}
       >
         <IconButton
@@ -45,6 +47,7 @@ export const FeedbackModalWrapper = ({ children, onClose, open }) => {
             width: { xs: '20px', md: '24px' },
             height: { xs: '20px', md: '24px' },
             padding: 0,
+            color: mode !== 'dark' ? '#FFFFFF' : '#111111',
           }}
         >
           <SvgIcon stroke="currentColor">
