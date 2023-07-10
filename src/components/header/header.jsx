@@ -26,7 +26,7 @@ export const Header = ({
   handleModeChange,
   mode,
 }) => {
-  const tasksInProgres = useSelector(selectTasks);
+  // const tasksInProgres = useSelector(selectTasks);
   const dispatch = useDispatch();
   const location = useLocation();
   const userState = useSelector(selectUser);
