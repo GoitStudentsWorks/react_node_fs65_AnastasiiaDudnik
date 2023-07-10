@@ -23,11 +23,9 @@ import { selectUserReview } from '../../redux/reviews/selectors';
 import { selectUser } from '../../redux/auth/selectors';
 
 const validationSchema = Yup.object().shape({
-  // rating: Yup.number().required('Required'),
   comment: Yup.string()
     .min(2)
     .max(300, 'Comment should be maximum 300 characters'),
-  // .required('Required'),
 });
 
 export const FeedbackForm = ({
@@ -291,8 +289,7 @@ export const FeedbackForm = ({
                     sx={{
                       textTransform: 'none',
                       width: '100%',
-                      // backgroundColor: '#3E85F3',
-                      // color: '#FFFFFF',
+
                       padding: { xs: '8px 20px', md: '15px 85px' },
                       borderRadius: '8px',
                       fontSize: '14px',
@@ -351,8 +348,7 @@ export const FeedbackForm = ({
                     sx={{
                       textTransform: 'none',
                       width: '100%',
-                      // backgroundColor: '#3E85F3',
-                      // color: '#FFFFFF',
+
                       padding: { xs: '8px 20px', md: '15px 85px' },
                       borderRadius: '8px',
                       fontSize: '14px',

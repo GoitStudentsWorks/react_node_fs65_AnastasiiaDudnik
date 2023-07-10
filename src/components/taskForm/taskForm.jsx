@@ -16,7 +16,6 @@ import { colorsDark, colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask, updateTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
-// import { selectError } from 'redux/tasks/selectors';
 
 const TaskForm = ({
   closeModal,
