@@ -18,21 +18,33 @@ export default function TasksColumn({ title, todos, date, category, mode }) {
 
   const panelSetts = {
     marginBottom: '28px',
+  };
+  if (todos.length === 0) {
+    panelSetts.marginBottom = { xs: '64px', md: '28px' };
+  } else {
+    panelSetts.marginBottom = '28px';
   }
-  if (todos.length === 0) { panelSetts.marginBottom = { xs: '64px', md: '28px' } }
-  else { panelSetts.marginBottom = '28px' }
 
   return (
-    <Box sx={{ ...style.listTodos, bgcolor: mode === 'light' ? '#21222C' : '#FFFFFF' }}>
+    <Box
+      sx={{
+        ...style.listTodos,
+        bgcolor: mode === 'light' ? '#21222C' : '#FFFFFF',
+      }}
+    >
       <Box sx={{ ...style.addPanel, ...panelSetts }}>
-        <Typography sx={{...style.titleText, color: mode === 'light' ? '#FFF' : '#111'}}>{title}</Typography>
-        <AddTaskBtn openModal={openModal} mode={mode}/>
+        <Typography
+          sx={{ ...style.titleText, color: mode === 'light' ? '#FFF' : '#111' }}
+        >
+          {title}
+        </Typography>
+        <AddTaskBtn openModal={openModal} mode={mode} />
       </Box>
 
       <TasksColumnList todos={todos} mode={mode} />
 
       <Box sx={style.btnAdd}>
-        <AddTaskBtn btnList openModal={openModal} mode={mode}/>
+        <AddTaskBtn btnList openModal={openModal} mode={mode} />
       </Box>
       {showModal && (
         <TaskModal
@@ -40,6 +52,7 @@ export default function TasksColumn({ title, todos, date, category, mode }) {
           date={date}
           category={category}
           closeModal={closeModal}
+          mode={mode}
         />
       )}
     </Box>
@@ -68,7 +81,7 @@ const style = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '28px'
+    marginBottom: '28px',
   },
   listTodos: {
     boxSizing: 'border-box',
@@ -102,5 +115,5 @@ const style = {
     fontStyle: 'normal',
     fontWeight: '700',
     lineHeight: ' 24px',
-  }
+  },
 };

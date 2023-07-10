@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Box, IconButton, Modal, SvgIcon } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
+import { colorsDark, colorsLight } from 'components/variables/colors';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const ModalWrapper = ({ children, closeModal }) => {
+const ModalWrapper = ({ children, closeModal, mode }) => {
   useEffect(() => {
     const handleEscape = e => {
       if (e.code === `Escape`) {
@@ -49,6 +50,10 @@ const ModalWrapper = ({ children, closeModal }) => {
             width: { xs: '20px', md: '24px' },
             height: { xs: '20px', md: '24px' },
             padding: 0,
+            color:
+              mode !== 'dark'
+                ? colorsDark.iconColor
+                : colorsLight.mainTextColor,
           }}
         >
           <SvgIcon stroke="currentColor">
