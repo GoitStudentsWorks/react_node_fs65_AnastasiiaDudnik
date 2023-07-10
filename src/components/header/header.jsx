@@ -43,7 +43,7 @@ export const Header = ({
     } else {
       setGooseTask(false);
     }
-  }, []);
+  }, [tasksInProgres.tasks]);
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
