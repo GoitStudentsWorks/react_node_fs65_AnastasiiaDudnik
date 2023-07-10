@@ -12,13 +12,20 @@ import {
   SvgIcon,
 } from '@mui/material';
 import Sprite from 'icons/sprite.svg';
-import { colorsLight } from 'components/variables/colors';
+import { colorsDark, colorsLight } from 'components/variables/colors';
 import { Notify } from 'notiflix';
 import { addTask, updateTask } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 // import { selectError } from 'redux/tasks/selectors';
 
-const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
+const TaskForm = ({
+  closeModal,
+  date,
+  currentTask,
+  category,
+  editingTask,
+  mode,
+}) => {
   const defaultTask = {
     title: '',
     start: '09:00',
@@ -87,7 +94,10 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
           <label>
             <Typography
               sx={{
-                color: colorsLight.secondaryTextColor,
+                color:
+                  mode !== 'dark'
+                    ? colorsDark.labelColor
+                    : colorsLight.secondaryTextColor,
                 fontSize: '12px',
                 fontWeight: '500',
                 lineHeight: '1.16',
@@ -108,12 +118,22 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
                 width: '100%',
                 fontSize: '14px',
                 fontWeight: 600,
-                color: colorsLight.popUpInputTextColor,
-                border: '1px solid rgba(17, 17, 17, 0.15)',
+                color:
+                  mode !== 'dark'
+                    ? colorsDark.popUpInputTextColor
+                    : colorsLight.popUpInputTextColor,
+                border: `1px solid ${
+                  mode !== 'dark'
+                    ? colorsDark.inputBorderColor
+                    : 'rgba(17, 17, 17, 0.15)'
+                } `,
                 borderRadius: '8px',
                 padding: '8px 18px 7px 18px',
                 marginBottom: { xs: '16px', md: '18px', lg: '18px' },
-                backgroundColor: colorsLight.inputFieldColor,
+                backgroundColor:
+                  mode !== 'dark'
+                    ? colorsDark.popUpInputBgrColor
+                    : colorsLight.inputFieldColor,
               }}
             />
           </label>
@@ -128,7 +148,10 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
               <label>
                 <Typography
                   sx={{
-                    color: colorsLight.secondaryTextColor,
+                    color:
+                      mode !== 'dark'
+                        ? colorsDark.labelColor
+                        : colorsLight.secondaryTextColor,
                     fontSize: '12px',
                     fontWeight: '500',
                     lineHeight: '1.16',
@@ -149,12 +172,26 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
                     width: '100%',
                     fontSize: '14px',
                     fontWeight: 600,
-                    color: colorsLight.popUpInputTextColor,
-                    border: '1px solid rgba(17, 17, 17, 0.15)',
+                    color:
+                      mode !== 'dark'
+                        ? colorsDark.popUpInputTextColor
+                        : colorsLight.popUpInputTextColor,
+                    fill:
+                      mode !== 'dark'
+                        ? colorsDark.popUpInputTextColor
+                        : colorsLight.popUpInputTextColor,
+                    border: `1px solid ${
+                      mode !== 'dark'
+                        ? colorsDark.inputBorderColor
+                        : 'rgba(17, 17, 17, 0.15)'
+                    } `,
                     borderRadius: '8px',
                     padding: '8px 18px 7px 18px',
                     lineHeight: '1.28',
-                    backgroundColor: colorsLight.inputFieldColor,
+                    backgroundColor:
+                      mode !== 'dark'
+                        ? colorsDark.popUpInputBgrColor
+                        : colorsLight.inputFieldColor,
                   }}
                 />
               </label>
@@ -163,7 +200,10 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
               <label>
                 <Typography
                   sx={{
-                    color: colorsLight.secondaryTextColor,
+                    color:
+                      mode !== 'dark'
+                        ? colorsDark.labelColor
+                        : colorsLight.secondaryTextColor,
                     fontSize: '12px',
                     fontWeight: '500',
                     lineHeight: '1.16',
@@ -184,12 +224,22 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
                     width: '100%',
                     fontSize: '14px',
                     fontWeight: 600,
-                    color: colorsLight.popUpInputTextColor,
-                    border: '1px solid rgba(17, 17, 17, 0.15)',
+                    color:
+                      mode !== 'dark'
+                        ? colorsDark.popUpInputTextColor
+                        : colorsLight.popUpInputTextColor,
+                    border: `1px solid ${
+                      mode !== 'dark'
+                        ? colorsDark.inputBorderColor
+                        : 'rgba(17, 17, 17, 0.15)'
+                    } `,
                     borderRadius: '8px',
                     padding: '8px 18px 7px 18px',
                     lineHeight: '1.28',
-                    backgroundColor: colorsLight.inputFieldColor,
+                    backgroundColor:
+                      mode !== 'dark'
+                        ? colorsDark.popUpInputBgrColor
+                        : colorsLight.inputFieldColor,
                   }}
                 />
               </label>
@@ -212,6 +262,15 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
             <FormControlLabel
               label="Low"
               value={'low'}
+              sx={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                fontSize: '14px',
+                color:
+                  mode !== 'dark'
+                    ? colorsDark.inputFieldTextColor
+                    : colorsLight.popUpLabelTextColor,
+              }}
               control={
                 <Radio
                   sx={{
@@ -229,6 +288,15 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
             <FormControlLabel
               label="Medium"
               value={'medium'}
+              sx={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                fontSize: '14px',
+                color:
+                  mode !== 'dark'
+                    ? colorsDark.inputFieldTextColor
+                    : colorsLight.popUpLabelTextColor,
+              }}
               control={
                 <Radio
                   sx={{
@@ -247,6 +315,15 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
             <FormControlLabel
               label="High"
               value={'high'}
+              sx={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                fontSize: '14px',
+                color:
+                  mode !== 'dark'
+                    ? colorsDark.inputFieldTextColor
+                    : colorsLight.popUpLabelTextColor,
+              }}
               control={
                 <Radio
                   sx={{
@@ -280,6 +357,11 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
                   backgroundColor: colorsLight.accentBackgroundColor,
                   boxShadow: 'none',
                   gap: '8px',
+                  borderRadius: '8px',
+                  textTransform: 'none',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '14px',
                 }}
               >
                 <SvgIcon
@@ -304,6 +386,11 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
                   backgroundColor: colorsLight.accentBackgroundColor,
                   boxShadow: 'none',
                   gap: '8px',
+                  borderRadius: '8px',
+                  textTransform: 'none',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '14px',
                 }}
               >
                 <SvgIcon
@@ -326,9 +413,14 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
               sx={{
                 height: '100%',
                 width: '144px',
+                borderRadius: '8px',
                 backgroundColor: colorsLight.taskCancelColor,
                 color: colorsLight.mainTextColor,
                 boxShadow: 'none',
+                textTransform: 'none',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                fontSize: '14px',
               }}
             >
               Cancel
