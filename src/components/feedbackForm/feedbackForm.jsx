@@ -30,7 +30,11 @@ const validationSchema = Yup.object().shape({
   // .required('Required'),
 });
 
-export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
+export const FeedbackForm = ({
+  feedbackModalOpen,
+  handleModalToggle,
+  mode,
+}) => {
   const { isTablet, isDesktop } = useResponse();
 
   const [newReview, setNewReview] = useState(true);
@@ -61,7 +65,6 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
     setNewReview(false);
     setEditingReview(false);
     setInputDisable(true);
-    //   handleModalToggle();
     setSubmitting(false);
 
     dispatch(addReview({ rating: values.rating, comment: values.comment }));
@@ -81,27 +84,17 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
   };
 
   return (
-    <FeedbackModalWrapper open={feedbackModalOpen} onClose={handleModalToggle}>
+    <FeedbackModalWrapper
+      open={feedbackModalOpen}
+      onClose={handleModalToggle}
+      mode={mode}
+    >
       <Formik
         initialValues={{ rating: 0, comment: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          isSubmitting,
-          resetForm,
-        }) => {
-          // const isValid = field =>
-          //   touched[field] && errors[field]
-          //     ? 'is-invalid'
-          //     : touched[field]
-          //     ? 'is-valid'
-          //     : '';
+        {({ handleBlur, isSubmitting, resetForm }) => {
           return (
             <Form>
               <label
@@ -117,7 +110,10 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: 500,
                     fontSize: { xs: '12px' },
-                    color: 'rgba(52, 52, 52, 0.8)',
+                    color:
+                      mode !== 'dark'
+                        ? 'rgba(250, 250, 250, 0.3)'
+                        : 'rgba(52, 52, 52, 0.8)',
                     lineHeight: 1.167,
                   }}
                 >
@@ -130,8 +126,16 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                   onChange={(_, newValue) => {
                     setRatingValue(newValue);
                   }}
+                  sx={{
+                    '& .MuiRating-iconFilled': {
+                      color: '#FFAC33',
+                    },
+                    '& .MuiRating-iconEmpty': {
+                      color: mode !== 'dark' && '#353647',
+                    },
+                  }}
                 />
-                {/* {isValid ? ( */}
+
                 <ErrorMessage
                   name="rating"
                   component="div"
@@ -142,7 +146,6 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                     marginTop: 8,
                   }}
                 />
-                {/* ) : null} */}
               </label>
 
               <label
@@ -164,7 +167,10 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                       fontFamily: 'Inter, sans-serif',
                       fontWeight: 500,
                       fontSize: { xs: '12px' },
-                      color: 'rgba(52, 52, 52, 0.8)',
+                      color:
+                        mode !== 'dark'
+                          ? 'rgba(250, 250, 250, 0.3)'
+                          : 'rgba(52, 52, 52, 0.8)',
                       lineHeight: 1.167,
                     }}
                   >
@@ -180,7 +186,8 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                         }}
                         sx={{
                           p: '10px',
-                          backgroundColor: '#E3F3FF',
+                          backgroundColor:
+                            mode !== 'dark' ? '#353647' : '#E3F3FF',
                           color: '#3E85F3',
                           '&.active, &:hover, &:focus': {
                             backgroundColor: '#3E85F3',
@@ -247,12 +254,10 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                   multiline
                   rows={5}
                   sx={{
-                    // border: `${
-                    //   (isValid('comment') === 'is-invalid' && '#E74A3B') ||
-                    //   (isValid('comment') === 'is-valid' && '#3CBC81')
-                    // } solid 1px`,
-                    backgroundColor: '#F6F6F6',
-                    color: '#343434',
+                    border:
+                      mode !== 'dark' && '1px solid rgba(255, 255, 255, 0.15)',
+                    backgroundColor: mode !== 'dark' ? '#171820' : '#F6F6F6',
+                    color: mode !== 'dark' ? '#FFFFFF' : '#343434',
                     fontFamily: 'Inter, sans-serif',
                     minWidth: { xs: '295px', md: '404px' },
                     borderRadius: '8px',
@@ -314,8 +319,8 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                     }}
                     sx={{
                       textTransform: 'none',
-                      backgroundColor: '#E5EDFA',
-                      color: '#343434',
+                      backgroundColor: mode !== 'dark' ? '#21222C' : '#E5EDFA',
+                      color: mode !== 'dark' ? '#FFFFFF' : '#343434',
                       padding: { xs: '8px 20px', md: '15px 85px' },
                       width: '100%',
                       borderRadius: '8px',
@@ -373,8 +378,8 @@ export const FeedbackForm = ({ feedbackModalOpen, handleModalToggle }) => {
                     }}
                     sx={{
                       textTransform: 'none',
-                      backgroundColor: '#E5EDFA',
-                      color: '#343434',
+                      backgroundColor: mode !== 'dark' ? '#21222C' : '#E5EDFA',
+                      color: mode !== 'dark' ? '#FFFFFF' : '#343434',
                       padding: { xs: '8px 20px', md: '15px 85px' },
                       width: '100%',
                       borderRadius: '8px',
