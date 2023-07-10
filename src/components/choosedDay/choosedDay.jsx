@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
-export default function ChoosedDay({mode}) {
+export default function ChoosedDay({ mode }) {
   const params = useParams()
   const [day, setDay] = useState(() => params.day);
   const [value, setValue] = React.useState(null);
@@ -72,7 +72,7 @@ export default function ChoosedDay({mode}) {
   }, [day, value]);
 
   useEffect(() => {
-    const currentWeek = dayjs(weekend[0].dayFormat).week(); 
+    const currentWeek = dayjs(weekend[0].dayFormat).week();
 
     if (weekend[0] && currentWeek !== weekYear) {
       dispatch(
@@ -119,6 +119,12 @@ const style = {
       md: 'calc(100vw - 64px)',
       lg: 'calc(100%)',
     },
+    height: {
+      xs: 'calc(100vh - 64px - 38px)',
+      md: 'calc(100vh - 64px - 40px)',
+      lg: 'calc(100%)'
+    },
     margin: '0',
+    mt: '-10px'
   },
 };
