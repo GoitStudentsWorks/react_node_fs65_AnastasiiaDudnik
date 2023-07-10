@@ -2,12 +2,10 @@ import Box from '@mui/material/Box';
 import { CalendarToolbar } from 'components/calendarToolbar/calendarToolbar';
 import { Outlet } from 'react-router-dom';
 
-
-const CalendarPage = ({ mode,readDate }) => {
-
+const CalendarPage = ({ mode, readDate }) => {
   return (
     <Box>
-      <CalendarToolbar mode={mode} readDate={readDate}/>
+      <CalendarToolbar mode={mode} readDate={readDate} />
       <Outlet />
     </Box>
   );

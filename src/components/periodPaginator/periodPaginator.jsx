@@ -47,7 +47,11 @@ export const PeriodPaginator = ({
   };
 
   return (
-    <Box sx={{ display: 'flex' }} ref={calendarRef}>
+    <Box
+      sx={{ display: 'flex' }}
+      ref={calendarRef}
+      justifyContent={'space-between'}
+    >
       <Box
         sx={{
           width: '131px',

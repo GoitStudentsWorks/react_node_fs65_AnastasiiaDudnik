@@ -5,7 +5,7 @@ import { getTasks } from 'redux/tasks/operations';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const Calendar = () => {
+const Calendar = ({ mode }) => {
   const theme = createTheme();
   const { day } = useParams();
   const navigate = useNavigate();
@@ -20,7 +20,9 @@ const Calendar = () => {
   const firstDayOfWeek = 1;
 
   const cellStyle = {
-    border: '1px solid #DCE3E5CC',
+    border: `1px solid ${
+      mode !== 'dark' ? 'rgba(255, 255, 255, 0.15)' : '#DCE3E5CC'
+    }`,
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'flex-end',
@@ -28,13 +30,13 @@ const Calendar = () => {
     boxSizing: 'border-box',
     justifyContent: 'flex-start',
     padding: '8px 4px 2px',
-    bgcolor: '#FFF',
+    bgcolor: mode !== 'dark' ? '#21222C' : '#FFF',
     transition: 'transform 0.3s',
     cursor: 'pointer',
   };
 
   const cellTextStyle = {
-    color: '#343434',
+    color: mode !== 'dark' ? '#FFF' : '#343434',
     fontSize: '16px',
     boxSizing: 'border-box',
     fontFamily: 'Inter, sans-serif',
@@ -184,9 +186,13 @@ const Calendar = () => {
           maxWidth={'100%'}
           p={{ xs: '16px', md: '14px 60px' }}
           justifyContent={'space-between'}
-          bgcolor={'#FFF'}
+          bgcolor={mode === 'dark' ? '#FFF' : '#21222C'}
           borderRadius={'8px'}
-          border={'1px solid rgba(220, 227, 229, 0.80)'}
+          border={`1px solid ${
+            mode === 'dark'
+              ? 'rgba(220, 227, 229, 0.80)'
+              : 'rgba(255, 255, 255, 0.15)'
+          }`}
           mb={'15px'}
         >
           <Typography align="center" sx={cellTextStyle}>
@@ -204,18 +210,11 @@ const Calendar = () => {
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'F' : 'Fri'}
           </Typography>
-
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'S' : 'Sat'}
           </Typography>
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'S' : 'Sun'}
-          </Typography>
-          <Typography align="center" sx={cellTextStyle} color={'#3E85F3'}>
-            Sat
-          </Typography>
-          <Typography align="center" sx={cellTextStyle} color={'#3E85F3'}>
-            Sun
           </Typography>
         </Box>
         <Box

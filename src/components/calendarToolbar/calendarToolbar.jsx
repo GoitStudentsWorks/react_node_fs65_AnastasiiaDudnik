@@ -57,6 +57,8 @@ export const CalendarToolbar = ({ mode, readDate }) => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        flexDirection: { xs: 'column', md: 'row' },
+        gap: { xs: '18px', md: 0 },
         marginBottom: { xs: '24px', lg: '32px' },
       }}
     >
