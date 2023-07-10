@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from 'redux/tasks/operations';
 import TaskModal from 'components/taskModal/taskModal';
 
-function MiniModal({ todo }) {
+function MiniModal({ todo, mode }) {
   const dispatch = useDispatch();
 
   return (
@@ -18,7 +18,7 @@ function MiniModal({ todo }) {
         onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))}
       >
         To do
-        <SvgIcon sx={style.iconButton} stroke="#111111">
+        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -32,7 +32,7 @@ function MiniModal({ todo }) {
         }
       >
         In progress
-        <SvgIcon sx={style.iconButton} stroke="#111111">
+        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -44,7 +44,7 @@ function MiniModal({ todo }) {
         onClick={() => dispatch(updateTask({ ...todo, category: 'done' }))}
       >
         Done
-        <SvgIcon sx={style.iconButton} stroke="#111111">
+        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -52,7 +52,7 @@ function MiniModal({ todo }) {
   );
 }
 
-export default function TaskToolbar({ todo }) {
+export default function TaskToolbar({ todo, mode }) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -80,7 +80,7 @@ export default function TaskToolbar({ todo }) {
           <SvgIcon
             sx={{
               ...style.iconButton,
-              stroke: isOpen === true ? '#3E85F3' : '#111111',
+              stroke: isOpen === true ? '#3E85F3' : mode === 'light' ? '#FFFFFF' : '#111111',
             }}
           >
             <use href={`${Sprite}#arrow-circle`}></use>
@@ -91,7 +91,7 @@ export default function TaskToolbar({ todo }) {
 
       <ListItem sx={{ padding: '0' }}>
         <IconButton aria-label="edit" sx={style.btnMenu} onClick={openModal}>
-          <SvgIcon sx={style.iconButton} stroke="#111111">
+          <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
             <use href={`${Sprite}#pencil`}></use>
           </SvgIcon>
         </IconButton>
@@ -110,7 +110,7 @@ export default function TaskToolbar({ todo }) {
           sx={style.btnMenu}
           onClick={() => dispatch(deleteTask(todo._id))}
         >
-          <SvgIcon sx={style.iconButton} stroke="#111111">
+          <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
             <use href={`${Sprite}#trash`}></use>
           </SvgIcon>
         </IconButton>

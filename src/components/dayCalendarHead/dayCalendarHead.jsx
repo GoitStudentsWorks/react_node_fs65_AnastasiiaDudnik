@@ -4,7 +4,7 @@ import React from 'react'
 import weekday from 'dayjs/plugin/weekday'
 dayjs.extend(weekday)
 
-export default function DayCalendarHead({ value, handleChange, weekend }) {
+export default function DayCalendarHead({ value, handleChange, weekend, mode }) {
 
     return (
         <>
@@ -12,16 +12,16 @@ export default function DayCalendarHead({ value, handleChange, weekend }) {
                 value={value}
                 onChange={handleChange}
                 aria-label="basic tabs example"
-                sx={style.weekIconList}>
+                sx={{ ...style.weekIconList, bgcolor: mode === 'light' ? '#21222C' : '#FFFFFF' }}>
                 {
                     weekend.map(({ day, weekDay, weekDayMob }) =>
                         <Tab key={weekDay}
-                            sx={style.iconDayTask}
+                            sx={{ ...style.iconDayTask }}
                             icon={
-                                <Box sx={style.dayTitle}>
-                                    <Box sx={style.desk}>{weekDay}</Box>
-                                    <Box sx={style.mobile}>{weekDayMob}</Box>
-                                    <Box className='numberDay' >{day}</Box>
+                                <Box sx={{ ...style.dayTitle }}>
+                                    <Box sx={{ ...style.desk, color: mode === 'light' ? '#FAFAFA30' : '#343434' }}>{weekDay}</Box>
+                                    <Box sx={{ ...style.mobile, color: mode === 'light' ? '#FAFAFA30' : '#343434' }}>{weekDayMob}</Box>
+                                    <Box className='numberDay' color={mode === 'light' ? '#FFFFFF' : '#343434'} >{day}</Box>
                                 </Box>}
                         />
                     )
@@ -31,9 +31,9 @@ export default function DayCalendarHead({ value, handleChange, weekend }) {
     )
 }
 
-const style = { 
-    
-    iconDayTask: { 
+const style = {
+
+    iconDayTask: {
         paddingInline: '0',
         '&.Mui-selected': {
             color: '#343434',
