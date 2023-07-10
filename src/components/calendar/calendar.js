@@ -225,14 +225,7 @@ const Calendar = ({ mode }) => {
           display="grid"
           gridTemplateColumns="repeat(7, 1fr)"
           gridTemplate-rows="repeat(6, 1fr)"
-          sx={{
-            // height: {
-            //   xs: 'calc(100vh - 248px)',
-            //   md: 'calc(100vh - 280px);',
-            //   lg: 'calc(100vh - 290px);',
-            // },
-            // overflowY: 'auto',
-          }}
+          
         >
           {renderCalendar()}
         </Box>
