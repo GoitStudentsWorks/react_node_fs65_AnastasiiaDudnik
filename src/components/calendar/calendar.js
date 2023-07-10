@@ -20,9 +20,8 @@ const Calendar = ({ mode }) => {
   const firstDayOfWeek = 1;
 
   const cellStyle = {
-    border: `1px solid ${
-      mode !== 'dark' ? 'rgba(255, 255, 255, 0.15)' : '#DCE3E5CC'
-    }`,
+    border: `1px solid ${mode !== 'dark' ? 'rgba(255, 255, 255, 0.15)' : '#DCE3E5CC'
+      }`,
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'flex-end',
@@ -73,6 +72,8 @@ const Calendar = ({ mode }) => {
       calendar.push(<Box key={`empty-${i}`} sx={cellStyle} />);
     }
 
+    const remainingCells = 7 - ((offset + daysInMonth) % 7);
+
     for (let i = 1; i <= daysInMonth; i++) {
       const date = currentDate.date(i);
       const isCurrentDay = dayjs().isSame(date, 'day');
@@ -87,6 +88,11 @@ const Calendar = ({ mode }) => {
           sx={{
             ...cellStyle,
             animation: `${scaleAnimation} 1s linear infinite alternate`,
+            height: {
+              xs: `calc((100vh - 248px) / ${(daysInMonth + offset + remainingCells) / 7})`,
+              md: `calc((100vh - 280px) / ${(daysInMonth + offset + remainingCells) / 7})`,
+              lg: `calc((100vh - 290px) / ${(daysInMonth + offset + remainingCells) / 7})`,
+            },
             ':hover': {
               transform: 'scale(1.1)',
             },
@@ -121,14 +127,14 @@ const Calendar = ({ mode }) => {
                   task.priority === 'high'
                     ? '#FFD2DD'
                     : task.priority === 'medium'
-                    ? '#FCF0D4'
-                    : '#CEEEFD',
+                      ? '#FCF0D4'
+                      : '#CEEEFD',
                 color:
                   task.priority === 'high'
                     ? '#EA3D65'
                     : task.priority === 'medium'
-                    ? '#F3B249'
-                    : '#3E85F3',
+                      ? '#F3B249'
+                      : '#3E85F3',
                 overflow: 'hidden',
                 borderRadius: '8px',
                 textOverflow: 'ellipsis',
@@ -141,7 +147,6 @@ const Calendar = ({ mode }) => {
         </Box>
       );
     }
-    const remainingCells = 7 - ((offset + daysInMonth) % 7);
     for (let i = 0; i < remainingCells; i++) {
       calendar.push(<Box key={`empty-${daysInMonth + i}`} sx={cellStyle} />);
     }
@@ -188,11 +193,10 @@ const Calendar = ({ mode }) => {
           justifyContent={'space-between'}
           bgcolor={mode === 'dark' ? '#FFF' : '#21222C'}
           borderRadius={'8px'}
-          border={`1px solid ${
-            mode === 'dark'
-              ? 'rgba(220, 227, 229, 0.80)'
-              : 'rgba(255, 255, 255, 0.15)'
-          }`}
+          border={`1px solid ${mode === 'dark'
+            ? 'rgba(220, 227, 229, 0.80)'
+            : 'rgba(255, 255, 255, 0.15)'
+            }`}
           mb={'15px'}
         >
           <Typography align="center" sx={cellTextStyle}>
@@ -222,12 +226,12 @@ const Calendar = ({ mode }) => {
           gridTemplateColumns="repeat(7, 1fr)"
           gridTemplate-rows="repeat(6, 1fr)"
           sx={{
-            height: {
-              xs: 'calc(100vh - 248px)',
-              md: 'calc(100vh - 280px);',
-              lg: 'calc(100vh - 290px);',
-            },
-            overflowY: 'auto',
+            // height: {
+            //   xs: 'calc(100vh - 248px)',
+            //   md: 'calc(100vh - 280px);',
+            //   lg: 'calc(100vh - 290px);',
+            // },
+            // overflowY: 'auto',
           }}
         >
           {renderCalendar()}
