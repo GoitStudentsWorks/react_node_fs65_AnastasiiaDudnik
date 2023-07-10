@@ -5,7 +5,7 @@ import TasksColumnList from 'components/tasksColumnList/tasksColumnList';
 import React from 'react';
 import TaskModal from 'components/taskModal/taskModal';
 
-export default function TasksColumn({ title, todos, date, category }) {
+export default function TasksColumn({ title, todos, date, category, mode }) {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -19,20 +19,20 @@ export default function TasksColumn({ title, todos, date, category }) {
   const panelSetts = {
     marginBottom: '28px',
   }
-  if (todos.length === 0) { panelSetts.marginBottom = {xs: '64px', md: '28px'} }
+  if (todos.length === 0) { panelSetts.marginBottom = { xs: '64px', md: '28px' } }
   else { panelSetts.marginBottom = '28px' }
 
   return (
-    <Box sx={style.listTodos}>
-      <Box sx={{...style.addPanel, ...panelSetts}}>
-        <Typography>{title}</Typography>
-        <AddTaskBtn openModal={openModal} />
+    <Box sx={{ ...style.listTodos, bgcolor: mode === 'light' ? '#21222C' : '#FFFFFF' }}>
+      <Box sx={{ ...style.addPanel, ...panelSetts }}>
+        <Typography sx={{...style.titleText, color: mode === 'light' ? '#FFF' : '#111'}}>{title}</Typography>
+        <AddTaskBtn openModal={openModal} mode={mode}/>
       </Box>
 
-      <TasksColumnList todos={todos} />
+      <TasksColumnList todos={todos} mode={mode} />
 
       <Box sx={style.btnAdd}>
-        <AddTaskBtn btnList openModal={openModal} />
+        <AddTaskBtn btnList openModal={openModal} mode={mode}/>
       </Box>
       {showModal && (
         <TaskModal
@@ -94,4 +94,13 @@ const style = {
     position: 'relative',
     padding: '18px 0 22px 0',
   },
+  titleText: {
+    color: ' #111',
+    textAlign: 'center',
+    fontFamily: 'Inter',
+    fontSize: '20px',
+    fontStyle: 'normal',
+    fontWeight: '700',
+    lineHeight: ' 24px',
+  }
 };

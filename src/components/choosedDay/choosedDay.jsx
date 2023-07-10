@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getWeekTasks } from 'redux/tasks/operations';
 
-export default function ChoosedDay() {
+export default function ChoosedDay({mode}) {
   const params = useParams()
   const [day, setDay] = useState(() => params.day);
   const [value, setValue] = React.useState(null);
@@ -102,21 +102,17 @@ export default function ChoosedDay() {
           <DayCalendarHead
             value={value}
             weekend={weekend}
+            mode={mode}
             handleChange={handleChange}
           />
         </Box>
       </Box>
-      <ColumnsTasksList weekend={weekend} value={value} />
+      <ColumnsTasksList weekend={weekend} mode={mode} value={value} />
     </Box>
   );
 }
 
 const style = {
-  '&::-webkit-scrollbar-thumb, &::-webkit-resizer': {
-    background: 'rgba(170, 170, 170, 0.6)',
-    borderRadius: '5px',
-    boxShadow: 'inset 0.05em 0.05em 0 rgba(0, 0, 0, 0.1), inset 0 - 0.05em 0 rgba(0, 0, 0, 0.07)',
-  },
   boxDay: {
     width: {
       xs: '100%',

@@ -2,7 +2,7 @@ import { List, ListItem } from '@mui/material'
 import TaskColumnCard from 'components/taskColumnCard/taskColumnCard'
 import React from 'react'
 
-export default function TasksColumnList({ todos }) {
+export default function TasksColumnList({ todos, mode }) {
 
     const listSetts = {
         marginBottom: '',
@@ -12,10 +12,10 @@ export default function TasksColumnList({ todos }) {
 
 
     return (
-        <List sx={{ ...style.list, ...listSetts }}>
+        <List sx={{ ...style.list, ...listSetts}}>
             {todos.map(todo =>
                 <ListItem key={todo._id} sx={style.item}>
-                    <TaskColumnCard todo={todo} />
+                    <TaskColumnCard todo={todo} mode={mode}/>
                 </ListItem>
             )}
         </List>
@@ -31,14 +31,12 @@ const style = {
         maxHeight: '400px',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        
 
         gap: '18px',
 
         padding: '0',
         paddingInline: '21px',
-        overflowY: 'auto',
-        scrollbars: 'none'
+        overflowY: 'auto', 
     },
     item: {
         padding: '0',
