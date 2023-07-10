@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -34,16 +34,7 @@ export const Header = ({
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   const { id } = useSelector(selectUser);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [gooseTask, setGooseTask] = useState(false);
-
-  useEffect(() => {
-    console.log(tasksInProgres.tasks);
-    if (tasksInProgres.tasks) {
-      setGooseTask(true);
-    } else {
-      setGooseTask(false);
-    }
-  }, [tasksInProgres.tasks]);
+  // const [gooseTask, setGooseTask] = useState(true);
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
@@ -115,7 +106,9 @@ export const Header = ({
             }}
           >
             {location.pathname.startsWith('/main/calendar/day/') &&
-              gooseTask && <img src={hay} width={64} alt="goose" />}
+              tasksInProgres.tasks.length >= 1 && (
+                <img src={hay} width={64} alt="goose" />
+              )}
             <Box>
               <Typography
                 fontSize={'32px'}
@@ -136,7 +129,7 @@ export const Header = ({
                     'Statistics')}
               </Typography>
               {location.pathname.startsWith('/main/calendar/day/') &&
-                gooseTask &&
+                tasksInProgres.tasks.length >= 1 &&
                 spanDay()}
             </Box>
           </Box>
