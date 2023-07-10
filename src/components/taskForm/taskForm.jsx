@@ -53,6 +53,10 @@ const TaskForm = ({ closeModal, date, currentTask, category, editingTask }) => {
   const handleSubmit = async e => {
     e.preventDefault();
 
+    if (task.title === '') {
+      Notify.failure('Fill tasks title');
+      return;
+    }
     if (task.start > task.end) {
       Notify.failure('Start time must be later than end time');
       return;
