@@ -9,16 +9,22 @@ function MiniModal({ todo, mode }) {
   const dispatch = useDispatch();
 
   return (
-    <Box sx={style.miniModal} id={'modal'}>
+    <Box sx={{
+      ...style.miniModal,
+      backgroundColor: mode === 'light' ? '#171820' : '#FFFFFF',
+      boxShadow: mode === 'light' ? '0px 4px 16px 0px rgba(17, 17, 17, 0.10)' : '0px 4px 16px 0px rgba(17, 17, 17, 0.10)',
+      border: mode === 'light' ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
+    }} id={'modal'}>
       <Box
         sx={{
           ...style.btnMiniModal,
           display: todo.category === 'to-do' ? 'none' : 'flex',
+          color: mode === 'light' ? 'white' : 'black',
         }}
         onClick={() => dispatch(updateTask({ ...todo, category: 'to-do' }))}
       >
         To do
-        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -26,13 +32,15 @@ function MiniModal({ todo, mode }) {
         sx={{
           ...style.btnMiniModal,
           display: todo.category === 'in-progress' ? 'none' : 'flex',
+          color: mode === 'light' ? 'white' : 'black',
+
         }}
         onClick={() =>
           dispatch(updateTask({ ...todo, category: 'in-progress' }))
         }
       >
         In progress
-        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -40,11 +48,13 @@ function MiniModal({ todo, mode }) {
         sx={{
           ...style.btnMiniModal,
           display: todo.category === 'done' ? 'none' : 'flex',
+          color: mode === 'light' ? 'white' : 'black',
+
         }}
         onClick={() => dispatch(updateTask({ ...todo, category: 'done' }))}
       >
         Done
-        <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
+        <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
           <use href={`${Sprite}#arrow-circle`}></use>
         </SvgIcon>
       </Box>
@@ -86,12 +96,12 @@ export default function TaskToolbar({ todo, mode }) {
             <use href={`${Sprite}#arrow-circle`}></use>
           </SvgIcon>
         </IconButton>
-        {isOpen && <MiniModal todo={todo} />}
+        {isOpen && <MiniModal todo={todo} mode={mode} />}
       </ListItem>
 
       <ListItem sx={{ padding: '0' }}>
         <IconButton aria-label="edit" sx={style.btnMenu} onClick={openModal}>
-          <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
+          <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
             <use href={`${Sprite}#pencil`}></use>
           </SvgIcon>
         </IconButton>
@@ -110,7 +120,7 @@ export default function TaskToolbar({ todo, mode }) {
           sx={style.btnMenu}
           onClick={() => dispatch(deleteTask(todo._id))}
         >
-          <SvgIcon sx={style.iconButton} stroke={ mode === 'light' ? '#FFFFFF' : "#111111"}>
+          <SvgIcon sx={style.iconButton} stroke={mode === 'light' ? '#FFFFFF' : "#111111"}>
             <use href={`${Sprite}#trash`}></use>
           </SvgIcon>
         </IconButton>
@@ -166,7 +176,6 @@ const style = {
     borderRadius: '8px',
     transform: 'translateY(100%)',
     zIndex: '1000',
-    boxShadow: '0px 4px 16px 0px rgba(17, 17, 17, 0.10)',
   },
   btnMiniModal: {
     height: {
