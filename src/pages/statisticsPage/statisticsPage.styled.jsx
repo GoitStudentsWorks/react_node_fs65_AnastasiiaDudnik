@@ -5,8 +5,8 @@ export const StatisticsContainer = styled.section`
   border-radius: 16px;
   @media screen and (max-width: 374px) {
     max-width: 335px;
-    // padding-top: 28px;
-    // padding-bottom: 135px;
+    padding-top: 28px;
+    padding-bottom: 135px;
     padding-left: 14px;
     padding-right: 14px;
   }
@@ -14,9 +14,8 @@ export const StatisticsContainer = styled.section`
   @media screen and (min-width: 375px) and (max-width: 768px) {
     width: 335px;
     border-radius: 16px;
-
+    /* padding-top: 28px; */
     padding-bottom: 135px;
-
     padding-left: 14px;
     padding-right: 14px;
   }
