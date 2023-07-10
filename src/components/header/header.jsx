@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -18,14 +18,12 @@ import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
 import { useLocation } from 'react-router-dom';
 import hay from './hay.png';
-import { selectTasks } from 'redux/tasks/selectors';
-
 
 export const Header = ({
   handleDrawerToggle,
   drawerWidth,
   handleModeChange,
-  mode
+  mode,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -34,18 +32,6 @@ export const Header = ({
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   const { id } = useSelector(selectUser);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [gooseTaskm, setGooseTask] = useState(false)
-  const tasksInProgres = useSelector(selectTasks);
-
-
-  useEffect(() => {
-    const task = tasksInProgres.tasks.find(task => task.category === 'to-do' || task.category === 'in-progress')
-    if (task) {
-      setGooseTask(true)
-    } setGooseTask(false)
-  }, [])
-
-
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
@@ -116,7 +102,7 @@ export const Header = ({
               alignItems: 'center',
             }}
           >
-            {location.pathname.startsWith('/main/calendar/day/') && gooseTaskm && (
+            {location.pathname.startsWith('/main/calendar/day/') && (
               <img src={hay} width={64} alt="goose" />
             )}
             <Box>
@@ -132,17 +118,13 @@ export const Header = ({
                     '0px 9.399999618530273px 57.6875px 0px rgba(0, 0, 0, 0.04), 0px 47px 355px 0px rgba(0, 0, 0, 0.07)',
                 }}
               >
-                {location.pathname.startsWith === '/main/account'
-                  && 'User Profile'
-                }
-                {location.pathname.startsWith === '/main/calendar'
-                  && 'Calendar'
-                }
-                 {location.pathname.startsWith === '/main/statistics'
-                  && 'Statistics'
-                }
+                {(location.pathname === '/main/account' && 'User Profile') ||
+                  (location.pathname.startsWith('/main/calendar/') &&
+                    'Calendar') ||
+                  (location.pathname.startsWith('/main/statistics') &&
+                    'Statistics')}
               </Typography>
-              {location.pathname.startsWith('/main/calendar/day/') && gooseTaskm && spanDay()}
+              {location.pathname.startsWith('/main/calendar/day/') && spanDay()}
             </Box>
           </Box>
         ) : (
