@@ -189,6 +189,7 @@ export const Header = ({
           <FeedbackForm
             feedbackModalOpen={feedbackModalOpen}
             handleModalToggle={handleModalToggle}
+            mode={mode}
           />
 
           <Box
