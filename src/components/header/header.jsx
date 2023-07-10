@@ -34,7 +34,6 @@ export const Header = ({
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   const { id } = useSelector(selectUser);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  // const [gooseTask, setGooseTask] = useState(true);
 
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
@@ -105,10 +104,9 @@ export const Header = ({
               alignItems: 'center',
             }}
           >
-            {location.pathname.startsWith('/main/calendar/day/') &&
-              tasksInProgres.tasks.length >= 1 && (
-                <img src={hay} width={64} alt="goose" />
-              )}
+            {location.pathname.startsWith('/main/calendar/day/') && (
+              <img src={hay} width={64} alt="goose" />
+            )}
             <Box>
               <Typography
                 fontSize={'32px'}
@@ -128,9 +126,7 @@ export const Header = ({
                   (location.pathname.startsWith('/main/statistics') &&
                     'Statistics')}
               </Typography>
-              {location.pathname.startsWith('/main/calendar/day/') &&
-                tasksInProgres.tasks.length >= 1 &&
-                spanDay()}
+              {location.pathname.startsWith('/main/calendar/day/') && spanDay()}
             </Box>
           </Box>
         ) : (
