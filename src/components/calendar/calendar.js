@@ -214,10 +214,10 @@ const Calendar = ({ mode }) => {
           <Typography align="center" sx={cellTextStyle}>
             {isMobile ? 'F' : 'Fri'}
           </Typography>
-          <Typography align="center" sx={cellTextStyle}>
+          <Typography align="center" sx={{...cellTextStyle, color: '#3E85F3'}}>
             {isMobile ? 'S' : 'Sat'}
           </Typography>
-          <Typography align="center" sx={cellTextStyle}>
+          <Typography align="center" sx={{...cellTextStyle, color: '#3E85F3'}}>
             {isMobile ? 'S' : 'Sun'}
           </Typography>
         </Box>
