@@ -21,7 +21,7 @@ export const StatisticsChart = ({ data, mode }) => {
         <text
           x={x + 2 + width / 2}
           y={labelY}
-          fill="rgba(255, 255, 255, 1)"
+          fill="rgba(52, 52, 52, 1)"
           fontSize={16}
           fontWeight={500}
           textAnchor="middle"
@@ -35,7 +35,7 @@ export const StatisticsChart = ({ data, mode }) => {
         <text
           x={x + 2 + width / 2}
           y={labelY}
-          fill="rgba(52, 52, 52, 1)"
+          fill="rgba(255, 255, 255, 1)"
           fontSize={16}
           fontWeight={500}
           textAnchor="middle"
