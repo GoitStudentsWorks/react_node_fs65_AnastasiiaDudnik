@@ -1,8 +1,7 @@
-import { Button, SvgIcon, Typography } from '@mui/material';
+import {   Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { colorsLight } from 'components/variables/colors';
-import Sprite from 'icons/sprite.svg';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
