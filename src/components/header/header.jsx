@@ -18,6 +18,7 @@ import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
 import { useLocation } from 'react-router-dom';
 import hay from './hay.png';
+import { selectTasks } from 'redux/tasks/selectors';
 
 export const Header = ({
   handleDrawerToggle,
@@ -25,7 +26,6 @@ export const Header = ({
   handleModeChange,
   mode,
 }) => {
-  // const tasksInProgres = useSelector(selectTasks);
   const dispatch = useDispatch();
   const location = useLocation();
   const userState = useSelector(selectUser);
@@ -34,6 +34,9 @@ export const Header = ({
   const { id } = useSelector(selectUser);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
+  const { tasks = [] } = useSelector(selectTasks);
+  const hasCategoryOtherThanDone =
+    tasks.length > 0 && tasks.some(task => task.category !== 'done');
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     handleModeChange(newMode);
@@ -103,9 +106,10 @@ export const Header = ({
               alignItems: 'center',
             }}
           >
-            {location.pathname.startsWith('/main/calendar/day/') && (
-              <img src={hay} width={64} alt="goose" />
-            )}
+            {location.pathname.startsWith('/main/calendar/day/') &&
+              hasCategoryOtherThanDone && (
+                <img src={hay} width={64} alt="goose" />
+              )}
             <Box>
               <Typography
                 fontSize={'32px'}
@@ -125,7 +129,9 @@ export const Header = ({
                   (location.pathname.startsWith('/main/statistics') &&
                     'Statistics')}
               </Typography>
-              {location.pathname.startsWith('/main/calendar/day/') && spanDay()}
+              {location.pathname.startsWith('/main/calendar/day/') &&
+                hasCategoryOtherThanDone &&
+                spanDay()}
             </Box>
           </Box>
         ) : (
