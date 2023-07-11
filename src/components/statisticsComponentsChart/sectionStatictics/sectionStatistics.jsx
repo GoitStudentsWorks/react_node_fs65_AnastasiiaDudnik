@@ -22,7 +22,6 @@ export const SectionStatistics = ({ mode }) => {
     dispatch(getTasksStatistics(currentDate.format('YYYY-MM-DD')));
     // eslint-disable-next-line
   }, []);
-  console.log(data);
   return (
     <>
       <HeadContainer>

@@ -15,7 +15,7 @@ export const StatisticsChart = ({ data, mode }) => {
     const { x, y, width, value } = props;
     const radius = 10;
     const labelY = y - (y === 0 ? radius : 0);
-    // console.log(mode);
+
     return mode === 'dark' ? (
       <svg>
         <text
@@ -46,8 +46,6 @@ export const StatisticsChart = ({ data, mode }) => {
       </svg>
     );
   };
-
-  console.log(data.tasksStatistics);
 
   const {
     todoByDayPercentage,
