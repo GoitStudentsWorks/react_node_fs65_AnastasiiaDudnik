@@ -60,12 +60,12 @@ export const FeedbackForm = ({
     values.rating = ratingValue;
     values.comment = commentValue;
 
+    dispatch(addReview({ rating: values.rating, comment: values.comment }));
+
     setNewReview(false);
     setEditingReview(false);
     setInputDisable(true);
     setSubmitting(false);
-
-    dispatch(addReview({ rating: values.rating, comment: values.comment }));
   };
 
   const editReview = values => {
@@ -368,9 +368,8 @@ export const FeedbackForm = ({
                   </Button>
                   <Button
                     onClick={() => {
-                      resetForm();
-                      setRatingValue(0);
-                      setCommentValue('');
+                      setEditingReview(false);
+                      setInputDisable(true);
                     }}
                     sx={{
                       textTransform: 'none',
