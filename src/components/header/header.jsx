@@ -16,7 +16,8 @@ import { FeedbackForm } from 'components/feedbackForm/feedbackForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserReview } from '../../redux/reviews/operations';
 import { selectUser } from '../../redux/auth/selectors';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 import hay from './hay.png';
 import { selectTasks } from 'redux/tasks/selectors';
 
@@ -29,14 +30,22 @@ export const Header = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const userState = useSelector(selectUser);
+  const params = useParams();
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.down('lg'));
   const { id } = useSelector(selectUser);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
   const { tasks = [] } = useSelector(selectTasks);
-  const hasCategoryOtherThanDone =
-    tasks.length > 0 && tasks.some(task => task.category !== 'done');
+
+  const taskExist = tasks.filter(
+    task =>
+      dayjs(task.date).format('YYYY-MM-DD') === params.day &&
+      task.category !== 'done'
+  );
+
+  const hasCategoryOtherThanDone = Boolean(taskExist.length > 0);
+
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     handleModeChange(newMode);

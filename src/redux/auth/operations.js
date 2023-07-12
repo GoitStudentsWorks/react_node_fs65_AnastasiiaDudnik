@@ -116,15 +116,16 @@ export const updateUser = createAsyncThunk(
         },
       });
 
-      const responseData = {
-        status: response.status,
-        data: response.data,
-      };
+      // const responseData = {
+      //   status: response.status,
+      //   data: response.data,
+      // };
 
       if (response.status === 200) {
         Notiflix.Notify.success('Update succes');
       }
-      return responseData;
+      // return responseData;
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
