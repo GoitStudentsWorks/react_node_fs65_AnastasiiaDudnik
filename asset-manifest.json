@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react_node_fs65_AnastasiiaDudnik/static/css/main.3a2c4ddb.css",
-    "main.js": "/react_node_fs65_AnastasiiaDudnik/static/js/main.e8e9975f.js",
+    "main.js": "/react_node_fs65_AnastasiiaDudnik/static/js/main.35897dbc.js",
     "static/js/379.0abcb355.chunk.js": "/react_node_fs65_AnastasiiaDudnik/static/js/379.0abcb355.chunk.js",
     "static/js/549.d6ceee0f.chunk.js": "/react_node_fs65_AnastasiiaDudnik/static/js/549.d6ceee0f.chunk.js",
     "static/css/337.09c5db1f.chunk.css": "/react_node_fs65_AnastasiiaDudnik/static/css/337.09c5db1f.chunk.css",
@@ -51,7 +51,7 @@
     "static/media/slick.woff": "/react_node_fs65_AnastasiiaDudnik/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/react_node_fs65_AnastasiiaDudnik/index.html",
     "main.3a2c4ddb.css.map": "/react_node_fs65_AnastasiiaDudnik/static/css/main.3a2c4ddb.css.map",
-    "main.e8e9975f.js.map": "/react_node_fs65_AnastasiiaDudnik/static/js/main.e8e9975f.js.map",
+    "main.35897dbc.js.map": "/react_node_fs65_AnastasiiaDudnik/static/js/main.35897dbc.js.map",
     "379.0abcb355.chunk.js.map": "/react_node_fs65_AnastasiiaDudnik/static/js/379.0abcb355.chunk.js.map",
     "549.d6ceee0f.chunk.js.map": "/react_node_fs65_AnastasiiaDudnik/static/js/549.d6ceee0f.chunk.js.map",
     "337.09c5db1f.chunk.css.map": "/react_node_fs65_AnastasiiaDudnik/static/css/337.09c5db1f.chunk.css.map",
@@ -71,6 +71,6 @@
   },
   "entrypoints": [
     "static/css/main.3a2c4ddb.css",
-    "static/js/main.e8e9975f.js"
+    "static/js/main.35897dbc.js"
   ]
 }
