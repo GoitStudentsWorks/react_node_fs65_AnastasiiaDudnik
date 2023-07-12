@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// const { REACT_APP_API_URL } = process.env;
+import Notiflix from 'notiflix';
+
 const instance = axios.create({
   baseURL: 'https://goose-calendar.onrender.com',
 });
@@ -54,6 +55,9 @@ export const addReview = createAsyncThunk(
       const response = await instance.post('/reviews', { rating, comment });
       return response.data;
     } catch (e) {
+      if (e.response.status === 404) {
+        Notiflix.Notify.failure(e.response.data.message);
+      }
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -76,6 +80,9 @@ export const updateReview = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
+      if (e.response.status === 404) {
+        Notiflix.Notify.failure(e.response.data.message);
+      }
       return thunkAPI.rejectWithValue(e.message);
     }
   }
